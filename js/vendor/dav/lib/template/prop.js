@@ -36,8 +36,19 @@ import * as ns from '../namespace';
  *     }
  */
 export default function prop(item) {
-  return `<${xmlnsPrefix(item.namespace)}:${item.name} />`;
+  return `<${xmlnsPrefix(item.namespace)}:${item.name} ${formatAttrs(item.attrs)}/>`;
 }
+
+function formatAttrs(attrs) {
+  if (typeof attrs !== 'object') {
+    return '';
+  }
+
+  return Object.keys(attrs)
+      .map(attr => `${attr}="${attrs[attr]}"`)
+      .join(' ');
+}
+
 
 function xmlnsPrefix(namespace) {
   switch (namespace) {

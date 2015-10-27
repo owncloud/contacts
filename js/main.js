@@ -31,7 +31,7 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
 						var addressBook = addressBooks.filter(function (element) {
 							return element.displayName === $stateParams.addressBookId;
 						})[0];
-						return DavClient.syncAddressBook(addressBook, {accept: 'application/vCard+json'});
+						return DavClient.syncAddressBook(addressBook, {json: true});
 					}).then(function (addressBook) {
 						return addressBook;
 					});
@@ -63,24 +63,3 @@ app.service('AddressBookService', ['DavService', function(DavService){
 	});
 }]);
 
-app.filter('JSON2vCard', function() {
-	return vCard.generate;
-});
-
-app.filter('vCard2JSON', function() {
-	return function(input, prop) {
-		var result = vCard.parse(input);
-		if(prop === undefined) {
-			return result;
-		}
-		if(result[prop] === undefined) {
-			return undefined;
-		}
-		result = result[prop][0];
-		if(result.value instanceof Array) {
-			return result.value.join(' ');
-		} else {
-			return result.value;
-		}
-	};
-});
