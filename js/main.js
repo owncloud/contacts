@@ -10,10 +10,6 @@
 
 var app = angular.module('contactsApp', ['ui.router']);
 
-app.run(function($rootScope) {
-	$rootScope.addressBooks = [];
-});
-
 app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider){
 	$urlRouterProvider.otherwise('/');
 
@@ -32,8 +28,6 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
 							return element.displayName === $stateParams.addressBookId;
 						})[0];
 						return DavClient.syncAddressBook(addressBook, {json: true});
-					}).then(function (addressBook) {
-						return addressBook;
 					});
 				}
 			},
