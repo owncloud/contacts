@@ -43,23 +43,3 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
 		});
 }]);
 
-app.service('DavClient', function() {
-	var xhr = new dav.transport.Basic(
-		new dav.Credentials()
-	);
-	return new dav.Client(xhr);
-});
-
-app.service('DavService', ['DavClient', function(client) {
-	return client.createAccount({
-		server: OC.linkToRemoteBase('carddav'),
-		accountType: 'carddav'
-	});
-}]);
-
-app.service('AddressBookService', ['DavService', function(DavService){
-	return DavService.then(function(account) {
-		return account.addressBooks;
-	});
-}]);
-

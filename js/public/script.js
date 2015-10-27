@@ -31,7 +31,7 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
 						var addressBook = addressBooks.filter(function (element) {
 							return element.displayName === $stateParams.addressBookId;
 						})[0];
-						return DavClient.syncAddressBook(addressBook, {accept: 'application/vCard+json'});
+						return DavClient.syncAddressBook(addressBook, {json: true});
 					}).then(function (addressBook) {
 						return addressBook;
 					});
@@ -43,63 +43,7 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
 		});
 }]);
 
-app.service('DavClient', function() {
-	var xhr = new dav.transport.Basic(
-		new dav.Credentials()
-	);
-	return new dav.Client(xhr);
-});
 
-app.service('DavService', ['DavClient', function(client) {
-	return client.createAccount({
-		server: OC.linkToRemoteBase('carddav'),
-		accountType: 'carddav'
-	});
-}]);
-
-app.service('AddressBookService', ['DavService', function(DavService){
-	return DavService.then(function(account) {
-		return account.addressBooks;
-	});
-}]);
-
-app.filter('JSON2vCard', function() {
-	return vCard.generate;
-});
-
-app.filter('vCard2JSON', function() {
-	return function(input, prop) {
-		var result = vCard.parse(input);
-		if(prop === undefined) {
-			return result;
-		}
-		if(result[prop] === undefined) {
-			return undefined;
-		}
-		result = result[prop][0];
-		if(result.value instanceof Array) {
-			return result.value.join(' ');
-		} else {
-			return result.value;
-		}
-	};
-});
-
-app.controller('addressbookCtrl', function() {
-	var ctrl = this;
-});
-app.directive('addressbook', function() {
-	return {
-		restrict: 'E',
-		scope: {},
-		controller: 'addressbookCtrl',
-		controllerAs: 'ctrl',
-		bindToController: {
-			addressBook: "=data"
-		},
-		templateUrl: OC.linkTo('contactsrework', 'templates/addressBook.html')
-	};
-});
 app.controller('addressbooklistCtrl', ['$scope', 'AddressBookService', function(scope, AddressBookService) {
 	var ctrl = this;
 
@@ -116,6 +60,21 @@ app.directive('addressbooklist', function() {
 		controllerAs: 'ctrl',
 		bindToController: {},
 		templateUrl: OC.linkTo('contactsrework', 'templates/addressBookList.html')
+	};
+});
+app.controller('addressbookCtrl', function() {
+	var ctrl = this;
+});
+app.directive('addressbook', function() {
+	return {
+		restrict: 'E',
+		scope: {},
+		controller: 'addressbookCtrl',
+		controllerAs: 'ctrl',
+		bindToController: {
+			addressBook: "=data"
+		},
+		templateUrl: OC.linkTo('contactsrework', 'templates/addressBook.html')
 	};
 });
 app.controller('contactCtrl', ['$filter', function($filter) {
@@ -150,3 +109,22 @@ app.directive('contactlist', function() {
 		templateUrl: OC.linkTo('contactsrework', 'templates/contactList.html')
 	};
 });
+app.service('AddressBookService', ['DavService', function(DavService){
+	return DavService.then(function(account) {
+		return account.addressBooks;
+	});
+}]);
+
+app.service('DavClient', function() {
+	var xhr = new dav.transport.Basic(
+		new dav.Credentials()
+	);
+	return new dav.Client(xhr);
+});
+app.service('DavService', ['DavClient', function(client) {
+	return client.createAccount({
+		server: OC.linkToRemoteBase('carddav'),
+		accountType: 'carddav'
+	});
+}]);
+
