@@ -1754,7 +1754,6 @@ function deleteCard(card, options) {
 function syncAddressBook(addressBook, options) {
   options.basicSync = basicSync;
   options.webdavSync = webdavSync;
-  options.accept = "application/vCard+json";
   return webdav.syncCollection(addressBook, options);
 }
 
@@ -2434,7 +2433,7 @@ var template = _interopRequireWildcard(_template);
  */
 
 function addressBookQuery(options) {
-  return collectionQuery(template.addressBookQuery({ props: options.props || [] }), { depth: options.depth, accept: options.accept });
+  return collectionQuery(template.addressBookQuery({ props: options.props || [] }), { depth: options.depth });
 }
 
 /**
@@ -2617,7 +2616,11 @@ function getProps(propstats) {
 }
 
 function setRequestHeaders(request, options) {
-  request.setRequestHeader('Content-Type', 'application/xml;charset=utf-8');
+  if (options.json) {
+    request.setRequestHeader('Content-Type', 'application/vcard+json');
+  } else {
+    request.setRequestHeader('Content-Type', 'application/xml;charset=utf-8');
+  }
 
   if ('depth' in options) {
     request.setRequestHeader('Depth', options.depth);
@@ -2625,10 +2628,6 @@ function setRequestHeaders(request, options) {
 
   if ('etag' in options) {
     request.setRequestHeader('If-Match', options.etag);
-  }
-
-  if ('accept' in options) {
-    request.setRequestHeader('Accept', options.accept);
   }
 }
 },{"./parser":11,"./template":17}],13:[function(require,module,exports){
@@ -3237,7 +3236,8 @@ function createObject(objectUrl, objectData, options) {
 }
 
 function updateObject(objectUrl, objectData, etag, options) {
-  var req = request.basic({ method: 'PUT', data: objectData, etag: etag });
+  if (options.json) objectData = JSON.stringify(objectData);
+  var req = request.basic({ method: 'PUT', data: objectData, etag: etag, json: options.json });
   return options.xhr.send(req, objectUrl, { sandbox: options.sandbox });
 }
 
