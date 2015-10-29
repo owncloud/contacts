@@ -1650,35 +1650,59 @@ function createCard(addressBook, options) {
  *   (dav.Sandbox) sandbox - optional request sandbox.
  */
 var listVCards = _co2['default'].wrap(regeneratorRuntime.mark(function callee$0$0(addressBook, options) {
-  var req, responses;
+  var props, req, responses;
   return regeneratorRuntime.wrap(function callee$0$0$(context$1$0) {
     while (1) switch (context$1$0.prev = context$1$0.next) {
       case 0:
         debug('Doing REPORT on address book ' + addressBook.url + ' which belongs to\n        ' + addressBook.account.credentials.username);
 
+        props = [{ name: 'getetag', namespace: ns.DAV }];
+
+        if (options.json) {
+          props.push({
+            name: 'address-data',
+            namespace: ns.CARDDAV,
+            attrs: { 'content-type': 'application/vcard+json' }
+          });
+        } else {
+          props.push({
+            name: 'address-data',
+            namespace: ns.CARDDAV
+          });
+        }
+
         req = request.addressBookQuery({
           depth: 1,
-          props: [{ name: 'getetag', namespace: ns.DAV }, { name: 'address-data', namespace: ns.CARDDAV }]
+          props: props
         });
-        context$1$0.next = 4;
+        context$1$0.next = 6;
         return options.xhr.send(req, addressBook.url, {
           sandbox: options.sandbox
         });
 
-      case 4:
+      case 6:
         responses = context$1$0.sent;
         return context$1$0.abrupt('return', responses.map(function (res) {
           debug('Found vcard with url ' + res.href);
+
+          var addressData = undefined;
+
+          if (options.json) {
+            addressData = JSON.parse(res.props.addressData);
+          } else {
+            addressData = res.props.addressData;
+          }
+
           return new _model.VCard({
             data: res,
             addressBook: addressBook,
             url: _url2['default'].resolve(addressBook.account.rootUrl, res.href),
             etag: res.props.getetag,
-            addressData: res.props.addressData
+            addressData: addressData
           });
         }));
 
-      case 6:
+      case 8:
       case 'end':
         return context$1$0.stop();
     }
@@ -2016,7 +2040,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
@@ -2592,7 +2616,11 @@ function getProps(propstats) {
 }
 
 function setRequestHeaders(request, options) {
-  request.setRequestHeader('Content-Type', 'application/xml;charset=utf-8');
+  if (options.json) {
+    request.setRequestHeader('Content-Type', 'application/vcard+json');
+  } else {
+    request.setRequestHeader('Content-Type', 'application/xml;charset=utf-8');
+  }
 
   if ('depth' in options) {
     request.setRequestHeader('Depth', options.depth);
@@ -2788,7 +2816,17 @@ var ns = _interopRequireWildcard(_namespace);
  */
 
 function prop(item) {
-  return '<' + xmlnsPrefix(item.namespace) + ':' + item.name + ' />';
+  return '<' + xmlnsPrefix(item.namespace) + ':' + item.name + ' ' + formatAttrs(item.attrs) + '/>';
+}
+
+function formatAttrs(attrs) {
+  if (typeof attrs !== 'object') {
+    return '';
+  }
+
+  return Object.keys(attrs).map(function (attr) {
+    return attr + '="' + attrs[attr] + '"';
+  }).join(' ');
 }
 
 function xmlnsPrefix(namespace) {
@@ -2851,7 +2889,7 @@ Object.defineProperty(exports, '__esModule', {
   value: true
 });
 
-var _get = function get(_x2, _x3, _x4) { var _again = true; _function: while (_again) { var object = _x2, property = _x3, receiver = _x4; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x2 = parent; _x3 = property; _x4 = receiver; _again = true; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+var _get = function get(_x2, _x3, _x4) { var _again = true; _function: while (_again) { var object = _x2, property = _x3, receiver = _x4; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x2 = parent; _x3 = property; _x4 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
@@ -3193,12 +3231,14 @@ var debug = require('./debug')('dav:webdav');
  */
 
 function createObject(objectUrl, objectData, options) {
-  var req = request.basic({ method: 'PUT', data: objectData });
+  if (options.json) objectData = JSON.stringify(objectData);
+  var req = request.basic({ method: 'PUT', data: objectData, json: options.json });
   return options.xhr.send(req, objectUrl, { sandbox: options.sandbox });
 }
 
 function updateObject(objectUrl, objectData, etag, options) {
-  var req = request.basic({ method: 'PUT', data: objectData, etag: etag });
+  if (options.json) objectData = JSON.stringify(objectData);
+  var req = request.basic({ method: 'PUT', data: objectData, etag: etag, json: options.json });
   return options.xhr.send(req, objectUrl, { sandbox: options.sandbox });
 }
 
@@ -7079,7 +7119,7 @@ if(typeof require == 'function'){
 },{}],33:[function(require,module,exports){
 module.exports={
   "name": "dav",
-  "version": "1.7.7",
+  "version": "1.7.8",
   "author": "Gareth Aye [:gaye] <gaye@mozilla.com>",
   "description": "WebDAV, CalDAV, and CardDAV client for nodejs and the browser",
   "license": "MPL-2.0",

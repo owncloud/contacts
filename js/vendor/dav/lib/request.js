@@ -185,7 +185,11 @@ export function getProps(propstats) {
 }
 
 export function setRequestHeaders(request, options) {
-  request.setRequestHeader('Content-Type', 'application/xml;charset=utf-8');
+  if(options.json) {
+    request.setRequestHeader('Content-Type', 'application/vcard+json');
+  } else {
+    request.setRequestHeader('Content-Type', 'application/xml;charset=utf-8');
+  }
 
   if ('depth' in options) {
     request.setRequestHeader('Depth', options.depth);

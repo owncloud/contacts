@@ -31,7 +31,7 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
 						var addressBook = addressBooks.filter(function (element) {
 							return element.displayName === $stateParams.addressBookId;
 						})[0];
-						return DavClient.syncAddressBook(addressBook, {accept: 'application/vCard+json'});
+						return DavClient.syncAddressBook(addressBook, {json: true});
 					}).then(function (addressBook) {
 						return addressBook;
 					});
@@ -43,63 +43,7 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
 		});
 }]);
 
-app.service('DavClient', function() {
-	var xhr = new dav.transport.Basic(
-		new dav.Credentials()
-	);
-	return new dav.Client(xhr);
-});
 
-app.service('DavService', ['DavClient', function(client) {
-	return client.createAccount({
-		server: OC.linkToRemoteBase('carddav'),
-		accountType: 'carddav'
-	});
-}]);
-
-app.service('AddressBookService', ['DavService', function(DavService){
-	return DavService.then(function(account) {
-		return account.addressBooks;
-	});
-}]);
-
-app.filter('JSON2vCard', function() {
-	return vCard.generate;
-});
-
-app.filter('vCard2JSON', function() {
-	return function(input, prop) {
-		var result = vCard.parse(input);
-		if(prop === undefined) {
-			return result;
-		}
-		if(result[prop] === undefined) {
-			return undefined;
-		}
-		result = result[prop][0];
-		if(result.value instanceof Array) {
-			return result.value.join(' ');
-		} else {
-			return result.value;
-		}
-	};
-});
-
-app.controller('addressbookCtrl', function() {
-	var ctrl = this;
-});
-app.directive('addressbook', function() {
-	return {
-		restrict: 'E',
-		scope: {},
-		controller: 'addressbookCtrl',
-		controllerAs: 'ctrl',
-		bindToController: {
-			addressBook: "=data"
-		},
-		templateUrl: OC.linkTo('contactsrework', 'templates/addressBook.html')
-	};
-});
 app.controller('addressbooklistCtrl', ['$scope', 'AddressBookService', function(scope, AddressBookService) {
 	var ctrl = this;
 
@@ -118,10 +62,27 @@ app.directive('addressbooklist', function() {
 		templateUrl: OC.linkTo('contactsrework', 'templates/addressBookList.html')
 	};
 });
-app.controller('contactCtrl', ['$filter', function($filter) {
+app.controller('addressbookCtrl', function() {
+	var ctrl = this;
+});
+app.directive('addressbook', function() {
+	return {
+		restrict: 'E',
+		scope: {},
+		controller: 'addressbookCtrl',
+		controllerAs: 'ctrl',
+		bindToController: {
+			addressBook: "=data"
+		},
+		templateUrl: OC.linkTo('contactsrework', 'templates/addressBook.html')
+	};
+});
+app.controller('contactCtrl', ['Contact', function(Contact) {
 	var ctrl = this;
 
-	console.log($filter('vCard2JSON')(ctrl.data.addressData));
+	ctrl.contact = new Contact(ctrl.data);
+
+	console.log(ctrl.contact);
 
 }]);
 app.directive('contact', function() {
@@ -148,5 +109,98 @@ app.directive('contactlist', function() {
 			addressbook: '='
 		},
 		templateUrl: OC.linkTo('contactsrework', 'templates/contactList.html')
+	};
+});
+app.service('AddressBookService', ['DavService', function(DavService){
+
+	return DavService.then(function(account) {
+		return account.addressBooks;
+	});
+}]);
+app.service('ContactService', [ 'DavClient', function(DavClient) {
+
+	this.create = function(addressBook) {
+		// push contact to server
+		return DavClient.createCard(addressBook);
+	};
+
+	this.update = function(contact) {
+		// update contact on server
+		return DavClient.updateCard(contact, {json: true});
+	};
+
+	this.remove = function(contact) {
+		// delete contact from server
+		return DavClient.deleteCard(contact);
+	};
+
+	this.fromArray = function(array) {
+		// from array to contact
+	};
+}]);
+app.service('DavClient', function() {
+	var xhr = new dav.transport.Basic(
+		new dav.Credentials()
+	);
+	return new dav.Client(xhr);
+});
+app.service('DavService', ['DavClient', function(client) {
+	return client.createAccount({
+		server: OC.linkToRemoteBase('carddav'),
+		accountType: 'carddav'
+	});
+}]);
+
+app.factory('Contact', function(ContactService)
+{
+	return function Contact(jCard) {
+		angular.extend(this, {
+
+			jCard: [],
+
+			name: function(value) {
+				var name = this.getProperty('n');
+				if (angular.isDefined(value)) {
+					// setter
+					this.setPropertyValue(name, value);
+				} else {
+					// getter
+					return this.getPropertyValue(name);
+				}
+
+			},
+
+			getProperty: function(name) {
+				var contact = this;
+				if(!angular.isDefined(contact.jCard.addressData[1])) {
+					return undefined;
+				}
+				var properties = contact.jCard.addressData[1];
+				for(var i in properties) {
+					if(properties[i][0] === name)
+						return properties[i];
+				}
+				return undefined;
+			},
+
+			getPropertyValue: function(property) {
+				if(property[3] instanceof Array) {
+					return property[3].join(' ');
+				} else {
+					return property[3];
+				}
+			},
+
+			setPropertyValue: function(property, propertyValue) {
+				property[3] = propertyValue;
+				this.update();
+			},
+
+			update: function() {
+				ContactService.update(this.jCard);
+			}
+
+		});
+		angular.extend(this.jCard, jCard);
 	};
 });

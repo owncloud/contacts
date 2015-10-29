@@ -78,12 +78,26 @@ export let listVCards = co.wrap(function *(addressBook, options) {
   debug(`Doing REPORT on address book ${addressBook.url} which belongs to
         ${addressBook.account.credentials.username}`);
 
+  let props = [
+    { name: 'getetag', namespace: ns.DAV }
+  ];
+
+  if(options.json) {
+    props.push({
+      name: 'address-data',
+      namespace: ns.CARDDAV,
+      attrs: {'content-type': 'application/vcard+json'}
+    });
+  } else {
+    props.push({
+      name: 'address-data',
+      namespace: ns.CARDDAV
+    })
+  }
+
   var req = request.addressBookQuery({
     depth: 1,
-    props: [
-      { name: 'getetag', namespace: ns.DAV },
-      { name: 'address-data', namespace: ns.CARDDAV }
-    ]
+    props: props
   });
 
   let responses = yield options.xhr.send(req, addressBook.url, {
@@ -92,12 +106,21 @@ export let listVCards = co.wrap(function *(addressBook, options) {
 
   return responses.map(res => {
     debug(`Found vcard with url ${res.href}`);
+
+    let addressData;
+
+    if(options.json) {
+      addressData = JSON.parse(res.props.addressData);
+    } else {
+      addressData = res.props.addressData;
+    }
+
     return new VCard({
       data: res,
       addressBook: addressBook,
       url: url.resolve(addressBook.account.rootUrl, res.href),
       etag: res.props.getetag,
-      addressData: res.props.addressData
+      addressData: addressData
     });
   });
 });

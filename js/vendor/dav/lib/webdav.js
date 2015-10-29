@@ -11,12 +11,14 @@ let debug = require('./debug')('dav:webdav');
  * @param {String} objectData webdav object data.
  */
 export function createObject(objectUrl, objectData, options) {
-  var req = request.basic({ method: 'PUT', data: objectData });
+  if(options.json) objectData = JSON.stringify(objectData);
+  var req = request.basic({ method: 'PUT', data: objectData, json: options.json });
   return options.xhr.send(req, objectUrl, { sandbox: options.sandbox });
 }
 
 export function updateObject(objectUrl, objectData, etag, options) {
-  var req = request.basic({ method: 'PUT', data: objectData, etag: etag });
+  if(options.json) objectData = JSON.stringify(objectData);
+  var req = request.basic({ method: 'PUT', data: objectData, etag: etag, json: options.json });
   return options.xhr.send(req, objectUrl, { sandbox: options.sandbox });
 }
 
