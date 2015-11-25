@@ -1,14 +1,2 @@
-<table id="contactstable">
-	<thead>
-		<tr>
-			<th class="contact__name">
-				<input type="checkbox" id="check-all" class="checkbox" />
-				<label for="check-all"></label>
-			</th>
-			<th>Name</th>
-		</tr>
-	</thead>
-	<tbody>
-		<tr ng-repeat="contact in ctrl.addressbook.contacts" contact data="contact"></tr>
-	</tbody>
-</table>
+<div class="app-content-list-item" ng-repeat="contact in ctrl.addressbook.contacts" contact data="contact" ui-sref=".detail({ uid: ctrl.contact.uid() })">{{ctrl.contact.fullName()}}>
+</div>
