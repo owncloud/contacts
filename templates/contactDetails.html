@@ -4,6 +4,7 @@
 		<input type="text" id="details-email" name="email" ng-model="ctrl.contact.fullName" ng-model-options="{ getterSetter: true, debounce: 500 }" ng-change="ctrl.updateContact()" value="" />
 	</h2>
 	<button ng-click="ctrl.deleteContact()">Delete</button>
+	<button ng-click="ctrl.close()">X</button>
 </header>
 <section>
 	<label for="details-email">E-Mail:</label>
