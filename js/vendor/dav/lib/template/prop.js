@@ -36,17 +36,7 @@ import * as ns from '../namespace';
  *     }
  */
 export default function prop(item) {
-  if (!item.children || !item.children.length) {
-    if (typeof item.value === "undefined") {
-      return `<${xmlnsPrefix(item.namespace)}:${item.name} />`;
-    }
-    return `<${xmlnsPrefix(item.namespace)}:${item.name}>${item.value}</${xmlnsPrefix(item.namespace)}:${item.name}>`;
-  }
-
-  let children = item.children.map(prop);
-  return `<${xmlnsPrefix(item.namespace)}:${item.name}>
-            ${children}
-          </${xmlnsPrefix(item.namespace)}:${item.name}>`;
+  return `<${xmlnsPrefix(item.namespace)}:${item.name} />`;
 }
 
 function xmlnsPrefix(namespace) {
@@ -59,6 +49,8 @@ function xmlnsPrefix(namespace) {
       return 'c';
     case ns.CARDDAV:
       return 'card';
+    case ns.OC:
+      return 'oc';
     default:
       throw new Error('Unrecognized xmlns ' + namespace);
   }
