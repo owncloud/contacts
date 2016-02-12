@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<d:multistatus xmlns:d="DAV:" xmlns:oc="http://owncloud.org/ns/">
+  <d:response>
+    <d:href>/calendars/admin/</d:href>
+    <d:propstat>
+      <d:prop>
+        <oc:groups>
+          <oc:group>Friends</oc:group>
+          <oc:group>Co-Workers</oc:group>
+        </oc:groups>
+      </d:prop>
+      <d:status>HTTP/1.1 200 OK</d:status>
+    </d:propstat>
+  </d:response>
+</d:multistatus>

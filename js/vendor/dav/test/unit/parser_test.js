@@ -63,4 +63,20 @@ suite('parser.multistatus', function() {
       syncToken: 'http://sabre.io/ns/sync/3'
     });
   });
+
+  test('propfind (oc-groups)', function() {
+    let propfind = data.propfindOc;
+    assert.deepEqual(multistatus(propfind), {
+      response: [{
+        href: '/calendars/admin/',
+        propstat: [{
+          prop: {
+            groups: ['Friends', 'Co-Workers']
+          },
+          status: 'HTTP/1.1 200 OK'
+        }]
+      }],
+    });
+  });
+
 });

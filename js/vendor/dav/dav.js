@@ -938,7 +938,7 @@ exports.createAccount = _co2['default'].wrap(regeneratorRuntime.mark(function ca
 }));
 
 // http redirect.
-},{"./calendars":2,"./contacts":5,"./debug":6,"./fuzzy_url_equals":7,"./model":9,"./namespace":10,"./request":12,"co":26,"url":31}],2:[function(require,module,exports){
+},{"./calendars":2,"./contacts":5,"./debug":6,"./fuzzy_url_equals":7,"./model":9,"./namespace":10,"./request":12,"co":29,"url":28}],2:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -1329,7 +1329,7 @@ var webdavSync = _co2['default'].wrap(regeneratorRuntime.mark(function callee$0$
     }
   }, callee$0$0, this);
 }));
-},{"./debug":6,"./fuzzy_url_equals":7,"./model":9,"./namespace":10,"./request":12,"./webdav":24,"co":26,"url":31}],3:[function(require,module,exports){
+},{"./debug":6,"./fuzzy_url_equals":7,"./model":9,"./namespace":10,"./request":12,"./webdav":22,"co":29,"url":28}],3:[function(require,module,exports){
 /**
  * @fileoverview Camelcase something.
  */
@@ -1476,30 +1476,6 @@ var Client = (function () {
       return calendars.syncCaldavAccount(account, options);
     }
   }, {
-    key: 'createAddressBook',
-    value: function createAddressBook() {
-      var options = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
-
-      options.xhr = options.xhr || this.xhr;
-      return contacts.createAddressBook(options);
-    }
-  }, {
-    key: 'deleteAddressBook',
-    value: function deleteAddressBook(addressBook) {
-      var options = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
-
-      options.xhr = options.xhr || this.xhr;
-      return contacts.deleteAddressBook(addressBook, options);
-    }
-  }, {
-    key: 'renameAddressBook',
-    value: function renameAddressBook(addressBook) {
-      var options = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
-
-      options.xhr = options.xhr || this.xhr;
-      return contacts.renameAddressBook(addressBook, options);
-    }
-  }, {
     key: 'createCard',
     value: function createCard(addressBook) {
       var options = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
@@ -1545,15 +1521,12 @@ var Client = (function () {
 })();
 
 exports.Client = Client;
-},{"./accounts":1,"./calendars":2,"./contacts":5,"url":31}],5:[function(require,module,exports){
+},{"./accounts":1,"./calendars":2,"./contacts":5,"url":28}],5:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
   value: true
 });
-exports.createAddressBook = createAddressBook;
-exports.deleteAddressBook = deleteAddressBook;
-exports.renameAddressBook = renameAddressBook;
 exports.createCard = createCard;
 exports.updateCard = updateCard;
 exports.deleteCard = deleteCard;
@@ -1601,7 +1574,7 @@ var listAddressBooks = _co2['default'].wrap(regeneratorRuntime.mark(function cal
       case 0:
         debug('Fetch address books from home url ' + account.homeUrl);
         req = request.propfind({
-          props: [{ name: 'displayname', namespace: ns.DAV }, { name: 'getctag', namespace: ns.CALENDAR_SERVER }, { name: 'resourcetype', namespace: ns.DAV }, { name: 'sync-token', namespace: ns.DAV }],
+          props: [{ name: 'displayname', namespace: ns.DAV }, { name: 'getctag', namespace: ns.CALENDAR_SERVER }, { name: 'resourcetype', namespace: ns.DAV }, { name: 'sync-token', namespace: ns.DAV }, { name: 'groups', namespace: ns.OC }],
           depth: 1
         });
         context$1$0.next = 4;
@@ -1654,54 +1627,6 @@ var listAddressBooks = _co2['default'].wrap(regeneratorRuntime.mark(function cal
 }));
 
 exports.listAddressBooks = listAddressBooks;
-/**
- * @return {Promise} promise will resolve when the addressBook has been created.
- *
- * Options:
- *
- *   (String) url
- *   (String) displayName - name for the address book.
- *   (dav.Sandbox) sandbox - optional request sandbox.
- *   (dav.Transport) xhr - request sender.
- */
-
-function createAddressBook(options) {
-  var collectionUrl = _url2['default'].resolve(options.url, options.displayName);
-  options.props = [{ name: 'resourcetype', namespace: ns.DAV, children: [{ name: 'collection', namespace: ns.DAV }, { name: 'addressbook', namespace: ns.CARDDAV }]
-  }, { name: 'displayname', value: options.displayName, namespace: ns.DAV }];
-  return webdav.createCollection(collectionUrl, options);
-}
-
-/**
- * @param {dav.AddressBook} addressBook the address book to be deleted.
- * @return {Promise} promise will resolve when the addressBook has been deleted.
- *
- * Options:
- *
- *   (dav.Sandbox) sandbox - optional request sandbox.
- *   (dav.Transport) xhr - request sender.
- */
-
-function deleteAddressBook(addressBook, options) {
-  return webdav.deleteCollection(addressBook.url, options);
-}
-
-/**
- * @param {dav.AddressBook} addressBook the address book to be renamed.
- * @return {Promise} promise will resolve when the addressBook has been renamed.
- *
- * Options:
- *
- *   (String) displayName - new name for the address book.
- *   (dav.Sandbox) sandbox - optional request sandbox.
- *   (dav.Transport) xhr - request sender.
- */
-
-function renameAddressBook(addressBook, options) {
-  options.props = [{ name: 'displayname', value: options.displayName, namespace: ns.DAV }];
-  return webdav.updateProperties(addressBook.url, options);
-}
-
 /**
  * @param {dav.AddressBook} addressBook the address book to put the object on.
  * @return {Promise} promise will resolve when the card has been created.
@@ -1955,7 +1880,7 @@ var webdavSync = _co2['default'].wrap(regeneratorRuntime.mark(function callee$0$
     }
   }, callee$0$0, this);
 }));
-},{"./debug":6,"./fuzzy_url_equals":7,"./model":9,"./namespace":10,"./request":12,"./webdav":24,"co":26,"url":31}],6:[function(require,module,exports){
+},{"./debug":6,"./fuzzy_url_equals":7,"./model":9,"./namespace":10,"./request":12,"./webdav":22,"co":29,"url":28}],6:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -2084,7 +2009,7 @@ exports.debug = _debug2['default'];
 exports.ns = ns;
 exports.request = request;
 exports.transport = transport;
-},{"../package":35,"./accounts":1,"./calendars":2,"./client":4,"./contacts":5,"./debug":6,"./model":9,"./namespace":10,"./request":12,"./sandbox":13,"./transport":23}],9:[function(require,module,exports){
+},{"../package":33,"./accounts":1,"./calendars":2,"./client":4,"./contacts":5,"./debug":6,"./model":9,"./namespace":10,"./request":12,"./sandbox":13,"./transport":21}],9:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -2259,6 +2184,8 @@ var CARDDAV = 'urn:ietf:params:xml:ns:carddav';
 exports.CARDDAV = CARDDAV;
 var DAV = 'DAV:';
 exports.DAV = DAV;
+var OC = 'http://owncloud.org/ns';
+exports.OC = OC;
 },{}],11:[function(require,module,exports){
 'use strict';
 
@@ -2318,13 +2245,23 @@ var traverse = {
       resourcetype: false,
       supportedCalendarComponentSet: false,
       supportedReportSet: false,
-      currentUserPrincipal: false
+      currentUserPrincipal: false,
+      groups: false
     });
   },
 
   resourcetype: function resourcetype(node) {
     return childNodes(node).map(function (childNode) {
       return childNode.localName;
+    });
+  },
+
+  groups: function groups(node) {
+    return complex(node, { group: true }, 'group');
+  },
+  group: function group(node) {
+    return childNodes(node).map(function (childNode) {
+      return childNode.nodeValue;
     });
   },
 
@@ -2450,7 +2387,7 @@ function children(node, localName) {
 function child(node, localName) {
   return children(node, localName)[0];
 }
-},{"./camelize":3,"./debug":6,"xmldom":32}],12:[function(require,module,exports){
+},{"./camelize":3,"./debug":6,"xmldom":30}],12:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -2460,8 +2397,6 @@ exports.addressBookQuery = addressBookQuery;
 exports.basic = basic;
 exports.calendarQuery = calendarQuery;
 exports.collectionQuery = collectionQuery;
-exports.mkcol = mkcol;
-exports.proppatch = proppatch;
 exports.propfind = propfind;
 exports.syncCollection = syncCollection;
 exports.mergeProps = mergeProps;
@@ -2544,34 +2479,6 @@ function collectionQuery(requestData, options) {
     requestData: requestData,
     transformRequest: transformRequest,
     transformResponse: transformResponse
-  });
-}
-
-function mkcol(options) {
-  var requestData = template.mkcol({ props: options.props });
-
-  function transformRequest(xhr) {
-    setRequestHeaders(xhr, options);
-  }
-
-  return new Request({
-    method: 'MKCOL',
-    requestData: requestData,
-    transformRequest: transformRequest
-  });
-}
-
-function proppatch(options) {
-  var requestData = template.proppatch({ props: options.props });
-
-  function transformRequest(xhr) {
-    setRequestHeaders(xhr, options);
-  }
-
-  return new Request({
-    method: 'PROPPATCH',
-    requestData: requestData,
-    transformRequest: transformRequest
   });
 }
 
@@ -2706,14 +2613,6 @@ function setRequestHeaders(request, options) {
   if ('etag' in options) {
     request.setRequestHeader('If-Match', options.etag);
   }
-
-  if ('destination' in options) {
-    request.setRequestHeader('Destination', options.destination);
-  }
-
-  if ('overwrite' in options) {
-    request.setRequestHeader('Overwrite', options.overwrite);
-  }
 }
 },{"./parser":11,"./template":17}],13:[function(require,module,exports){
 /**
@@ -2793,7 +2692,7 @@ function addressBookQuery(object) {
 }
 
 module.exports = exports['default'];
-},{"./prop":19}],15:[function(require,module,exports){
+},{"./prop":18}],15:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -2816,7 +2715,7 @@ function calendarQuery(object) {
 }
 
 module.exports = exports['default'];
-},{"./filter":16,"./prop":19}],16:[function(require,module,exports){
+},{"./filter":16,"./prop":18}],16:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -2850,28 +2749,7 @@ exports.addressBookQuery = require('./address_book_query');
 exports.calendarQuery = require('./calendar_query');
 exports.propfind = require('./propfind');
 exports.syncCollection = require('./sync_collection');
-exports.mkcol = require('./mkcol');
-exports.proppatch = require('./proppatch');
-},{"./address_book_query":14,"./calendar_query":15,"./mkcol":18,"./propfind":20,"./proppatch":21,"./sync_collection":22}],18:[function(require,module,exports){
-'use strict';
-
-Object.defineProperty(exports, '__esModule', {
-  value: true
-});
-exports['default'] = mkcol;
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
-var _prop = require('./prop');
-
-var _prop2 = _interopRequireDefault(_prop);
-
-function mkcol(object) {
-  return '<d:mkcol xmlns:c="urn:ietf:params:xml:ns:caldav"\n              xmlns:card="urn:ietf:params:xml:ns:carddav"\n              xmlns:cs="http://calendarserver.org/ns/"\n              xmlns:d="DAV:">\n    <d:set>\n      <d:prop>\n        ' + object.props.map(_prop2['default']) + '\n      </d:prop>\n    </d:set>\n  </d:mkcol>';
-}
-
-module.exports = exports['default'];
-},{"./prop":19}],19:[function(require,module,exports){
+},{"./address_book_query":14,"./calendar_query":15,"./propfind":19,"./sync_collection":20}],18:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -2922,15 +2800,7 @@ var ns = _interopRequireWildcard(_namespace);
  */
 
 function prop(item) {
-  if (!item.children || !item.children.length) {
-    if (typeof item.value === "undefined") {
-      return '<' + xmlnsPrefix(item.namespace) + ':' + item.name + ' />';
-    }
-    return '<' + xmlnsPrefix(item.namespace) + ':' + item.name + '>' + item.value + '</' + xmlnsPrefix(item.namespace) + ':' + item.name + '>';
-  }
-
-  var children = item.children.map(prop);
-  return '<' + xmlnsPrefix(item.namespace) + ':' + item.name + '>\n            ' + children + '\n          </' + xmlnsPrefix(item.namespace) + ':' + item.name + '>';
+  return '<' + xmlnsPrefix(item.namespace) + ':' + item.name + ' />';
 }
 
 function xmlnsPrefix(namespace) {
@@ -2943,12 +2813,14 @@ function xmlnsPrefix(namespace) {
       return 'c';
     case ns.CARDDAV:
       return 'card';
+    case ns.OC:
+      return 'oc';
     default:
       throw new Error('Unrecognized xmlns ' + namespace);
   }
 }
 module.exports = exports['default'];
-},{"../namespace":10}],20:[function(require,module,exports){
+},{"../namespace":10}],19:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -2963,30 +2835,11 @@ var _prop = require('./prop');
 var _prop2 = _interopRequireDefault(_prop);
 
 function propfind(object) {
-  return '<d:propfind xmlns:c="urn:ietf:params:xml:ns:caldav"\n              xmlns:card="urn:ietf:params:xml:ns:carddav"\n              xmlns:cs="http://calendarserver.org/ns/"\n              xmlns:d="DAV:">\n    <d:prop>\n      ' + object.props.map(_prop2['default']) + '\n    </d:prop>\n  </d:propfind>';
+  return '<d:propfind xmlns:c="urn:ietf:params:xml:ns:caldav"\n              xmlns:card="urn:ietf:params:xml:ns:carddav"\n              xmlns:cs="http://calendarserver.org/ns/"\n              xmlns:oc="http://owncloud.org/ns"\n              xmlns:d="DAV:">\n    <d:prop>\n      ' + object.props.map(_prop2['default']) + '\n    </d:prop>\n  </d:propfind>';
 }
 
 module.exports = exports['default'];
-},{"./prop":19}],21:[function(require,module,exports){
-'use strict';
-
-Object.defineProperty(exports, '__esModule', {
-  value: true
-});
-exports['default'] = proppatch;
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
-var _prop = require('./prop');
-
-var _prop2 = _interopRequireDefault(_prop);
-
-function proppatch(object) {
-  return '<d:propertyupdate xmlns:c="urn:ietf:params:xml:ns:caldav"\n              xmlns:card="urn:ietf:params:xml:ns:carddav"\n              xmlns:cs="http://calendarserver.org/ns/"\n              xmlns:d="DAV:">\n    <d:set>\n      <d:prop>\n        ' + object.props.map(_prop2['default']) + '\n      </d:prop>\n    </d:set>\n  </d:propertyupdate>';
-}
-
-module.exports = exports['default'];
-},{"./prop":19}],22:[function(require,module,exports){
+},{"./prop":18}],20:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -3005,7 +2858,7 @@ function syncCollection(object) {
 }
 
 module.exports = exports['default'];
-},{"./prop":19}],23:[function(require,module,exports){
+},{"./prop":18}],21:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -3315,7 +3168,7 @@ var refreshAccessToken = _co2['default'].wrap(regeneratorRuntime.mark(function c
     }
   }, callee$0$0, this);
 }));
-},{"./xmlhttprequest":25,"co":26,"querystring":30}],24:[function(require,module,exports){
+},{"./xmlhttprequest":23,"co":29,"querystring":27}],22:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -3325,10 +3178,6 @@ exports.createObject = createObject;
 exports.updateObject = updateObject;
 exports.deleteObject = deleteObject;
 exports.syncCollection = syncCollection;
-exports.updateProperties = updateProperties;
-exports.createCollection = createCollection;
-exports.deleteCollection = deleteCollection;
-exports.moveCollection = moveCollection;
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj['default'] = obj; return newObj; } }
 
@@ -3389,30 +3238,6 @@ function syncCollection(collection, options) {
     debug('basic sync.');
     return options.basicSync(collection, options);
   }
-}
-
-function updateProperties(objectUrl, options) {
-  var req = request.proppatch({
-    props: options.props
-  });
-  return options.xhr.send(req, objectUrl, { sandbox: options.sandbox });
-}
-
-function createCollection(collectionUrl, options) {
-  var req = request.mkcol({
-    props: options.props
-  });
-  return options.xhr.send(req, collectionUrl, { sandbox: options.sandbox });
-}
-
-function deleteCollection(collectionUrl, options) {
-  var req = request.basic({ method: 'DELETE', data: objectData });
-  return options.xhr.send(req, collectionUrl, { sandbox: options.sandbox });
-}
-
-function moveCollection(collectionUrl, options) {
-  var req = request.basic({ method: 'MOVE', overwrite: 'F', destination: options.destination, data: objectData });
-  return options.xhr.send(req, collectionUrl, { sandbox: options.sandbox });
 }
 
 /**
@@ -3497,7 +3322,7 @@ var isCollectionDirty = _co2['default'].wrap(regeneratorRuntime.mark(function ca
   }, callee$0$0, this);
 }));
 exports.isCollectionDirty = isCollectionDirty;
-},{"./debug":6,"./fuzzy_url_equals":7,"./namespace":10,"./request":12,"co":26}],25:[function(require,module,exports){
+},{"./debug":6,"./fuzzy_url_equals":7,"./namespace":10,"./request":12,"co":29}],23:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -3621,246 +3446,7 @@ var XMLHttpRequest = (function () {
 
 exports['default'] = XMLHttpRequest;
 module.exports = exports['default'];
-},{"./debug":6}],26:[function(require,module,exports){
-
-/**
- * slice() reference.
- */
-
-var slice = Array.prototype.slice;
-
-/**
- * Expose `co`.
- */
-
-module.exports = co['default'] = co.co = co;
-
-/**
- * Wrap the given generator `fn` into a
- * function that returns a promise.
- * This is a separate function so that
- * every `co()` call doesn't create a new,
- * unnecessary closure.
- *
- * @param {GeneratorFunction} fn
- * @return {Function}
- * @api public
- */
-
-co.wrap = function (fn) {
-  createPromise.__generatorFunction__ = fn;
-  return createPromise;
-  function createPromise() {
-    return co.call(this, fn.apply(this, arguments));
-  }
-};
-
-/**
- * Execute the generator function or a generator
- * and return a promise.
- *
- * @param {Function} fn
- * @return {Promise}
- * @api public
- */
-
-function co(gen) {
-  var ctx = this;
-  var args = slice.call(arguments, 1)
-
-  // we wrap everything in a promise to avoid promise chaining,
-  // which leads to memory leak errors.
-  // see https://github.com/tj/co/issues/180
-  return new Promise(function(resolve, reject) {
-    if (typeof gen === 'function') gen = gen.apply(ctx, args);
-    if (!gen || typeof gen.next !== 'function') return resolve(gen);
-
-    onFulfilled();
-
-    /**
-     * @param {Mixed} res
-     * @return {Promise}
-     * @api private
-     */
-
-    function onFulfilled(res) {
-      var ret;
-      try {
-        ret = gen.next(res);
-      } catch (e) {
-        return reject(e);
-      }
-      next(ret);
-    }
-
-    /**
-     * @param {Error} err
-     * @return {Promise}
-     * @api private
-     */
-
-    function onRejected(err) {
-      var ret;
-      try {
-        ret = gen.throw(err);
-      } catch (e) {
-        return reject(e);
-      }
-      next(ret);
-    }
-
-    /**
-     * Get the next value in the generator,
-     * return a promise.
-     *
-     * @param {Object} ret
-     * @return {Promise}
-     * @api private
-     */
-
-    function next(ret) {
-      if (ret.done) return resolve(ret.value);
-      var value = toPromise.call(ctx, ret.value);
-      if (value && isPromise(value)) return value.then(onFulfilled, onRejected);
-      return onRejected(new TypeError('You may only yield a function, promise, generator, array, or object, '
-        + 'but the following object was passed: "' + String(ret.value) + '"'));
-    }
-  });
-}
-
-/**
- * Convert a `yield`ed value into a promise.
- *
- * @param {Mixed} obj
- * @return {Promise}
- * @api private
- */
-
-function toPromise(obj) {
-  if (!obj) return obj;
-  if (isPromise(obj)) return obj;
-  if (isGeneratorFunction(obj) || isGenerator(obj)) return co.call(this, obj);
-  if ('function' == typeof obj) return thunkToPromise.call(this, obj);
-  if (Array.isArray(obj)) return arrayToPromise.call(this, obj);
-  if (isObject(obj)) return objectToPromise.call(this, obj);
-  return obj;
-}
-
-/**
- * Convert a thunk to a promise.
- *
- * @param {Function}
- * @return {Promise}
- * @api private
- */
-
-function thunkToPromise(fn) {
-  var ctx = this;
-  return new Promise(function (resolve, reject) {
-    fn.call(ctx, function (err, res) {
-      if (err) return reject(err);
-      if (arguments.length > 2) res = slice.call(arguments, 1);
-      resolve(res);
-    });
-  });
-}
-
-/**
- * Convert an array of "yieldables" to a promise.
- * Uses `Promise.all()` internally.
- *
- * @param {Array} obj
- * @return {Promise}
- * @api private
- */
-
-function arrayToPromise(obj) {
-  return Promise.all(obj.map(toPromise, this));
-}
-
-/**
- * Convert an object of "yieldables" to a promise.
- * Uses `Promise.all()` internally.
- *
- * @param {Object} obj
- * @return {Promise}
- * @api private
- */
-
-function objectToPromise(obj){
-  var results = new obj.constructor();
-  var keys = Object.keys(obj);
-  var promises = [];
-  for (var i = 0; i < keys.length; i++) {
-    var key = keys[i];
-    var promise = toPromise.call(this, obj[key]);
-    if (promise && isPromise(promise)) defer(promise, key);
-    else results[key] = obj[key];
-  }
-  return Promise.all(promises).then(function () {
-    return results;
-  });
-
-  function defer(promise, key) {
-    // predefine the key in the result
-    results[key] = undefined;
-    promises.push(promise.then(function (res) {
-      results[key] = res;
-    }));
-  }
-}
-
-/**
- * Check if `obj` is a promise.
- *
- * @param {Object} obj
- * @return {Boolean}
- * @api private
- */
-
-function isPromise(obj) {
-  return 'function' == typeof obj.then;
-}
-
-/**
- * Check if `obj` is a generator.
- *
- * @param {Mixed} obj
- * @return {Boolean}
- * @api private
- */
-
-function isGenerator(obj) {
-  return 'function' == typeof obj.next && 'function' == typeof obj.throw;
-}
-
-/**
- * Check if `obj` is a generator function.
- *
- * @param {Mixed} obj
- * @return {Boolean}
- * @api private
- */
-function isGeneratorFunction(obj) {
-  var constructor = obj.constructor;
-  if (!constructor) return false;
-  if ('GeneratorFunction' === constructor.name || 'GeneratorFunction' === constructor.displayName) return true;
-  return isGenerator(constructor.prototype);
-}
-
-/**
- * Check for plain object.
- *
- * @param {Mixed} val
- * @return {Boolean}
- * @api private
- */
-
-function isObject(val) {
-  return Object == val.constructor;
-}
-
-},{}],27:[function(require,module,exports){
+},{"./debug":6}],24:[function(require,module,exports){
 (function (global){
 /*! https://mths.be/punycode v1.4.0 by @mathias */
 ;(function(root) {
@@ -4397,7 +3983,7 @@ function isObject(val) {
 }(this));
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],28:[function(require,module,exports){
+},{}],25:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -4483,7 +4069,7 @@ var isArray = Array.isArray || function (xs) {
   return Object.prototype.toString.call(xs) === '[object Array]';
 };
 
-},{}],29:[function(require,module,exports){
+},{}],26:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -4570,13 +4156,13 @@ var objectKeys = Object.keys || function (obj) {
   return res;
 };
 
-},{}],30:[function(require,module,exports){
+},{}],27:[function(require,module,exports){
 'use strict';
 
 exports.decode = exports.parse = require('./decode');
 exports.encode = exports.stringify = require('./encode');
 
-},{"./decode":28,"./encode":29}],31:[function(require,module,exports){
+},{"./decode":25,"./encode":26}],28:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -5285,7 +4871,246 @@ function isNullOrUndefined(arg) {
   return  arg == null;
 }
 
-},{"punycode":27,"querystring":30}],32:[function(require,module,exports){
+},{"punycode":24,"querystring":27}],29:[function(require,module,exports){
+
+/**
+ * slice() reference.
+ */
+
+var slice = Array.prototype.slice;
+
+/**
+ * Expose `co`.
+ */
+
+module.exports = co['default'] = co.co = co;
+
+/**
+ * Wrap the given generator `fn` into a
+ * function that returns a promise.
+ * This is a separate function so that
+ * every `co()` call doesn't create a new,
+ * unnecessary closure.
+ *
+ * @param {GeneratorFunction} fn
+ * @return {Function}
+ * @api public
+ */
+
+co.wrap = function (fn) {
+  createPromise.__generatorFunction__ = fn;
+  return createPromise;
+  function createPromise() {
+    return co.call(this, fn.apply(this, arguments));
+  }
+};
+
+/**
+ * Execute the generator function or a generator
+ * and return a promise.
+ *
+ * @param {Function} fn
+ * @return {Promise}
+ * @api public
+ */
+
+function co(gen) {
+  var ctx = this;
+  var args = slice.call(arguments, 1)
+
+  // we wrap everything in a promise to avoid promise chaining,
+  // which leads to memory leak errors.
+  // see https://github.com/tj/co/issues/180
+  return new Promise(function(resolve, reject) {
+    if (typeof gen === 'function') gen = gen.apply(ctx, args);
+    if (!gen || typeof gen.next !== 'function') return resolve(gen);
+
+    onFulfilled();
+
+    /**
+     * @param {Mixed} res
+     * @return {Promise}
+     * @api private
+     */
+
+    function onFulfilled(res) {
+      var ret;
+      try {
+        ret = gen.next(res);
+      } catch (e) {
+        return reject(e);
+      }
+      next(ret);
+    }
+
+    /**
+     * @param {Error} err
+     * @return {Promise}
+     * @api private
+     */
+
+    function onRejected(err) {
+      var ret;
+      try {
+        ret = gen.throw(err);
+      } catch (e) {
+        return reject(e);
+      }
+      next(ret);
+    }
+
+    /**
+     * Get the next value in the generator,
+     * return a promise.
+     *
+     * @param {Object} ret
+     * @return {Promise}
+     * @api private
+     */
+
+    function next(ret) {
+      if (ret.done) return resolve(ret.value);
+      var value = toPromise.call(ctx, ret.value);
+      if (value && isPromise(value)) return value.then(onFulfilled, onRejected);
+      return onRejected(new TypeError('You may only yield a function, promise, generator, array, or object, '
+        + 'but the following object was passed: "' + String(ret.value) + '"'));
+    }
+  });
+}
+
+/**
+ * Convert a `yield`ed value into a promise.
+ *
+ * @param {Mixed} obj
+ * @return {Promise}
+ * @api private
+ */
+
+function toPromise(obj) {
+  if (!obj) return obj;
+  if (isPromise(obj)) return obj;
+  if (isGeneratorFunction(obj) || isGenerator(obj)) return co.call(this, obj);
+  if ('function' == typeof obj) return thunkToPromise.call(this, obj);
+  if (Array.isArray(obj)) return arrayToPromise.call(this, obj);
+  if (isObject(obj)) return objectToPromise.call(this, obj);
+  return obj;
+}
+
+/**
+ * Convert a thunk to a promise.
+ *
+ * @param {Function}
+ * @return {Promise}
+ * @api private
+ */
+
+function thunkToPromise(fn) {
+  var ctx = this;
+  return new Promise(function (resolve, reject) {
+    fn.call(ctx, function (err, res) {
+      if (err) return reject(err);
+      if (arguments.length > 2) res = slice.call(arguments, 1);
+      resolve(res);
+    });
+  });
+}
+
+/**
+ * Convert an array of "yieldables" to a promise.
+ * Uses `Promise.all()` internally.
+ *
+ * @param {Array} obj
+ * @return {Promise}
+ * @api private
+ */
+
+function arrayToPromise(obj) {
+  return Promise.all(obj.map(toPromise, this));
+}
+
+/**
+ * Convert an object of "yieldables" to a promise.
+ * Uses `Promise.all()` internally.
+ *
+ * @param {Object} obj
+ * @return {Promise}
+ * @api private
+ */
+
+function objectToPromise(obj){
+  var results = new obj.constructor();
+  var keys = Object.keys(obj);
+  var promises = [];
+  for (var i = 0; i < keys.length; i++) {
+    var key = keys[i];
+    var promise = toPromise.call(this, obj[key]);
+    if (promise && isPromise(promise)) defer(promise, key);
+    else results[key] = obj[key];
+  }
+  return Promise.all(promises).then(function () {
+    return results;
+  });
+
+  function defer(promise, key) {
+    // predefine the key in the result
+    results[key] = undefined;
+    promises.push(promise.then(function (res) {
+      results[key] = res;
+    }));
+  }
+}
+
+/**
+ * Check if `obj` is a promise.
+ *
+ * @param {Object} obj
+ * @return {Boolean}
+ * @api private
+ */
+
+function isPromise(obj) {
+  return 'function' == typeof obj.then;
+}
+
+/**
+ * Check if `obj` is a generator.
+ *
+ * @param {Mixed} obj
+ * @return {Boolean}
+ * @api private
+ */
+
+function isGenerator(obj) {
+  return 'function' == typeof obj.next && 'function' == typeof obj.throw;
+}
+
+/**
+ * Check if `obj` is a generator function.
+ *
+ * @param {Mixed} obj
+ * @return {Boolean}
+ * @api private
+ */
+function isGeneratorFunction(obj) {
+  var constructor = obj.constructor;
+  if (!constructor) return false;
+  if ('GeneratorFunction' === constructor.name || 'GeneratorFunction' === constructor.displayName) return true;
+  return isGenerator(constructor.prototype);
+}
+
+/**
+ * Check for plain object.
+ *
+ * @param {Mixed} val
+ * @return {Boolean}
+ * @api private
+ */
+
+function isObject(val) {
+  return Object == val.constructor;
+}
+
+},{}],30:[function(require,module,exports){
 function DOMParser(options){
 	this.options = options ||{locator:{}};
 	
@@ -5329,27 +5154,20 @@ function buildErrorHandler(errorImpl,domBuilder,locator){
 	locator = locator||{}
 	function build(key){
 		var fn = errorImpl[key];
-		if(!fn){
-			if(isCallback){
-				fn = errorImpl.length == 2?function(msg){errorImpl(key,msg)}:errorImpl;
-			}else{
-				var i=arguments.length;
-				while(--i){
-					if(fn = errorImpl[arguments[i]]){
-						break;
-					}
-				}
-			}
+		if(!fn && isCallback){
+			fn = errorImpl.length == 2?function(msg){errorImpl(key,msg)}:errorImpl;
 		}
 		errorHandler[key] = fn && function(msg){
-			fn(msg+_locator(locator));
+			fn('[xmldom '+key+']\t'+msg+_locator(locator));
 		}||function(){};
 	}
-	build('warning','warn');
-	build('error','warn','warning');
-	build('fatalError','warn','warning','error');
+	build('warning');
+	build('error');
+	build('fatalError');
 	return errorHandler;
 }
+
+//console.log('#\n\n\n\n\n\n\n####')
 /**
  * +ContentHandler+ErrorHandler
  * +LexicalHandler+EntityResolver2
@@ -5466,13 +5284,13 @@ DOMHandler.prototype = {
 	 * @link http://www.saxproject.org/apidoc/org/xml/sax/ErrorHandler.html
 	 */
 	warning:function(error) {
-		console.warn(error,_locator(this.locator));
+		console.warn('[xmldom warning]\t'+error,_locator(this.locator));
 	},
 	error:function(error) {
-		console.error(error,_locator(this.locator));
+		console.error('[xmldom error]\t'+error,_locator(this.locator));
 	},
 	fatalError:function(error) {
-		console.error(error,_locator(this.locator));
+		console.error('[xmldom fatalError]\t'+error,_locator(this.locator));
 	    throw error;
 	}
 }
@@ -5543,7 +5361,7 @@ if(typeof require == 'function'){
 	exports.DOMParser = DOMParser;
 }
 
-},{"./dom":33,"./sax":34}],33:[function(require,module,exports){
+},{"./dom":31,"./sax":32}],31:[function(require,module,exports){
 /*
  * DOM Level 2
  * Object DOMException
@@ -5655,6 +5473,12 @@ NodeList.prototype = {
 	 */
 	item: function(index) {
 		return this[index] || null;
+	},
+	toString:function(){
+		for(var buf = [], i = 0;i<this.length;i++){
+			serializeToString(this[i],buf);
+		}
+		return buf.join('');
 	}
 };
 function LiveNodeList(node,refresh){
@@ -6686,7 +6510,7 @@ if(typeof require == 'function'){
 	exports.XMLSerializer = XMLSerializer;
 }
 
-},{}],34:[function(require,module,exports){
+},{}],32:[function(require,module,exports){
 //[4]   	NameStartChar	   ::=   	":" | [A-Z] | "_" | [a-z] | [#xC0-#xD6] | [#xD8-#xF6] | [#xF8-#x2FF] | [#x370-#x37D] | [#x37F-#x1FFF] | [#x200C-#x200D] | [#x2070-#x218F] | [#x2C00-#x2FEF] | [#x3001-#xD7FF] | [#xF900-#xFDCF] | [#xFDF0-#xFFFD] | [#x10000-#xEFFFF]
 //[4a]   	NameChar	   ::=   	NameStartChar | "-" | "." | [0-9] | #xB7 | [#x0300-#x036F] | [#x203F-#x2040]
 //[5]   	Name	   ::=   	NameStartChar (NameChar)*
@@ -7274,10 +7098,10 @@ if(typeof require == 'function'){
 }
 
 
-},{}],35:[function(require,module,exports){
+},{}],33:[function(require,module,exports){
 module.exports={
   "name": "dav",
-  "version": "1.8.0",
+  "version": "1.7.8",
   "author": "Gareth Aye [:gaye] <gaye@mozilla.com>",
   "description": "WebDAV, CalDAV, and CardDAV client for nodejs and the browser",
   "license": "MPL-2.0",
