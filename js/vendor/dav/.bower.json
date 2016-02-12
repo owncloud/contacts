@@ -1,12 +1,12 @@
 {
   "name": "dav",
-  "homepage": "https://github.com/irgendwie/dav",
-  "_release": "d33ecad1e6",
+  "homepage": "https://github.com/DeepDiver1975/dav-1",
+  "_release": "3a186ddcf3",
   "_resolution": {
     "type": "commit",
-    "commit": "d33ecad1e64202ec5b35b6911708d1253064b5a7"
+    "commit": "3a186ddcf3e084e32f220c6938affd876d17baa4"
   },
-  "_source": "git@github.com:irgendwie/dav.git",
-  "_target": "d33ecad1e64202ec5b35b6911708d1253064b5a7",
-  "_originalSource": "git@github.com:irgendwie/dav.git"
+  "_source": "git@github.com:DeepDiver1975/dav-1.git",
+  "_target": "3a186ddcf3e084e32f220c6938affd876d17baa4",
+  "_originalSource": "git@github.com:DeepDiver1975/dav-1.git"
 }
