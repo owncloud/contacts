@@ -39,12 +39,18 @@ let traverse = {
       resourcetype: false,
       supportedCalendarComponentSet: false,
       supportedReportSet: false,
-      currentUserPrincipal: false
+      currentUserPrincipal: false,
+      groups: false
     });
   },
 
   resourcetype: node => {
     return childNodes(node).map(childNode => childNode.localName);
+  },
+
+  groups: node => complex(node, { group: true }, 'group'),
+  group: node => {
+    return childNodes(node).map(childNode => childNode.nodeValue);
   },
 
   // [x, y, z]
