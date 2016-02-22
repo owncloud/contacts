@@ -24,22 +24,6 @@ app.config(['$routeProvider', function($routeProvider){
 
 }]);
 
-app.controller('addressbookCtrl', function() {
-	var ctrl = this;
-	console.log(this);
-});
-app.directive('addressbook', function() {
-	return {
-		restrict: 'A', // has to be an attribute to work with core css
-		scope: {},
-		controller: 'addressbookCtrl',
-		controllerAs: 'ctrl',
-		bindToController: {
-			addressBook: "=data"
-		},
-		templateUrl: OC.linkTo('contactsrework', 'templates/addressBook.html')
-	};
-});
 app.controller('addressbooklistCtrl', ['$scope', 'AddressBookService', 'SettingsService', function(scope, AddressBookService, SettingsService) {
 	var ctrl = this;
 
@@ -67,6 +51,46 @@ app.directive('addressbooklist', function() {
 	};
 });
 
+app.controller('addressbookCtrl', function() {
+	var ctrl = this;
+	console.log(this);
+});
+app.directive('addressbook', function() {
+	return {
+		restrict: 'A', // has to be an attribute to work with core css
+		scope: {},
+		controller: 'addressbookCtrl',
+		controllerAs: 'ctrl',
+		bindToController: {
+			addressBook: "=data"
+		},
+		templateUrl: OC.linkTo('contactsrework', 'templates/addressBook.html')
+	};
+});
+app.controller('contactCtrl', ['$route', '$routeParams', function($route, $routeParams) {
+	var ctrl = this;
+
+	ctrl.openContact = function() {
+		$route.updateParams({
+			gid: $routeParams.gid,
+			uid: ctrl.contact.uid()});
+	};
+
+	console.log("Contact: ",ctrl.contact);
+
+}]);
+
+app.directive('contact', function() {
+	return {
+		scope: {},
+		controller: 'contactCtrl',
+		controllerAs: 'ctrl',
+		bindToController: {
+			contact: '=data'
+		},
+		templateUrl: OC.linkTo('contactsrework', 'templates/contact.html')
+	};
+});
 app.controller('contactdetailsCtrl', ['ContactService', '$routeParams', '$scope', function(ContactService, $routeParams, $scope) {
 	var ctrl = this;
 
@@ -107,30 +131,6 @@ app.directive('contactdetails', function() {
 	};
 });
 
-app.controller('contactCtrl', ['$route', '$routeParams', function($route, $routeParams) {
-	var ctrl = this;
-
-	ctrl.openContact = function() {
-		$route.updateParams({
-			gid: $routeParams.gid,
-			uid: ctrl.contact.uid()});
-	};
-
-	console.log("Contact: ",ctrl.contact);
-
-}]);
-
-app.directive('contact', function() {
-	return {
-		scope: {},
-		controller: 'contactCtrl',
-		controllerAs: 'ctrl',
-		bindToController: {
-			contact: '=data'
-		},
-		templateUrl: OC.linkTo('contactsrework', 'templates/contact.html')
-	};
-});
 app.controller('contactlistCtrl', ['$scope', 'ContactService', '$routeParams', function($scope, ContactService, $routeParams) {
 	var ctrl = this;
 
@@ -276,18 +276,13 @@ app.factory('Contact', [ '$filter', function($filter) {
 			},
 
 			email: function(value) {
-				if (angular.isDefined(value)) {
-					// setter
-					return this.setProperty('email', { value: value });
-				} else {
-					// getter
-					var property = this.getProperty('email');
-					if(property) {
-						return property.value;
-					} else {
-						return undefined;
-					}
-				}
+				return this.gettersetter('email', value);
+			},
+			nickname: function(value) {
+				return this.gettersetter('nickname', value);
+			},
+			title: function(value) {
+				return this.gettersetter('title', value);
 			},
 
 			categories: function(value) {
@@ -333,8 +328,23 @@ app.factory('Contact', [ '$filter', function($filter) {
 
 			setUrl: function(addressBook, uid) {
 				this.data.url = addressBook.url + uid + ".vcf";
-			}
+			},
 
+			gettersetter: function (name, value) {
+				if (angular.isDefined(value)) {
+					// setter
+					return this.setProperty(name, { value: value });
+				} else {
+					// getter
+					var property = this.getProperty(name);
+					if(property) {
+						return property.value;
+					} else {
+						return undefined;
+					}
+				}
+
+			}
 
 			/*getPropertyValue: function(property) {
 				if(property.value instanceof Array) {
