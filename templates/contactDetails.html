@@ -14,13 +14,13 @@
 </header>
 <section>
 	<label for="details-nickname">Nickname:</label>
-	<input type="text" id="details-nickname" name="nickname" value="" />
+	<input type="text" id="details-nickname" name="nickname" ng-model="ctrl.contact.nickname" ng-model-options="{ getterSetter: true, debounce: 500 }" ng-change="ctrl.updateContact()" value="" />
 	<br />
 	<label for="details-title">Title:</label>
-	<input type="text" id="details-title" name="title" value="" />
+	<input type="text" id="details-title" name="title" ng-model="ctrl.contact.title" ng-model-options="{ getterSetter: true, debounce: 500 }" ng-change="ctrl.updateContact()" value="" />
 	<br />
 	<label for="details-email">E-Mail:</label>
-	<input type="email" id="details-email" name="email" ng-model="ctrl.contact.email" ng-model-options="{ getterSetter: true, debounce: 500 }" value="" />
+	<input type="email" id="details-email" name="email" ng-model="ctrl.contact.email" ng-model-options="{ getterSetter: true, debounce: 500 }" ng-change="ctrl.updateContact()" value="" />
 	<br />
 	<label for="details-organization">Organization:</label>
 	<input type="text" id="details-organization" name="organization" value="" />

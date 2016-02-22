@@ -31,18 +31,13 @@ app.factory('Contact', [ '$filter', function($filter) {
 			},
 
 			email: function(value) {
-				if (angular.isDefined(value)) {
-					// setter
-					return this.setProperty('email', { value: value });
-				} else {
-					// getter
-					var property = this.getProperty('email');
-					if(property) {
-						return property.value;
-					} else {
-						return undefined;
-					}
-				}
+				return this.gettersetter('email', value);
+			},
+			nickname: function(value) {
+				return this.gettersetter('nickname', value);
+			},
+			title: function(value) {
+				return this.gettersetter('title', value);
 			},
 
 			categories: function(value) {
@@ -88,8 +83,23 @@ app.factory('Contact', [ '$filter', function($filter) {
 
 			setUrl: function(addressBook, uid) {
 				this.data.url = addressBook.url + uid + ".vcf";
-			}
+			},
 
+			gettersetter: function (name, value) {
+				if (angular.isDefined(value)) {
+					// setter
+					return this.setProperty(name, { value: value });
+				} else {
+					// getter
+					var property = this.getProperty(name);
+					if(property) {
+						return property.value;
+					} else {
+						return undefined;
+					}
+				}
+
+			}
 
 			/*getPropertyValue: function(property) {
 				if(property.value instanceof Array) {
