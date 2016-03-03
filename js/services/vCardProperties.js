@@ -71,6 +71,10 @@ app.service('vCardPropertiesService', [function() {
 			multiple: true,
 			readableName: t('contacts', 'Phone'),
 			template: 'tel',
+			defaultValue: {
+				value:[''],
+				meta:{type:['HOME,VOICE']}
+			},
 			options: [
 				{id: 'HOME,VOICE', name: t('contacts', 'Home')},
 				{id: 'WORK,VOICE', name: t('contacts', 'Work')},
