@@ -36,7 +36,8 @@ vendor_style('select2/select2');
 			</div>
 			<div id="app-settings-content">
 				<addressBookList></addressBookList>
-				<input type="file" id="contact-import" class="hidden-visually" contactimport /><label for="contact-import">Import</label>
+				<input type="file" id="contact-import" class="hidden-visually" contactimport />
+				<label for="contact-import" class="button" id="upload">Import<span class="icon-upload"></span></label>
 			</div>
 		</div>
 	</div>
