@@ -51,10 +51,16 @@ module.exports = function(config) {
 		reporters: ['mocha', 'coverage'],
 
 
+		// Configure code coverage reporter
 		coverageReporter: {
-			type: 'text'
+			reporters: [
+				{type: 'text'},
+				// generates ./coverage/lcov.info
+				{type:'lcovonly', subdir: '.'},
+				// generates ./coverage/coverage-final.json
+				{type:'json', subdir: '.'},
+			]
 		},
-
 
 		// web server port
 		port: 9876,
@@ -75,8 +81,14 @@ module.exports = function(config) {
 
 		// start these browsers
 		// available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-		browsers: ['Chrome'],
+		browsers: process.env.TRAVIS ? ['Chrome_travis_ci'] : ['Chrome'],
 
+		customLaunchers: {
+			Chrome_travis_ci: {
+				base: 'Chrome',
+				flags: ['--no-sandbox']
+			}
+		},
 
 		// Continuous Integration mode
 		// if true, Karma captures browsers, runs the tests and exits
