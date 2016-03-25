@@ -12,7 +12,6 @@ module.exports = function(config) {
 
 		// list of files / patterns to load in the browser
 		files: [
-			'../../core/vendor/underscore/underscore.js',
 			'js/vendor/angular/angular.js',
 			'js/vendor/angular-route/angular-route.js',
 			'js/vendor/angular-uuid4/angular-uuid4.js',
@@ -23,9 +22,14 @@ module.exports = function(config) {
 			'js/dav/dav.js',
 			'js/vendor/vcard/src/vcard.js',
 
+			'js/vendor/underscore/underscore.js',
 			'js/vendor/angular-mocks/angular-mocks.js',
 
-			'js/public/script.js',
+			'js/main.js',
+			'js/components/**/*.js',
+			'js/models/**/*.js',
+			'js/services/**/*.js',
+			'js/filters/**/*.js',
 
 			'js/vendor/angular-bootstrap/ui-bootstrap.min.js',
 
@@ -41,7 +45,11 @@ module.exports = function(config) {
 		// preprocess matching files before serving them to the browser
 		// available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
 		preprocessors: {
-			'js/public/script.js': 'coverage'
+			'js/main.js': 'coverage',
+			'js/components/**/*.js': 'coverage',
+			'js/models/**/*.js': 'coverage',
+			'js/services/**/*.js': 'coverage',
+			'js/filters/**/*.js': 'coverage'
 		},
 
 
@@ -51,10 +59,16 @@ module.exports = function(config) {
 		reporters: ['mocha', 'coverage'],
 
 
+		// Configure code coverage reporter
 		coverageReporter: {
-			type: 'text'
+			reporters: [
+				{type: 'text'},
+				// generates ./coverage/lcov.info
+				{type:'lcovonly', subdir: '.'},
+				// generates ./coverage/coverage-final.json
+				{type:'json', subdir: '.'},
+			]
 		},
-
 
 		// web server port
 		port: 9876,
@@ -75,7 +89,7 @@ module.exports = function(config) {
 
 		// start these browsers
 		// available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-		browsers: ['Chrome'],
+		browsers: ['Firefox'],
 
 
 		// Continuous Integration mode
