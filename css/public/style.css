@@ -82,6 +82,14 @@
 	background-color: transparent;
 }
 
+.contactdetails__logo.contact__icon {
+	background-color: rgba(0,0,0,0.2);
+	height: 75px;
+	width: 75px;
+	font-size: 2.5em;
+	line-height: 75px;
+}
+
 #check-all + label:before {
 	position: absolute;
 	top: 18px;
