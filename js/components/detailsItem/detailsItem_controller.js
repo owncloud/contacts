@@ -1,5 +1,5 @@
 angular.module('contactsApp')
-.controller('detailsItemCtrl', function($templateRequest, vCardPropertiesService, ContactService) {
+.controller('detailsItemCtrl', function($scope, $templateRequest, vCardPropertiesService, ContactService) {
 	var ctrl = this;
 
 	ctrl.meta = vCardPropertiesService.getMeta(ctrl.name);
@@ -14,6 +14,15 @@ angular.module('contactsApp')
 		address: t('contacts', 'Address'),
 		newGroup: t('contacts', '(new group)')
 	};
+
+	// Prevent \\, in some fields
+	$scope.$watch('ctrl.data', function(newData) {
+		if(_.isArray(newData.value)) {
+			for(var i in newData.value) {
+				ctrl.data.value[i] = ctrl.data.value[i].replace(/\\,/, ',');
+			}
+		}
+	}, true);
 
 	ctrl.availableOptions = ctrl.meta.options || [];
 	if (!_.isUndefined(ctrl.data) && !_.isUndefined(ctrl.data.meta) && !_.isUndefined(ctrl.data.meta.type)) {
