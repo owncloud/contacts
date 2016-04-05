@@ -296,15 +296,15 @@ li.addressBook-share-item span.shareeIdentifier {
 }
 
 #app-settings-content #upload.button {
-	padding: 5px 40px 5px 20px;
-	background-position-x: 80px;
+	padding: 5px;
+	padding-right: 25px;
 	position: absolute;
 	top: 2px;
 	right: 2px;
 }
 #app-settings-content #upload.button .icon-upload {
 	display: block;
-	right: 16px;
+	right: 5px;
 	position: absolute;
 	top: 7px;
 	opacity: 0.5;
