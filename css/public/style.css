@@ -9,14 +9,14 @@
 
 .contactdetails__header h2 {
 	position: absolute;
-	top: 15px;
+	top: 8px;
 	left: 100px;
 }
 .contactdetails__header .contactdetails__name,
 .contactdetails__header .contactdetails__org,
 .contactdetails__header .contactdetails__title {
 	font-size: inherit !important;
-	width: 100% !important;
+	width: 60% !important;
 	color: #fff !important;
 	background: transparent !important;
 	border: none !important;
@@ -26,13 +26,13 @@
 }
 .contactdetails__header .contactdetails__org {
 	position: absolute;
-	left: 101px;
-	width: 100px !important;
+	left: 100px;
+	top: 36px;
 }
 .contactdetails__header .contactdetails__title {
 	position: absolute;
-	left: 201px;
-	width: 125px !important;
+	left: 100px;
+	top: 58px;
 }
 /* fix placeholder color */
 .contactdetails__header .contactdetails__name::-webkit-input-placeholder,
