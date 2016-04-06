@@ -315,9 +315,28 @@ li.addressBook-share-item span.shareeIdentifier {
 	opacity: 0.5;
 }
 
-
-
-
+/* GroupList */
+ul li .group-count {
+	position: absolute;
+	display: block;
+	min-width: 40px;
+	height: 20px;
+	right: 10px;
+	padding: 2px 8px;
+	text-align: center;
+	line-height: 16px;
+	background: rgba(0,0,0,0.1);
+	border-radius: 3px;
+	/* Align middle */
+	top: 50%;
+	margin-top: -10px;
+}
+ul #groups_loading {
+	position: absolute;
+	top: 0;
+	height: 100%;
+	width: 100%;
+}
 
 
 
