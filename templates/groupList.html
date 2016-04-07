@@ -1,1 +1,3 @@
-<li ng-repeat="group in ctrl.groups" group data="group" ng-click="ctrl.setSelected(group)" ng-class="{active: group === ctrl.getSelected}"></li>
+<li ng-repeat="(group, count) in ctrl.groups | orderGroupList" group data="group" count="count"
+	ng-click="ctrl.setSelected(group)" ng-class="{active: group === ctrl.getSelected}"></li>
+<div class="loading" id="groups_loading" ng-show="ctrl.loading"></div>

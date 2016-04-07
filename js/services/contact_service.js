@@ -66,6 +66,34 @@ angular.module('contactsApp')
 		});
 	};
 
+	this.getGroupsWithCount = function () {
+		return this.getAll().then(function(contacts) {
+			contacts = _.uniq(contacts.map(function (element) {
+				return element.categories();
+			}));
+			var count = Array();
+			count[t('contacts', 'All contacts')] = contacts.length;
+			contacts.forEach(function(groups) {
+				if(groups.length===0) {
+					if(typeof count[t('contacts', 'Not grouped')]!=='number') {
+						count[t('contacts', 'Not grouped')] = 1;
+					} else {
+						count[t('contacts', 'Not grouped')]++;
+					}
+				} else {
+					groups.forEach(function(group) {
+						if(typeof count[group]!=='number') {
+							count[group] = 1;
+						} else {
+							count[group]++;
+						}
+					});
+				}
+			});
+			return count;
+		});
+	};
+
 	this.getById = function(uid) {
 		if(cacheFilled === false) {
 			return this.fillCache().then(function() {
@@ -141,6 +169,7 @@ angular.module('contactsApp')
 
 	this.update = function(contact) {
 		contact.syncVCard();
+		notifyObservers('update', contact.uid());
 
 		// update contact on server
 		return DavClient.updateCard(contact.data, {json: true}).then(function(xhr) {
