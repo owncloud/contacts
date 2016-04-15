@@ -38,6 +38,13 @@ angular.module('contactsApp')
 			ctrl.availableOptions = ctrl.availableOptions.concat([{id: ctrl.type, name: displayName}]);
 		}
 	}
+
+	if (ctrl.meta.template === 'url') {
+		if (!ctrl.data.value.startsWith('http://') && !ctrl.data.value.startsWith('https://')) {
+			ctrl.data.value = 'http://' + ctrl.data.value;
+		}
+	}
+
 	ctrl.availableGroups = [];
 
 	ContactService.getGroups().then(function(groups) {
