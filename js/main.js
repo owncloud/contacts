@@ -11,11 +11,11 @@
 angular.module('contactsApp', ['uuid4', 'angular-cache', 'ngRoute', 'ui.bootstrap', 'ui.select', 'ngSanitize'])
 .config(function($routeProvider) {
 
-	$routeProvider.when('/:gid', {
+	$routeProvider.when('/group/:gid', {
 		template: '<contactdetails></contactdetails>'
 	});
 
-	$routeProvider.when('/:gid/:uid', {
+	$routeProvider.when('/group/:gid/contact/:uid', {
 		template: '<contactdetails></contactdetails>'
 	});
 
