@@ -22,19 +22,18 @@
 	<ul>
 		<li class="action">
 			<button class="addressbooklist-icon icon-toggle"
-				  title="Enable/Disable addressbook"
-				  ng-click="ctrl.toggleEnable()">
+					title="Enable/Disable addressbook"
+					ng-click="ctrl.toggleEnable()">
 		</li>
 		<li class="action">
 			<button class="addressbooklist-icon icon-public"
-				  title="Show URL"
-				  ng-click="ctrl.toggleShowUrl()">
+					title="Show URL"
+					ng-click="ctrl.toggleShowUrl()">
 		</li>
-		<li class="action">
+		<li class="action" ng-if="ctrl.list.length !== 1">
 			<button class="addressbooklist-icon icon-delete"
-				  ng-class="{hidden: ctrl.list.length === 1}"
-				  title="Delete Addressbook"
-				  ng-click="ctrl.deleteAddressBook()">
+					title="Delete Addressbook"
+					ng-click="ctrl.deleteAddressBook()">
 		</li>
 	</ul>
 </div>

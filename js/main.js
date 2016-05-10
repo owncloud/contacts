@@ -24,8 +24,8 @@ angular.module('contactsApp', ['uuid4', 'angular-cache', 'ngRoute', 'ui.bootstra
 });
 
 angular.module('contactsApp')
-.run(['$document', '$rootScope', '$window',
-	function ($document, $rootScope, $window) {
+.run(['$document', '$rootScope',
+	function ($document, $rootScope) {
 		'use strict';
 
 		$document.click(function (event) {

@@ -86,6 +86,34 @@ angular.module('contactsApp')
 			return DavClient.syncAddressBook(addressBook);
 		},
 
+
+		enable: function(addressBook, enable) {
+			var xmlDoc = document.implementation.createDocument('', '', null);
+			var dPropUpdate = xmlDoc.createElement('d:propertyupdate');
+			dPropUpdate.setAttribute('xmlns:d', 'DAV:');
+			dPropUpdate.setAttribute('xmlns:o', 'http://owncloud.org/ns');
+			xmlDoc.appendChild(dPropUpdate);
+
+			var dSet = xmlDoc.createElement('d:set');
+			dPropUpdate.appendChild(dSet);
+
+			var dProp = xmlDoc.createElement('d:prop');
+			dSet.appendChild(dProp);
+
+			var oEnabled = xmlDoc.createElement('o:enabled');
+			oEnabled.textContent = enable ? '1' : '0';
+			dProp.appendChild(oEnabled);
+
+			var body = dPropUpdate.outerHTML;
+
+			return DavClient.xhr.send(
+				dav.request.basic({method: 'PROPPATCH', data: body}),
+				addressBook.url
+			).then(function(response) {
+				return addressBook;
+			});
+		},
+
 		share: function(addressBook, shareType, shareWith, writable, existingShare) {
 			var xmlDoc = document.implementation.createDocument('', '', null);
 			var oShare = xmlDoc.createElement('o:share');
