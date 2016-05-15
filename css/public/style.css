@@ -155,8 +155,12 @@ detailsitem {
 	flex-wrap: wrap;
 	width: 350px;
 }
+.detailsitem {
+    padding-right: 39px; /* addressbook and add field alignment */
+}
 
-detailsitem label {
+detailsitem label,
+.detailsitem label {
 	display: inline-block;
 	width: 80px;
 	padding: 7px 0px;
@@ -167,7 +171,10 @@ detailsitem label {
 	text-overflow: ellipsis;
 	vertical-align: middle;
 }
-
+detailsitem input,
+.detailsitem input {
+	max-height: 32px;
+}
 detailsitem input[type="text"],
 detailsitem input[type="password"],
 detailsitem input[type="search"],
@@ -180,7 +187,7 @@ detailsitem input[type="date"],
 detailsitem textarea,
 .select-addressbook select,
 .add-field {
-	width: 225px !important;
+	width: 225px;
 }
 
 detailsitem .contactdetails__header + section > * {
@@ -194,6 +201,7 @@ detailsitem .icon-delete {
 	background-color: rgba(0, 0, 0, 0);
 	border: none;
 	opacity: .2;
+	align-self: flex-start;
 }
 
 /* Prevent delete for last adr/mail/tel item  */
@@ -203,7 +211,7 @@ detailsitem .icon-delete {
 	display: none;
 }
 
-detailsitem  input#details-url {
+detailsitem input#details-url {
     text-overflow: ellipsis;
     padding-right: 18px;
 }
@@ -223,8 +231,9 @@ detailsitem.details-item-tel label {
 	padding: 0;
 }
 detailsitem > select,
-detailsitem > label {
-	margin-right: 5px;
+detailsitem > label,
+.detailsitem > label {
+	margin-right: 3px;
 }
 
 detailsitem.details-item-adr .icon-delete {
@@ -235,7 +244,7 @@ detailsitem.details-item-adr .icon-delete {
 detailsitem .url-link {
 	position: absolute;
 	padding: 8px 10px;
-	margin-left: -30px;
+	margin-left: -70px;
 	opacity: .5;
 }
 
@@ -247,7 +256,6 @@ detailsitem.details-item-note .icon-delete {
 	vertical-align: top;
 }
 
-.select-addressbook,
 .add-field {
 	margin-left: 83px;
 }
@@ -465,7 +473,7 @@ ul.addressBook-share-list li {
 /* SELECT2 styling - MOVE TO CORE FOR 9.1! */
 
 detailsitem .select2-container {
-	width: 245px;
+	width: 225px;
 }
 .select2-container-multi .select2-choices {
 	border-color: #ddd !important;
