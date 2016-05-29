@@ -19,6 +19,8 @@ angular.module('contactsApp')
 	ctrl.t = {
 		noContacts : t('contacts', 'No contacts in here'),
 		placeholderName : t('contacts', 'Name'),
+		placeholderLastName : t('contacts', 'Last Name'),
+		placeholderFirstName : t('contacts', 'First Name'),
 		placeholderOrg : t('contacts', 'Organization'),
 		placeholderTitle : t('contacts', 'Title'),
 		selectField : t('contacts', 'Add field ...')
