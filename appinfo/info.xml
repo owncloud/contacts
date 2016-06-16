@@ -10,12 +10,12 @@
     <documentation>
     	<user>https://doc.owncloud.org/server/9.1/user_manual/pim/contacts.html</user>
     	<admin>https://doc.owncloud.org/server/9.1/admin_manual/configuration_server/occ_command.html?highlight=contact#dav-commands</admin>
-    	<developer>https://doc.owncloud.org/missing</developer>
+    	<developer>https://github.com/owncloud/contacts/blob/master/README.md</developer>
     </documentation>
     <category>tool</category>
-    <website>https://owncloud.org</website>
-    <bugs>https://github.com/owncloud/theapp/issues</bugs>
-    <repository type="git">https://github.com/owncloud/theapp.git</repository>
+    <website>https://github.com/owncloud/contacts</website>
+    <bugs>https://github.com/owncloud/contacts/issues</bugs>
+    <repository type="git">https://github.com/owncloud/contacts.git</repository>
     <dependencies>
         <owncloud min-version="9.0" max-version="9.1" />
     </dependencies>
