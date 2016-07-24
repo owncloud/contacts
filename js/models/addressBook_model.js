@@ -6,6 +6,7 @@ angular.module('contactsApp')
 
 			displayName: '',
 			contacts: [],
+			enabled: true,
 			groups: data.data.props.groups,
 
 			getContact: function(uid) {

@@ -2,35 +2,44 @@
 <span class="utils">
 	<span class="action" ng-show="ctrl.canExport">
 		<a href="{{ctrl.addressBook.url}}?export"
-			  id="addressBooklist-icon download"
-			  title="Download"
-			  class="icon-download">
+		   id="addressBooklist-icon download"
+		   title="Download"
+		   class="icon-download">
 		</a>
 	</span>
-    <span class="action">
-        <span
-            class="addressbooklist-icon icon-public"
-            title="Show URL"
-            ng-click="ctrl.toggleShowUrl()">
-        </span>
-    </span>
-    <span class="action">
-        <span
-            class="addressbooklist-icon icon-share"
-            title="Share Addressbook"
-            ng-click="ctrl.toggleSharesEditor(ctrl.addressBook)">
-        </span>
-    </span>
-    <span class="action">
-        <span
-            class="addressbooklist-icon icon-delete"
-			ng-class="{hidden: ctrl.list.length === 1}"
-            title="Delete Addressbook"
-            ng-click="ctrl.deleteAddressBook()">
-        </span>
-    </span>
+	<span class="action">
+		<span class="addressbooklist-icon icon-share"
+			  title="Share Addressbook"
+			  ng-click="ctrl.toggleSharesEditor(ctrl.addressBook)">
+		</span>
+	</span>
+	<span class="action">
+		<span title="More" class="icon-more" on-toggle-show="#more-{{ctrl.addressBook.ctag}}"></span>
+	</span>
 </span>
-    <input class="addressBookUrl" ng-show="ctrl.showUrl" type="url" value="{{ctrl.addressBook.url}}" readonly />
+
+<div id="more-{{ctrl.addressBook.ctag}}" class="app-navigation-entry-menu">
+	<ul>
+		<li class="action">
+			<button class="addressbooklist-icon icon-toggle"
+					title="Enable/Disable addressbook"
+					ng-click="ctrl.toggleEnable()">
+		</li>
+		<li class="action">
+			<button class="addressbooklist-icon icon-public"
+					title="Show URL"
+					ng-click="ctrl.toggleShowUrl()">
+		</li>
+		<li class="action" ng-if="ctrl.list.length !== 1">
+			<button class="addressbooklist-icon icon-delete"
+					title="Delete Addressbook"
+					ng-click="ctrl.deleteAddressBook()">
+		</li>
+	</ul>
+</div>
+
+<input class="addressBookUrl" ng-show="ctrl.showUrl" type="url" value="{{ctrl.addressBook.url}}" readonly />
+
 <div class="addressBookShares" ng-show="ctrl.editingShares">
 	<i ng-show="ctrl.loadingSharees" class="glyphicon glyphicon-refresh"></i>
 	<input

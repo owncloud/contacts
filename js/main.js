@@ -22,3 +22,14 @@ angular.module('contactsApp', ['uuid4', 'angular-cache', 'ngRoute', 'ui.bootstra
 	$routeProvider.otherwise('/' + t('contacts', 'All contacts'));
 
 });
+
+angular.module('contactsApp')
+.run(['$document', '$rootScope',
+	function ($document, $rootScope) {
+		'use strict';
+
+		$document.click(function (event) {
+			$rootScope.$broadcast('documentClicked', event);
+		});
+	}
+]);

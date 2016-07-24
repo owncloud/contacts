@@ -17,6 +17,11 @@ angular.module('contactsApp')
 		ctrl.selectedSharee = null;
 	};
 
+	ctrl.toggleEnable = function() {
+		ctrl.addressBook.enabled = !ctrl.addressBook.enabled;
+		AddressBookService.enable(ctrl.addressBook, ctrl.addressBook.enabled);
+	};
+
 	/* From Calendar-Rework - js/app/controllers/calendarlistcontroller.js */
 	ctrl.findSharee = function (val) {
 		return $.get(

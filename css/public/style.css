@@ -273,7 +273,7 @@ detailsitem.details-item-note .icon-delete {
 /* addressbook settings */
 
 
-ul.addressBookList li {
+ul.addressBookList > li {
 	padding: 6px 0;
 }
 
@@ -293,7 +293,18 @@ ul.addressBookList li .action > span {
 ul.addressBookList li .action > a {
 	padding: 10px 14px;
 }
-
+.addressBookList .app-navigation-entry-menu {
+	margin: 3px 5px !important;
+}
+ul.addressBookList > li.disabled {
+	color: #bbbbbb;
+}
+.addressBookList li.disabled .action button.icon-toggle {
+	opacity: .2 !important;
+}
+.addressBookList li.disabled .action button.icon-toggle:hover {
+	opacity: .4 !important;
+}
 div.addressBookShares ul.dropdown-menu {
 	border: 1px solid #ddd;
 	border-radius: 3px;
@@ -448,7 +459,7 @@ li.addressBook-share-item span.shareeIdentifier {
 	opacity: .5;
 }
 
-ul.addressBookList li {
+ul.addressBookList > li {
     margin-bottom: 5px;
 }
 
@@ -471,7 +482,6 @@ ul.addressBook-share-list li {
 #app-navigation .utils .action:focus {
 	opacity: 1;
 }
-
 /* SELECT2 styling - MOVE TO CORE FOR 9.1! */
 
 detailsitem .select2-container {
