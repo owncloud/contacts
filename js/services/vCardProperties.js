@@ -66,6 +66,10 @@ angular.module('contactsApp')
 			readableName: t('contacts', 'Birthday'),
 			template: 'date'
 		},
+		anniversary: {
+			readableName: t('contacts', 'Anniversary'),
+			template: 'date'
+		},
 		deathdate: {
 			readableName: t('contacts', 'Date of Death'),
 			template: 'date'
@@ -142,6 +146,7 @@ angular.module('contactsApp')
 		'impp',
 		'nick',
 		'bday',
+		'anniversary',
 		'deathdate',
 		'url',
 		'X-SOCIALPROFILE',
