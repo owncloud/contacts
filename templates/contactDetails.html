@@ -30,11 +30,11 @@
 		</header>
 		<section>
 			<div ng-repeat="prop in ctrl.contact.props | toArray | orderDetailItems:'$key'">
-				<detailsItem ng-repeat="propData in prop" name="prop.$key" data="propData" model="ctrl" index="$index" ng-class="[ 'details-item-' + prop.$key ]"></detailsItem>
+				<detailsItem ng-repeat="propData in prop" name="prop.$key" data="propData" model="ctrl" index="$index" ng-class="[ 'details-item-' + prop.$key, {'hidden': 'org title version fn geo photo uid'.indexOf(prop.$key) !== -1} ]"></detailsItem>
 			</div>
-			<div class="select-addressbook" ng-if="ctrl.addressBooks.length > 1">
-				<select ng-model="ctrl.addressBook" ng-change="ctrl.changeAddressBook(ctrl.addressBook)" ng-options="book.displayName for book in ctrl.addressBooks">
-				</select>
+			<div class="select-addressbook detailsitem" ng-if="ctrl.addressBooks.length > 1">
+				<label for="select-addressbook">{{ctrl.t.addressBook}}</label>
+				<select ng-model="ctrl.addressBook" ng-change="ctrl.changeAddressBook(ctrl.addressBook)" ng-options="book.displayName for book in ctrl.addressBooks" id="select-addressbook"></select>
 			</div>
 			<select class="add-field" ng-model="ctrl.field" ng-change="ctrl.addField(ctrl.field)">
 				<option value=''>{{ctrl.t.selectField}}</option>
