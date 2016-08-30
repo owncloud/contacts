@@ -8,7 +8,7 @@ script('contacts', 'vendor/angular-sanitize/angular-sanitize');
 script('contacts', 'vendor/ui-select/dist/select');
 
 // DAV libraries
-script('contacts', 'dav/dav');
+vendor_script('contacts', 'davclient.js/lib/client');
 script('contacts', 'vendor/vcard/src/vcard');
 
 // compiled version of app javascript

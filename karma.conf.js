@@ -19,7 +19,7 @@ module.exports = function(config) {
 			'js/vendor/angular-sanitize/angular-sanitize.js',
 			'js/vendor/ui-select/dist/select.js',
 
-			'js/dav/dav.js',
+			'js/vendor/davclient.js/lib/client.js',
 			'js/vendor/vcard/src/vcard.js',
 
 			'js/vendor/underscore/underscore.js',
