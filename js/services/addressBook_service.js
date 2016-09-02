@@ -1,194 +1,111 @@
 angular.module('contactsApp')
-.factory('AddressBookService', function(DavClient, DavService, SettingsService, AddressBook, $q) {
+.service('AddressBookService', function(DavClientService, SettingsService, AddressBook, $q) {
+	'use strict';
 
-	var addressBooks = [];
-	var loadPromise = undefined;
+	var self = this;
 
-	var loadAll = function() {
-		if (addressBooks.length > 0) {
-			return $q.when(addressBooks);
-		}
-		if (_.isUndefined(loadPromise)) {
-			loadPromise = DavService.then(function(account) {
-				loadPromise = undefined;
-				addressBooks = account.addressBooks.map(function(addressBook) {
-					return new AddressBook(addressBook);
-				});
+	this._CONTACTS_HOME = null;
+	this._currentUserPrincipal = null;
+
+	this._PROPERTIES = [
+		'{' + DavClientService.NS_DAV + '}displayname',
+		'{' + DavClientService.NS_DAV + '}owner',
+		'{' + DavClientService.NS_CALENDARSERVER + '}getctag',
+		'{' + DavClientService.NS_DAV + '}resourcetype',
+		'{' + DavClientService.NS_DAV + '}sync-token',
+		'{' + DavClientService.NS_OWNCLOUD + '}invite'
+	];
+
+	this._xmls = new XMLSerializer();
+
+	function discoverHome(callback) {
+		return DavClientService.propFind(DavClientService.buildUrl(OC.linkToRemoteBase('dav')), ['{' + DavClientService.NS_DAV + '}current-user-principal'], 0, {'requesttoken': OC.requestToken}).then(function(response) {
+			if (!DavClientService.wasRequestSuccessful(response.status)) {
+				throw 'CardDAV client could not be initialized - Querying current-user-principal failed';
+			}
+
+			if (response.body.propStat.length < 1) {
+				return;
+			}
+
+			var props = response.body.propStat[0].properties;
+			self._currentUserPrincipal = props['{' + DavClientService.NS_DAV + '}current-user-principal'][0].textContent;
+
+			return DavClientService.propFind(DavClientService.buildUrl(self._currentUserPrincipal), ['{' + DavClientService.NS_IETF + '}addressbook-home-set'], 0, {'requesttoken': OC.requestToken}).then(function (response) {
+				if (!DavClientService.wasRequestSuccessful(response.status)) {
+					throw 'CardDAV client could not be initialized - Querying addressbook-home-set failed';
+				}
+
+				if (response.body.propStat.length < 1) {
+					return;
+				}
+
+				var props = response.body.propStat[0].properties;
+				self._CONTACTS_HOME = props['{' + DavClientService.NS_IETF + '}addressbook-home-set'][0].textContent;
+
+				return callback();
+			});
+		});
+	}
+
+	function getResponseCodeFromHTTPResponse(t) {
+		return parseInt(t.split(' ')[1]);
+	}
+
+	this.getAll = function() {
+		if (this._CONTACTS_HOME === null) {
+			return discoverHome(function() {
+				return self.getAll();
 			});
 		}
-		return loadPromise;
+
+		return DavClientService.propFind(DavClientService.buildUrl(this._CONTACTS_HOME), this._PROPERTIES, 1, {'requesttoken': OC.requestToken}).then(function(response) {
+			var addressbooks = [];
+
+			if (!DavClientService.wasRequestSuccessful(response.status)) {
+				throw 'CardDAV client could not be initialized - Querying addressbooks failed';
+			}
+
+			for (var i = 1; i < response.body.length; i++) {
+				var body = response.body[i];
+				if (body.propStat.length < 1) {
+					continue;
+				}
+
+				var responseCode = getResponseCodeFromHTTPResponse(body.propStat[0].status);
+				if (!DavClientService.wasRequestSuccessful(responseCode)) {
+					continue;
+				}
+
+				var props = self._getSimplePropertiesFromRequest(body.propStat[0].properties);
+				if (!props) {
+					continue;
+				}
+
+				console.log(props);
+				var addressbook = new AddressBook(body.href, props);
+				addressbooks.push(addressbook);
+			}
+
+			return addressbooks;
+		});
 	};
 
-	return {
-		getAll: function() {
-			return loadAll().then(function() {
-				return addressBooks;
-			});
-		},
+	this._getSimplePropertiesFromRequest = function(props) {
+		var simple = {
+			displayname: props['{' + DavClientService.NS_DAV + '}displayname'],
+			getctag: props['{' + DavClientService.NS_CALENDARSERVER + '}getctag'],
+			synctoken: props['{' + DavClientService.NS_DAV + '}sync-token']
+		};
 
-		getGroups: function () {
-			return this.getAll().then(function(addressBooks) {
-				return addressBooks.map(function (element) {
-					return element.groups;
-				}).reduce(function(a, b) {
-					return a.concat(b);
-				});
-			});
-		},
-
-		getDefaultAddressBook: function() {
-			return addressBooks[0];
-		},
-
-		getAddressBook: function(displayName) {
-			return DavService.then(function(account) {
-				return DavClient.getAddressBook({displayName:displayName, url:account.homeUrl}).then(function(addressBook) {
-					addressBook = new AddressBook({
-						url: addressBook[0].href,
-						data: addressBook[0]
-					});
-					addressBook.displayName = displayName;
-					return addressBook;
-				});
-			});
-		},
-
-		create: function(displayName) {
-			return DavService.then(function(account) {
-				return DavClient.createAddressBook({displayName:displayName, url:account.homeUrl});
-			});
-		},
-
-		delete: function(addressBook) {
-			return DavService.then(function() {
-				return DavClient.deleteAddressBook(addressBook).then(function() {
-					var index = addressBooks.indexOf(addressBook);
-					addressBooks.splice(index, 1);
-				});
-			});
-		},
-
-		rename: function(addressBook, displayName) {
-			return DavService.then(function(account) {
-				return DavClient.renameAddressBook(addressBook, {displayName:displayName, url:account.homeUrl});
-			});
-		},
-
-		get: function(displayName) {
-			return this.getAll().then(function(addressBooks) {
-				return addressBooks.filter(function (element) {
-					return element.displayName === displayName;
-				})[0];
-			});
-		},
-
-		sync: function(addressBook) {
-			return DavClient.syncAddressBook(addressBook);
-		},
-
-		share: function(addressBook, shareType, shareWith, writable, existingShare) {
-			var xmlDoc = document.implementation.createDocument('', '', null);
-			var oShare = xmlDoc.createElement('o:share');
-			oShare.setAttribute('xmlns:d', 'DAV:');
-			oShare.setAttribute('xmlns:o', 'http://owncloud.org/ns');
-			xmlDoc.appendChild(oShare);
-
-			var oSet = xmlDoc.createElement('o:set');
-			oShare.appendChild(oSet);
-
-			var dHref = xmlDoc.createElement('d:href');
-			if (shareType === OC.Share.SHARE_TYPE_USER) {
-				dHref.textContent = 'principal:principals/users/';
-			} else if (shareType === OC.Share.SHARE_TYPE_GROUP) {
-				dHref.textContent = 'principal:principals/groups/';
+		var owner = props['{' + DavClientService.NS_DAV + '}owner'];
+		if (typeof owner !== 'undefined' && owner.length !== 0) {
+			owner = owner[0].textContent.slice(0, -1);
+			if (owner.indexOf('/remote.php/dav/principals/users/') !== -1) {
+				simple.owner = owner.substr(33 + owner.indexOf('/remote.php/dav/principals/users/'));
 			}
-			dHref.textContent += shareWith;
-			oSet.appendChild(dHref);
-
-			var oSummary = xmlDoc.createElement('o:summary');
-			oSummary.textContent = t('contacts', '{addressbook} shared by {owner}', {
-				addressbook: addressBook.displayName,
-				owner: addressBook.owner
-			});
-			oSet.appendChild(oSummary);
-
-			if (writable) {
-				var oRW = xmlDoc.createElement('o:read-write');
-				oSet.appendChild(oRW);
-			}
-
-			var body = oShare.outerHTML;
-
-			return DavClient.xhr.send(
-				dav.request.basic({method: 'POST', data: body}),
-				addressBook.url
-			).then(function(response) {
-				if (response.status === 200) {
-					if (!existingShare) {
-						if (shareType === OC.Share.SHARE_TYPE_USER) {
-							addressBook.sharedWith.users.push({
-								id: shareWith,
-								displayname: shareWith,
-								writable: writable
-							});
-						} else if (shareType === OC.Share.SHARE_TYPE_GROUP) {
-							addressBook.sharedWith.groups.push({
-								id: shareWith,
-								displayname: shareWith,
-								writable: writable
-							});
-						}
-					}
-				}
-			});
-
-		},
-
-		unshare: function(addressBook, shareType, shareWith) {
-			var xmlDoc = document.implementation.createDocument('', '', null);
-			var oShare = xmlDoc.createElement('o:share');
-			oShare.setAttribute('xmlns:d', 'DAV:');
-			oShare.setAttribute('xmlns:o', 'http://owncloud.org/ns');
-			xmlDoc.appendChild(oShare);
-
-			var oRemove = xmlDoc.createElement('o:remove');
-			oShare.appendChild(oRemove);
-
-			var dHref = xmlDoc.createElement('d:href');
-			if (shareType === OC.Share.SHARE_TYPE_USER) {
-				dHref.textContent = 'principal:principals/users/';
-			} else if (shareType === OC.Share.SHARE_TYPE_GROUP) {
-				dHref.textContent = 'principal:principals/groups/';
-			}
-			dHref.textContent += shareWith;
-			oRemove.appendChild(dHref);
-			var body = oShare.outerHTML;
-
-
-			return DavClient.xhr.send(
-				dav.request.basic({method: 'POST', data: body}),
-				addressBook.url
-			).then(function(response) {
-				if (response.status === 200) {
-					if (shareType === OC.Share.SHARE_TYPE_USER) {
-						addressBook.sharedWith.users = addressBook.sharedWith.users.filter(function(user) {
-							return user.id !== shareWith;
-						});
-					} else if (shareType === OC.Share.SHARE_TYPE_GROUP) {
-						addressBook.sharedWith.groups = addressBook.sharedWith.groups.filter(function(groups) {
-							return groups.id !== shareWith;
-						});
-					}
-					//todo - remove entry from addressbook object
-					return true;
-				} else {
-					return false;
-				}
-			});
-
 		}
 
-
+		return simple;
 	};
-
 });
