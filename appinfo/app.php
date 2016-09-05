@@ -11,6 +11,15 @@
 
 namespace OCA\Contacts\AppInfo;
 
+$request = \OC::$server->getRequest();
+
+if (isset($request->server['REQUEST_URI'])) {
+    $url = $request->server['REQUEST_URI'];
+    if (preg_match('%/apps/files(/.*)?%', $url)|| preg_match('%/s/(/.*)?%', $url)) {
+        \OCP\Util::addScript('contacts', 'contactsfileaction');
+    }
+}
+
 use OCP\AppFramework\App;
 
 $app = new App('contacts');
