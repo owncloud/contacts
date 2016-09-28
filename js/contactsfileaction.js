@@ -6,7 +6,7 @@ $(document).ready(function() {
 			mime: 'text/vcard',
 			permissions: OC.PERMISSION_READ,
 			icon: function () {return OC.imagePath('core', 'places/contacts-dark');},
-			actionHanler: null
+			actionHandler: null
 		});
 	}
 });
