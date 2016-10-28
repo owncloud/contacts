@@ -94,7 +94,7 @@ angular.module('contactsApp')
 		newContact.setUrl(addressBook, newUid);
 		newContact.addressBookId = addressBook.displayName;
 		if (_.isUndefined(newContact.fullName()) || newContact.fullName() === '') {
-			newContact.fullName(t('contacts', 'New Contact'));
+			newContact.fullName(t('contacts', 'New contact'));
 		}
 
 		return DavClient.createCard(
