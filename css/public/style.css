@@ -267,6 +267,15 @@ ul.addressBook-share-list li {
 ul.addressBookList li .action > span {
 	padding: 10px 14px;
 }
+ul.addressBookList li .action.addressbooklist-menu-icon,
+ul.addressBookList li:hover .action {
+	display: inline-block;
+}
+ul.addressBookList li:hover .action.addressbooklist-menu-icon,
+ul.addressBookList li .action {
+	display: none;
+}
+
 
 ul.addressBookList li .action > a {
 	padding: 10px 14px;
@@ -316,6 +325,15 @@ input.newAddressBookInput, input.shareeInput, input.addressBookUrl {
 
 ul.addressBookList li[addressbook] > span.addressBookName {
 	padding-left: 7px;
+	max-width: calc(100% - 30px);
+	overflow: hidden;
+	display: inline-block;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+ul.addressBookList li[addressbook]:hover > span.addressBookName {
+	max-width: 105px;
 }
 
 li.addressBook-share-item span.shareeIdentifier {
