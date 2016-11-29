@@ -570,3 +570,25 @@ detailsitem .select2-container {
 #app-navigation-toggle-back {
 	display: none;
 }
+
+/* clipboard button */
+.icon-clippy {
+	background-image: url('../../img/clippy.svg');
+	background-size: 16px 16px;
+}
+
+.oneline {
+	position: relative;
+}
+
+.addressBookUrl {
+	width: 100% !important;
+}
+
+#copyButton {
+	position: absolute;
+	right: 0;
+	top: 1px;
+	background-color: white;
+	border: none;
+}

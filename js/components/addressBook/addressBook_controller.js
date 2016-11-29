@@ -2,6 +2,10 @@ angular.module('contactsApp')
 .controller('addressbookCtrl', function($scope, AddressBookService) {
 	var ctrl = this;
 
+	ctrl.t = {
+		copyUrlTitle : t('contacts', 'Copy Url to clipboard')
+	};
+
 	ctrl.showUrl = false;
 	/* globals oc_config */
 	/* eslint-disable camelcase */

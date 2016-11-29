@@ -30,7 +30,10 @@
         </span>
     </span>
 </span>
-    <input class="addressBookUrl" ng-show="ctrl.showUrl" type="url" value="{{ctrl.addressBook.url}}" readonly />
+<div class="oneline">
+	<input id="addressBookUrl-{{index}}" class="addressBookUrl" ng-show="ctrl.showUrl" type="url" value="{{ctrl.addressBook.url}}" readonly />
+	<input id="copyButton" type="submit" value="" class="icon-clippy pull-right" ngclipboard ng-show="ctrl.showUrl" title="{{ctrl.t.copyUrlTitle}}" data-clipboard-target="#addressBookUrl-{{index}}">
+</div>
 <div class="addressBookShares" ng-show="ctrl.editingShares">
 	<i ng-show="ctrl.loadingSharees" class="glyphicon glyphicon-refresh"></i>
 	<input
