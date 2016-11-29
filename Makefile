@@ -49,6 +49,20 @@ appstore_package_name=$(appstore_build_directory)/$(app_name)
 npm=$(shell which npm 2> /dev/null)
 composer=$(shell which composer 2> /dev/null)
 
+occ=$(CURDIR)/../../occ
+private_key=$(HOME)/.owncloud/$(app_name).key
+certificate=$(HOME)/.owncloud/$(app_name).crt
+sign=php -f $(occ) integrity:sign-app --privateKey="$(private_key)" --certificate="$(certificate)"
+sign_skip_msg="Skipping signing, either no key and certificate found in $(private_key) and $(certificate) or occ can not be found at $(occ)"
+ifneq (,$(wildcard $(private_key)))
+ifneq (,$(wildcard $(certificate)))
+ifneq (,$(wildcard $(occ)))
+	CAN_SIGN=true
+endif
+endif
+endif
+
+
 all: build
 
 # Fetches the PHP and JS dependencies and compiles the JS. If no composer.json
@@ -128,27 +142,35 @@ source:
 .PHONY: appstore
 appstore:
 	rm -rf $(appstore_build_directory)
-	mkdir -p $(appstore_build_directory)
-	tar cvzf $(appstore_package_name).tar.gz \
-	--exclude-vcs \
-	$(project_directory)/appinfo \
-	$(project_directory)/controller \
-	$(project_directory)/css \
-	$(project_directory)/img \
-	$(project_directory)/l10n \
-	$(project_directory)/templates \
-	$(project_directory)/js/public \
-	$(project_directory)/js/dav/dav.js \
-	$(project_directory)/js/vendor/angular/angular.js \
-	$(project_directory)/js/vendor/angular-route/angular-route.js \
-	$(project_directory)/js/vendor/angular-cache/dist/angular-cache.js \
-	$(project_directory)/js/vendor/angular-uuid4/angular-uuid4.js \
-	$(project_directory)/js/vendor/vcard/src/vcard.js \
-	$(project_directory)/js/vendor/angular-bootstrap/ui-bootstrap.min.js \
-	$(project_directory)/js/vendor/angular-bootstrap/ui-bootstrap-tpls.min.js \
-	$(project_directory)/js/vendor/angular-sanitize/angular-sanitize.js \
-	$(project_directory)/js/vendor/ui-select/dist/select.js \
-	$(project_directory)/js/vendor/jquery-timepicker/jquery.ui.timepicker.js
+	mkdir -p $(appstore_package_name)
+	cp --parents -r \
+	appinfo \
+	controller \
+	css \
+	img \
+	l10n \
+	templates \
+	js/public \
+	js/dav/dav.js \
+	js/vendor/angular/angular.js \
+	js/vendor/angular-bootstrap/ui-bootstrap.min.js \
+	js/vendor/angular-bootstrap/ui-bootstrap-tpls.min.js \
+	js/vendor/angular-cache/dist/angular-cache.js \
+	js/vendor/angular-route/angular-route.js \
+	js/vendor/angular-sanitize/angular-sanitize.js \
+	js/vendor/angular-uuid4/angular-uuid4.js \
+	js/vendor/jquery-timepicker/jquery.ui.timepicker.js \
+	js/vendor/ngclipboard/dist/ngclipboard.min.js \
+	js/vendor/ui-select/dist/select.js \
+	js/vendor/vcard/src/vcard.js \
+	$(appstore_package_name)
+
+ifdef CAN_SIGN
+	$(sign) --path="$(appstore_package_name)"
+else
+	@echo $(sign_skip_msg)
+endif
+	tar -czf $(appstore_package_name).tar.gz -C $(appstore_package_name)/../ $(app_name)
 
 # Command for running JS and PHP tests. Works for package.json files in the js/
 # and root directory. If phpunit is not installed systemwide, a copy is fetched
