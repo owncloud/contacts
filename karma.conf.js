@@ -32,6 +32,7 @@ module.exports = function(config) {
 			'js/filters/**/*.js',
 
 			'js/vendor/angular-bootstrap/ui-bootstrap.min.js',
+			'js/vendor/ngclipboard/dist/ngclipboard.min.js',
 
 			'js/tests/**/*.js'
 		],
