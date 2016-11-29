@@ -80,7 +80,7 @@ export default class XMLHttpRequest {
         }
 
         if (request.status < 200 || request.status >= 400) {
-          return reject(new Error(`Bad status: ${request.status}`));
+          return reject(request);
         }
 
         return resolve(request.responseText);
