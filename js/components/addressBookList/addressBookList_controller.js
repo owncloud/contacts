@@ -18,6 +18,7 @@ angular.module('contactsApp')
 			AddressBookService.create(ctrl.newAddressBookName).then(function() {
 				AddressBookService.getAddressBook(ctrl.newAddressBookName).then(function(addressBook) {
 					ctrl.addressBooks.push(addressBook);
+					ctrl.newAddressBookName = '';
 					$scope.$apply();
 				});
 			});
