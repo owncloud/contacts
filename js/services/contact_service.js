@@ -108,8 +108,15 @@ angular.module('contactsApp')
 			contacts.put(newUid, newContact);
 			notifyObservers('create', newUid);
 			return newContact;
-		}).catch(function(e) {
-			OC.Notification.showTemporary(t('contacts', 'Contact could not be created.'));
+		}).catch(function(xhr) {
+			var msg = t('contacts', 'Contact could not be created.');
+			if (!angular.isUndefined(xhr) && !angular.isUndefined(xhr.responseXML) && !angular.isUndefined(xhr.responseXML.getElementsByTagNameNS('http://sabredav.org/ns', 'message'))) {
+				if ($(xhr.responseXML.getElementsByTagNameNS('http://sabredav.org/ns', 'message')).text()) {
+					msg = $(xhr.responseXML.getElementsByTagNameNS('http://sabredav.org/ns', 'message')).text();
+				}
+			}
+
+			OC.Notification.showTemporary(msg);
 		});
 	};
 
