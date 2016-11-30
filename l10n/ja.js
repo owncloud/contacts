@@ -2,6 +2,7 @@ OC.L10N.register(
     "contacts",
     {
     "Contacts" : "アドレス帳",
+    "Copy Url to clipboard" : "クリップボードにURLをコピーしました",
     "Address book name" : "アドレス帳名",
     "Import" : "インポート",
     "The selected image is too big (max 1MB)" : "選択した画像容量が大きすぎます (最大1 MB)",

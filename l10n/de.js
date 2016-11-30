@@ -2,6 +2,7 @@ OC.L10N.register(
     "contacts",
     {
     "Contacts" : "Kontakte",
+    "Copy Url to clipboard" : "URL in die Zwischenablage kopieren",
     "Address book name" : "Adressbuch Name",
     "Import" : "Importieren",
     "The selected image is too big (max 1MB)" : "Das ausgewählte Bild ist zu groß (max. 1MB)",

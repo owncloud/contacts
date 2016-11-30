@@ -2,6 +2,7 @@ OC.L10N.register(
     "contacts",
     {
     "Contacts" : "ข้อมูลผู้ติดต่อ",
+    "Copy Url to clipboard" : "ดลอก URL ไปยังคลิปบอร์ด",
     "Address book name" : "สมุดชื่อที่อยู่",
     "Import" : "นำเข้า",
     "The selected image is too big (max 1MB)" : "รูปภาพที่เลือกมีขนาดใหญ่เกินไป (ขนาดไม่ควรเกิน 1 เมกะไบต์)",
