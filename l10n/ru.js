@@ -2,6 +2,7 @@ OC.L10N.register(
     "contacts",
     {
     "Contacts" : "Контакты",
+    "Copy Url to clipboard" : "Копировать адрес в буфер обмена",
     "Address book name" : "Название адресной книги",
     "Import" : "Импорт",
     "The selected image is too big (max 1MB)" : "Выбранное изображение слишком велико (макс. 1 МБ)",

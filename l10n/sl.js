@@ -2,6 +2,7 @@ OC.L10N.register(
     "contacts",
     {
     "Contacts" : "Stiki",
+    "Copy Url to clipboard" : "Kopiraj naslov URL v odložišče",
     "Address book name" : "Ime imenika",
     "Import" : "Uvozi",
     "The selected image is too big (max 1MB)" : "Izbrana slika je prevelika (omejitev je 1 MB).",
