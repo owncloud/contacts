@@ -130,11 +130,13 @@ angular.module('contactsApp')
 				} else {
 					// getter
 					var property = this.getProperty('categories');
-					if(property && property.value.length > 0) {
-						return property.value.split(',');
-					} else {
+					if(!property) {
 						return [];
 					}
+					if (angular.isArray(property.value)) {
+						return property.value;
+					}
+					return [property.value];
 				}
 			},
 
@@ -284,6 +286,10 @@ angular.module('contactsApp')
 		var property = this.getProperty('categories');
 		if(!property) {
 			this.categories('');
+		} else {
+			if (angular.isString(property.value)) {
+				this.categories([property.value]);
+			}
 		}
 	};
 });
