@@ -1,5 +1,6 @@
 sudo: required
 dist: trusty
+group: deprecated
 language: php
 php:
     - 5.4
@@ -7,7 +8,7 @@ php:
     
 services:
   - postgresql
-  
+
 addons:
   apt:
     packages:
