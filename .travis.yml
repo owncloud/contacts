@@ -1,6 +1,5 @@
 sudo: required
 dist: trusty
-group: deprecated
 language: php
 php:
     - 5.4
@@ -10,11 +9,6 @@ services:
   - postgresql
 
 addons:
-  apt:
-    packages:
-    - mysql-server-5.6
-    - mysql-client-core-5.6
-    - mysql-client-5.6
   firefox: "latest"
     
 env:
@@ -59,12 +53,12 @@ before_install:
 before_script:
     - if [[ "$DB" == 'pgsql' ]]; then createuser -U travis -s oc_autotest; fi
     - if [[ "$DB" == 'mysql' ]]; then mysql -u root -e 'create database oc_autotest;'; fi
-    - if [[ "$DB" == 'mysql' ]]; then mysql -u root -e "CREATE USER 'oc_autotest'@'localhost' IDENTIFIED BY '';"; fi
-    - if [[ "$DB" == 'mysql' ]]; then mysql -u root -e "grant all on oc_autotest.* to 'oc_autotest'@'localhost';"; fi
+    - if [[ "$DB" == 'mysql' ]]; then mysql -u root -e "CREATE USER 'oc_autotest'@'127.0.0.1' IDENTIFIED BY '';"; fi
+    - if [[ "$DB" == 'mysql' ]]; then mysql -u root -e "grant all on oc_autotest.* to 'oc_autotest'@'127.0.0.1';"; fi
     # fill owncloud with default configs and enable contacts
     - cd owncloud
     - mkdir data
-    - ./occ maintenance:install --database-name oc_autotest --database-user oc_autotest --admin-user admin --admin-pass admin --database $DB --database-pass=''
+    - ./occ maintenance:install --database-name oc_autotest --database-user oc_autotest --admin-user admin --admin-pass admin --database $DB --database-pass='' --database-host='127.0.0.1'
     - ./occ app:enable contacts
     - ./occ background:cron  # enable default cron
     - php -S localhost:8080 &
