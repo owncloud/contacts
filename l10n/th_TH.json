@@ -1,6 +1,10 @@
 { "translations": {
     "Contacts" : "ข้อมูลผู้ติดต่อ",
     "Copy Url to clipboard" : "ดลอก URL ไปยังคลิปบอร์ด",
+    "Download" : "ดาวน์โหลด",
+    "Share with users or groups" : "แชร์กับผู้ใช้หรือกลุ่ม",
+    "Delete" : "ลบ",
+    "can edit" : "สามารถแก้ไข",
     "Address book name" : "สมุดชื่อที่อยู่",
     "Import" : "นำเข้า",
     "The selected image is too big (max 1MB)" : "รูปภาพที่เลือกมีขนาดใหญ่เกินไป (ขนาดไม่ควรเกิน 1 เมกะไบต์)",

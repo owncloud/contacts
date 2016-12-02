@@ -1,5 +1,11 @@
 { "translations": {
     "Contacts" : "Contactos",
+    "Download" : "Transferir",
+    "ShowURL" : "MostrarEndereço",
+    "Share Addressbook" : "Partilhar Livro de contactos",
+    "Share with users or groups" : "Partilhe com os utilizadores ou grupos",
+    "Delete" : "Eliminar ",
+    "can edit" : "pode editar",
     "Address book name" : "Nome do livro de endereços",
     "Import" : "Importar",
     "The selected image is too big (max 1MB)" : "A imagem selecionada é demasiado grande (max 1MB)",

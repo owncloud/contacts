@@ -2,6 +2,10 @@ OC.L10N.register(
     "contacts",
     {
     "Contacts" : "Contautos",
+    "Download" : "Baxar",
+    "Share with users or groups" : "Compartir con usuarios o grupos",
+    "Delete" : "Desaniciar",
+    "can edit" : "pue editar",
     "Address book name" : "Nome de la Llibreta de direiciones",
     "Import" : "Importar",
     "The selected image is too big (max 1MB)" : "La imaxe escoyida ye demasiáu grande (máximu 1 MB)",

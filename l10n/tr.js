@@ -2,6 +2,10 @@ OC.L10N.register(
     "contacts",
     {
     "Contacts" : "Kişiler",
+    "Download" : "İndir",
+    "Share with users or groups" : "Kullanıcı ve gruplarla paylaş",
+    "Delete" : "Sil",
+    "can edit" : "düzenleyebilir",
     "Address book name" : "Adres defteri adı",
     "Import" : "İçe aktar",
     "The selected image is too big (max 1MB)" : "Seçilen resim çok büyük (azami 1MB)",

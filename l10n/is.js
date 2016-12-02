@@ -2,6 +2,10 @@ OC.L10N.register(
     "contacts",
     {
     "Contacts" : "Tengiliðir",
+    "Download" : "Sækja",
+    "Share with users or groups" : "Deila með notendum eða hópum",
+    "Delete" : "Eyða",
+    "can edit" : "getur breytt",
     "Address book name" : "Heiti nafnaskrár",
     "Import" : "Flytja inn",
     "The selected image is too big (max 1MB)" : "Valin mynd er of stór (hám. 1MB)",

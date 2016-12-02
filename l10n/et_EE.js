@@ -2,6 +2,10 @@ OC.L10N.register(
     "contacts",
     {
     "Contacts" : "Kontaktid",
+    "Download" : "Lae alla",
+    "Delete Addressbook" : "Kustuta aadressiraamat",
+    "Delete" : "Kustuta",
+    "can edit" : "saab muuta",
     "Address book name" : "Aadressiraamatu nimi",
     "Import" : "Impordi",
     "The selected image is too big (max 1MB)" : "Valitud pilt on liiga suur (maks 1MB)",

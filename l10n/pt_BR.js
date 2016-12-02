@@ -3,6 +3,11 @@ OC.L10N.register(
     {
     "Contacts" : "Contatos",
     "Copy Url to clipboard" : "Copiar URL para a área de transferência",
+    "Download" : "Baixar",
+    "Delete Addressbook" : "Excluir Livro de Endereços",
+    "Share with users or groups" : "Compartilhar com usuários ou grupos",
+    "Delete" : "Excluir",
+    "can edit" : "pode editar",
     "Address book name" : "Nome do livro de endereços",
     "Import" : "Importar",
     "The selected image is too big (max 1MB)" : "A imagem selecionada é grande demais (máximo 1MB)",

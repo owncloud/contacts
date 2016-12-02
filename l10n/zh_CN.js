@@ -2,6 +2,10 @@ OC.L10N.register(
     "contacts",
     {
     "Contacts" : "联系人",
+    "Download" : "下载",
+    "Share with users or groups" : "共享给其他组或者用户",
+    "Delete" : "删除",
+    "can edit" : "可编辑",
     "Address book name" : "地址簿名称",
     "Import" : "导入",
     "The selected image is too big (max 1MB)" : "所选图片过大(最大1MB)",

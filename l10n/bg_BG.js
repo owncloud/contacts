@@ -2,6 +2,10 @@ OC.L10N.register(
     "contacts",
     {
     "Contacts" : "Контакти",
+    "Download" : "Изтегляне",
+    "Share with users or groups" : "Споделяне с потребители или групи",
+    "Delete" : "Изтриване",
+    "can edit" : "може да променя",
     "Address book name" : "Име на адреснакнига ",
     "Import" : "Внасяне",
     "The selected image is too big (max 1MB)" : "Избраното изображение е твърде голямо (най-много 1МБ)",

@@ -2,6 +2,11 @@ OC.L10N.register(
     "contacts",
     {
     "Contacts" : "Επαφές",
+    "Download" : "Λήψη",
+    "Delete Addressbook" : "Διαγραφή Βιβλίου Διευθύνσεων",
+    "Share with users or groups" : "Διαμοιρασμός με χρήστες ή ομάδες",
+    "Delete" : "Διαγραφή",
+    "can edit" : "δυνατότητα επεξεργασίας",
     "Address book name" : "Όνομα βιβλίου διευθύνσεων",
     "Import" : "Εισαγωγή",
     "The selected image is too big (max 1MB)" : "Η επιλεγμένη εικόνα είναι πολύ μεγάλη (max 1MB)",

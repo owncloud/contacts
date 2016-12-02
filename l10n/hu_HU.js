@@ -2,6 +2,10 @@ OC.L10N.register(
     "contacts",
     {
     "Contacts" : "Névjegyek",
+    "Download" : "Letöltés",
+    "Share with users or groups" : "Megosztás felhasználókkal vagy csoportokkal",
+    "Delete" : "Törlés",
+    "can edit" : "szerkesztheti",
     "Address book name" : "Címjegyzék neve",
     "Import" : "Importálás",
     "The selected image is too big (max 1MB)" : "A kiválasztott kép túl nagy (max. 1 MB)!",

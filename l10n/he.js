@@ -2,6 +2,10 @@ OC.L10N.register(
     "contacts",
     {
     "Contacts" : "אנשי קשר",
+    "Download" : "הורדה",
+    "Share with users or groups" : "שיתוף עם משתמשים או קבוצות",
+    "Delete" : "מחיקה",
+    "can edit" : "ניתן לערוך",
     "Address book name" : "שם ספר כתובות",
     "Import" : "יבוא",
     "The selected image is too big (max 1MB)" : "התמונה הנבחרת גדולה מדי (מקסימום 1 מגה בייט)",

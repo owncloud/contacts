@@ -2,6 +2,11 @@ OC.L10N.register(
     "contacts",
     {
     "Contacts" : "Kontakty",
+    "Download" : "Stáhnout",
+    "Delete Addressbook" : "Odstranit Adresář",
+    "Share with users or groups" : "Sdílet s uživateli nebo skupinami",
+    "Delete" : "Smazat",
+    "can edit" : "lze upravovat",
     "Address book name" : "Název adresáře kontaktů",
     "Import" : "Importovat",
     "The selected image is too big (max 1MB)" : "Zvolený obrázek je příliš velký (max 1MB)",

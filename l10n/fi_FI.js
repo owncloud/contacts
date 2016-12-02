@@ -2,6 +2,10 @@ OC.L10N.register(
     "contacts",
     {
     "Contacts" : "Yhteystiedot",
+    "Download" : "Lataa",
+    "Share with users or groups" : "Jaa käyttäjien tai ryhmien kanssa",
+    "Delete" : "Poista",
+    "can edit" : "voi muokata",
     "Address book name" : "Osoitekirjan nimi",
     "Import" : "Tuo",
     "The selected image is too big (max 1MB)" : "Valittu kuva on liian suuri kooltaan (enintään 1 Mt)",

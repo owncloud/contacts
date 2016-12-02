@@ -3,6 +3,11 @@ OC.L10N.register(
     {
     "Contacts" : "アドレス帳",
     "Copy Url to clipboard" : "クリップボードにURLをコピーしました",
+    "Download" : "ダウンロード",
+    "Delete Addressbook" : "アドレス帳を削除",
+    "Share with users or groups" : "ユーザーもしくはグループと共有",
+    "Delete" : "削除",
+    "can edit" : "編集を許可",
     "Address book name" : "アドレス帳名",
     "Import" : "インポート",
     "The selected image is too big (max 1MB)" : "選択した画像容量が大きすぎます (最大1 MB)",

@@ -2,6 +2,10 @@ OC.L10N.register(
     "contacts",
     {
     "Contacts" : "Kontakter",
+    "Download" : "Hent",
+    "Share with users or groups" : "Del med brugere eller grupper",
+    "Delete" : "Slet",
+    "can edit" : "kan redigere",
     "Address book name" : "Adressebogsnavn",
     "Import" : "Importér",
     "The selected image is too big (max 1MB)" : "Det valgte billede er for stort (max 1MB)",

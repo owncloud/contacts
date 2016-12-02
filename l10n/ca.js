@@ -2,6 +2,10 @@ OC.L10N.register(
     "contacts",
     {
     "Contacts" : "Contactes",
+    "Download" : "Descàrrega",
+    "Delete Addressbook" : "Elimina llibreta d'adreces",
+    "Delete" : "Esborra",
+    "can edit" : "pot editar",
     "Address book name" : "Nom de la llibreta d'adreces",
     "Import" : "Importar",
     "The selected image is too big (max 1MB)" : "La imatge seleccionada és massa gran (màxim 1MB)",

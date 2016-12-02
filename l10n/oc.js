@@ -2,6 +2,9 @@ OC.L10N.register(
     "contacts",
     {
     "Contacts" : "Contactes",
+    "Download" : "Telecargar",
+    "Delete" : "Suprimir",
+    "can edit" : "pòt modificar",
     "Import" : "Importar",
     "No contacts in here" : "Pas cap de contacte",
     "Name" : "Nom",

@@ -3,6 +3,11 @@ OC.L10N.register(
     {
     "Contacts" : "Contactpersonen",
     "Copy Url to clipboard" : "Kopiëren URL naar klembord",
+    "Download" : "Downloaden",
+    "Delete Addressbook" : "Verwijder adresboek",
+    "Share with users or groups" : "Delen met gebruikers of groepen",
+    "Delete" : "Verwijderen",
+    "can edit" : "kan wijzigen",
     "Address book name" : "Adresboek naam",
     "Import" : "Importeer",
     "The selected image is too big (max 1MB)" : "De geselecteerde afbeelding is te groot (max 1MB)",

@@ -2,6 +2,10 @@ OC.L10N.register(
     "contacts",
     {
     "Contacts" : "Contacte",
+    "Download" : "Descarcă",
+    "Share with users or groups" : "Partajează cu utilizatori sau grupuri",
+    "Delete" : "Șterge",
+    "can edit" : "poate edita",
     "Address book name" : "Numele listă de contacte",
     "Import" : "Importă",
     "The selected image is too big (max 1MB)" : "Imaginea selectată este prea mare (maxim 1 MB)",

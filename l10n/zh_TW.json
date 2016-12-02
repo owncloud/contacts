@@ -1,5 +1,10 @@
 { "translations": {
     "Contacts" : "通訊錄",
+    "Download" : "下載",
+    "Delete Addressbook" : "刪除通訊錄",
+    "Share with users or groups" : "與使用者和群組分享",
+    "Delete" : "刪除",
+    "can edit" : "可編輯",
     "Address book name" : "通訊錄名稱",
     "Import" : "匯入",
     "No contacts in here" : "這裡沒有聯絡人",
