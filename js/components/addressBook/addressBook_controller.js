@@ -3,7 +3,14 @@ angular.module('contactsApp')
 	var ctrl = this;
 
 	ctrl.t = {
-		copyUrlTitle : t('contacts', 'Copy Url to clipboard')
+		copyUrlTitle : t('contacts', 'Copy Url to clipboard'),
+		download: t('contacts', 'Download'),
+		showURL:t('contacts', 'ShowURL'),
+		shareAddressbook: t('contacts', 'Share Addressbook'),
+		deleteAddressbook: t('contacts', 'Delete Addressbook'),
+		shareInputPlaceHolder: t('contacts', 'Share with users or groups'),
+		delete: t('contacts', 'Delete'),
+		canEdit: t('contacts', 'can edit')
 	};
 
 	ctrl.showUrl = false;
