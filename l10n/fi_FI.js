@@ -2,7 +2,10 @@ OC.L10N.register(
     "contacts",
     {
     "Contacts" : "Yhteystiedot",
+    "Copy Url to clipboard" : "Kopioi osoite leikepöydälle",
     "Download" : "Lataa",
+    "Share Addressbook" : "Jaa osoitekirja",
+    "Delete Addressbook" : "Poista osoitekirja",
     "Share with users or groups" : "Jaa käyttäjien tai ryhmien kanssa",
     "Delete" : "Poista",
     "can edit" : "voi muokata",
@@ -34,6 +37,7 @@ OC.L10N.register(
     "{addressbook} shared by {owner}" : "Osoitekirjan {addressbook} jakoi {owner}",
     "Contact could not be created." : "Yhteystiedon luominen ei onnistunut.",
     "No contacts in file. Only VCard files are allowed." : "Ei yhteystietoja tiedostossa. Vain vCard-tiedostot ovat sallittuja.",
+    "Only VCard version 4.0 (RFC6350) or version 3.0 (RFC2426) are supported." : "Vain VCardin versiot 4.0 (RFC6350) ja 3.0 (RFC2426) ovat tuettuja.",
     "Nickname" : "Kutsumanimi",
     "Detailed name" : "Täsmällinen nimi",
     "Notes" : "Huomiot",
