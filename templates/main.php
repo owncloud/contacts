@@ -17,6 +17,7 @@ script('contacts', 'public/script');
 script('contacts', 'vendor/angular-bootstrap/ui-bootstrap.min');
 script('contacts', 'vendor/angular-bootstrap/ui-bootstrap-tpls.min');
 script('contacts', 'vendor/jquery-timepicker/jquery.ui.timepicker');
+script('contacts', 'vendor/clipboard/dist/clipboard.min');
 script('contacts', 'vendor/ngclipboard/dist/ngclipboard.min');
 
 // all styles
