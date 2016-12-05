@@ -159,6 +159,7 @@ appstore:
 	js/vendor/angular-route/angular-route.js \
 	js/vendor/angular-sanitize/angular-sanitize.js \
 	js/vendor/angular-uuid4/angular-uuid4.js \
+	js/vendor/clipboard/dist/clipboard.min.js \
 	js/vendor/jquery-timepicker/jquery.ui.timepicker.js \
 	js/vendor/ngclipboard/dist/ngclipboard.min.js \
 	js/vendor/ui-select/dist/select.js \
