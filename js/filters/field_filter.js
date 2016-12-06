@@ -2,10 +2,10 @@ angular.module('contactsApp')
 .filter('fieldFilter', function() {
 	'use strict';
 	return function (fields, contact) {
-		if (typeof fields === 'undefined') {
+		if (angular.isUndefined(fields)) {
 			return fields;
 		}
-		if (typeof contact === 'undefined') {
+		if (angular.isUndefined(contact)) {
 			return fields;
 		}
 		var filter = [];

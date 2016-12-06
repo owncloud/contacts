@@ -1,7 +1,7 @@
 angular.module('contactsApp')
 .filter('localeOrderBy', [function () {
 	return function (array, sortPredicate, reverseOrder) {
-		if (!Array.isArray(array)) return array;
+		if (!angular.isArray(array)) return array;
 		if (!sortPredicate) return array;
 
 		var arrayCopy = [];

@@ -2,7 +2,7 @@ angular.module('contactsApp')
 .filter('contactColor', function() {
 	return function(input) {
 		// Check if core has the new color generator
-		if(typeof input.toHsl === 'function') {
+		if(angular.isFunction(input.toHsl)) {
 			var hsl = input.toHsl();
 			return 'hsl('+hsl[0]+', '+hsl[1]+'%, '+hsl[2]+'%)';
 		} else {

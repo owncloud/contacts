@@ -75,7 +75,7 @@ angular.module('contactsApp')
 				if (angular.isDefined(value)) {
 					var val = value;
 					// setter
-					if(property && Array.isArray(property.value)) {
+					if(property && angular.isArray(property.value)) {
 						val = property.value;
 						val[0] = value;
 					}
@@ -83,7 +83,7 @@ angular.module('contactsApp')
 				} else {
 					// getter
 					if(property) {
-						if (Array.isArray(property.value)) {
+						if (angular.isArray(property.value)) {
 							return property.value[0];
 						}
 						return property.value;
@@ -150,7 +150,7 @@ angular.module('contactsApp')
 			},
 
 			formatDateAsRFC6350: function(name, data) {
-				if (_.isUndefined(data) || _.isUndefined(data.value)) {
+				if (angular.isUndefined(data) || angular.isUndefined(data.value)) {
 					return data;
 				}
 				if (this.dateProperties.indexOf(name) !== -1) {
@@ -164,7 +164,7 @@ angular.module('contactsApp')
 			},
 
 			formatDateForDisplay: function(name, data) {
-				if (_.isUndefined(data) || _.isUndefined(data.value)) {
+				if (angular.isUndefined(data) || angular.isUndefined(data.value)) {
 					return data;
 				}
 				if (this.dateProperties.indexOf(name) !== -1) {
@@ -240,7 +240,7 @@ angular.module('contactsApp')
 				var self = this;
 
 				_.each(this.dateProperties, function(name) {
-					if (!_.isUndefined(self.props[name]) && !_.isUndefined(self.props[name][0])) {
+					if (angular.isDefined(self.props[name]) && angular.isDefined(self.props[name][0])) {
 						// Set dates again to make sure they are in RFC-6350 format
 						self.setProperty(name, self.props[name][0]);
 					}
@@ -253,7 +253,7 @@ angular.module('contactsApp')
 			},
 
 			matches: function(pattern) {
-				if (_.isUndefined(pattern) || pattern.length === 0) {
+				if (angular.isUndefined(pattern) || pattern.length === 0) {
 					return true;
 				}
 				var model = this;

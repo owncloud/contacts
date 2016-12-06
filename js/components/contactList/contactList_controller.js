@@ -103,12 +103,12 @@ angular.module('contactsApp')
 
 	$scope.$watch('ctrl.routeParams.uid', function(newValue, oldValue) {
 		// Used for mobile view to clear the url
-		if(typeof oldValue != 'undefined' && typeof newValue == 'undefined' && $(window).width() <= 768) {
+		if(angular.isDefined(oldValue) && angular.isDefined(newValue) && $(window).width() <= 768) {
 			// no contact selected
 			ctrl.show = true;
 			return;
 		}
-		if(newValue === undefined) {
+		if(angular.isUndefined(newValue)) {
 			// we might have to wait until ng-repeat filled the contactList
 			if(ctrl.contactList && ctrl.contactList.length > 0) {
 				$route.updateParams({

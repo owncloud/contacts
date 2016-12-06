@@ -29,7 +29,7 @@ angular.module('contactsApp')
 		});
 
 		var shares = this.data.props.invite;
-		if (typeof shares !== 'undefined') {
+		if (angular.isDefined(shares)) {
 			for (var j = 0; j < shares.length; j++) {
 				var href = shares[j].href;
 				if (href.length === 0) {
@@ -40,7 +40,7 @@ angular.module('contactsApp')
 					continue;
 				}
 
-				var readWrite = (typeof access.readWrite !== 'undefined');
+				var readWrite = angular.isDefined(access.readWrite);
 
 				if (href.startsWith('principal:principals/users/')) {
 					this.sharedWith.users.push({

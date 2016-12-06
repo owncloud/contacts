@@ -17,7 +17,10 @@
 		"no-trailing-spaces": "error",
 		"quotes": ["error", "single", "avoid-escape"],
 		"semi": "error",
-		"space-before-blocks": "error"
+		"space-before-blocks": "error",
+
+		"angular/controller-name": 0,
+		"angular/controller-as-vm": 0
 	},
 	"env": {
 		"browser": true,

@@ -1,5 +1,5 @@
 angular.module('contactsApp')
-.service('ContactService', function(DavClient, AddressBookService, Contact, $q, CacheFactory, uuid4) {
+.factory('ContactService', function(DavClient, AddressBookService, Contact, $q, CacheFactory, uuid4) {
 
 	var cacheFilled = false;
 
@@ -110,7 +110,7 @@ angular.module('contactsApp')
 			return newContact;
 		}).catch(function(xhr) {
 			var msg = t('contacts', 'Contact could not be created.');
-			if (!angular.isUndefined(xhr) && !angular.isUndefined(xhr.responseXML) && !angular.isUndefined(xhr.responseXML.getElementsByTagNameNS('http://sabredav.org/ns', 'message'))) {
+			if (angular.isDefined(xhr) && angular.isDefined(xhr.responseXML) && angular.isDefined(xhr.responseXML.getElementsByTagNameNS('http://sabredav.org/ns', 'message'))) {
 				if ($(xhr.responseXML.getElementsByTagNameNS('http://sabredav.org/ns', 'message')).text()) {
 					msg = $(xhr.responseXML.getElementsByTagNameNS('http://sabredav.org/ns', 'message')).text();
 				}

@@ -47,7 +47,7 @@ angular.module('contactsApp')
 	});
 
 	ctrl.changeContact = function(uid) {
-		if (typeof uid === 'undefined') {
+		if (angular.isUndefined(uid)) {
 			ctrl.show = false;
 			$('#app-navigation-toggle').removeClass('showdetails');
 			return;
