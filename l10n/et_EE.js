@@ -4,6 +4,7 @@ OC.L10N.register(
     "Contacts" : "Kontaktid",
     "Download" : "Lae alla",
     "Delete Addressbook" : "Kustuta aadressiraamat",
+    "Share with users or groups" : "Jaga kasutajate või gruppidega",
     "Delete" : "Kustuta",
     "can edit" : "saab muuta",
     "Address book name" : "Aadressiraamatu nimi",
