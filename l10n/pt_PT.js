@@ -5,6 +5,7 @@ OC.L10N.register(
     "Download" : "Transferir",
     "ShowURL" : "MostrarEndereço",
     "Share Addressbook" : "Partilhar Livro de contactos",
+    "Delete Addressbook" : "Eliminar Livro de endereços",
     "Share with users or groups" : "Partilhe com os utilizadores ou grupos",
     "Delete" : "Eliminar ",
     "can edit" : "pode editar",
