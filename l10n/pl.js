@@ -3,6 +3,7 @@ OC.L10N.register(
     {
     "Contacts" : "Kontakty",
     "Download" : "Pobierz",
+    "ShowURL" : "Pokaż adres URL",
     "Share with users or groups" : "Współdziel z grupami bądź użytkownikami",
     "Delete" : "Usuń",
     "can edit" : "może edytować",
