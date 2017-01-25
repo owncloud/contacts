@@ -34,6 +34,24 @@ angular.module('contactsApp')
 				return this.fullName() || this.org() || '';
 			},
 
+			firstName: function() {
+				var property = this.getProperty('n');
+				if (property) {
+					return property.value[1];
+				} else {
+					return '';
+				}
+			},
+
+			lastName: function() {
+				var property = this.getProperty('n');
+				if (property) {
+					return property.value[0];
+				} else {
+					return '';
+				}
+			},
+
 			fullName: function(value) {
 				var model = this;
 				if (angular.isDefined(value)) {
