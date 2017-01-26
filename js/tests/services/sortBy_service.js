@@ -7,8 +7,8 @@ describe('sortbyService', function() {
 		$Service = SortByService;
 	}));
 
-	it('should return firstName as default sorting method', function() {
-		expect($Service.getSortBy()).to.equal('firstName');
+	it('should return displayName as default sorting method', function() {
+		expect($Service.getSortBy()).to.equal('displayName');
 	});
 
 	it('should store sorting method', function() {

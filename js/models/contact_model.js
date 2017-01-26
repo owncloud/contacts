@@ -39,7 +39,7 @@ angular.module('contactsApp')
 				if (property) {
 					return property.value[1];
 				} else {
-					return '';
+					return this.fullName();
 				}
 			},
 
@@ -48,7 +48,7 @@ angular.module('contactsApp')
 				if (property) {
 					return property.value[0];
 				} else {
-					return '';
+					return this.fullName();
 				}
 			},
 

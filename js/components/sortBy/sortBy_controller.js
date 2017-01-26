@@ -6,6 +6,7 @@ angular.module('contactsApp')
 	ctrl.sortText = sortText;
 
 	var sortList = {
+		displayName: t('contacts', 'Display name'),
 		firstName: t('contacts', 'First name'),
 		lastName: t('contacts', 'Last name'),
 		email: t('contacts', 'E-mail')
