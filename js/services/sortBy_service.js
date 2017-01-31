@@ -1,7 +1,7 @@
 angular.module('contactsApp')
 .service('SortByService', function () {
 	var subscriptions = [];
-	var sortBy = 'displayName';
+	var sortBy = 'sortDisplayName';
 
 	var defaultOrder = window.localStorage.getItem('contacts_default_order');
 	if (defaultOrder) {
@@ -27,6 +27,13 @@ angular.module('contactsApp')
 		},
 		getSortBy: function () {
 			return sortBy;
+		},
+		getSortByList: function () {
+			return {
+				sortDisplayName: t('contacts', 'Display name'),
+				sortFirstName: t('contacts', 'First name'),
+				sortLastName: t('contacts', 'Last name')
+			};
 		}
 	};
 });

@@ -7,12 +7,12 @@ describe('sortbyService', function() {
 		$Service = SortByService;
 	}));
 
-	it('should return displayName as default sorting method', function() {
-		expect($Service.getSortBy()).to.equal('displayName');
+	it('should return sortDisplayName as default sorting method', function() {
+		expect($Service.getSortBy()).to.equal('sortDisplayName');
 	});
 
 	it('should store sorting method', function() {
-		$Service.setSortBy('lastName');
+		$Service.setSortBy('sortLastName');
 		expect($Service.getSortBy()).to.equal(
 			window.localStorage.getItem('contacts_default_order')
 		);
