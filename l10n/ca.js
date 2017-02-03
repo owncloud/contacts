@@ -4,6 +4,7 @@ OC.L10N.register(
     "Contacts" : "Contactes",
     "Download" : "Descàrrega",
     "Delete Addressbook" : "Elimina llibreta d'adreces",
+    "Share with users or groups" : "Comparteix amb usuaris o grups",
     "Delete" : "Esborra",
     "can edit" : "pot editar",
     "Address book name" : "Nom de la llibreta d'adreces",
