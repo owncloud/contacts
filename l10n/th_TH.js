@@ -4,7 +4,6 @@ OC.L10N.register(
     "Contacts" : "ข้อมูลผู้ติดต่อ",
     "Copy Url to clipboard" : "ดลอก URL ไปยังคลิปบอร์ด",
     "Download" : "ดาวน์โหลด",
-    "ShowURL" : "แสดง URL",
     "Share Addressbook" : "แชร์สมุดที่อยู่",
     "Delete Addressbook" : "ลบสมุดที่อยู่",
     "Share with users or groups" : "แชร์กับผู้ใช้หรือกลุ่ม",

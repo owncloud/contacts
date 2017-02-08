@@ -4,7 +4,6 @@ OC.L10N.register(
     "Contacts" : "Контакти",
     "Copy Url to clipboard" : "Копирване на интернет адреса",
     "Download" : "Изтегляне",
-    "ShowURL" : "Показване на интернет адреса",
     "Share Addressbook" : "Споделяне на книгата с адреси",
     "Delete Addressbook" : "Изтриване на адресника",
     "Share with users or groups" : "Споделяне с потребители или групи",

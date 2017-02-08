@@ -4,7 +4,6 @@ OC.L10N.register(
     "Contacts" : "Contacts",
     "Copy Url to clipboard" : "Copier l'adresse dans le presse-papier",
     "Download" : "Télécharger",
-    "ShowURL" : "Voir l'adresse",
     "Share Addressbook" : "Partager le carnet d'adresses",
     "Delete Addressbook" : "Supprimer le carnet d'adresses",
     "Share with users or groups" : "Partager avec des utilisateurs ou des groupes",

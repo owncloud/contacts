@@ -4,7 +4,6 @@ OC.L10N.register(
     "Contacts" : "Επαφές",
     "Copy Url to clipboard" : "Αντιγραφή Url στο πρόχειρο",
     "Download" : "Λήψη",
-    "ShowURL" : "Εμφάνισε τοURL ",
     "Share Addressbook" : "Διαμοιρασμός βιβλίου διευθύνσεων",
     "Delete Addressbook" : "Διαγραφή Βιβλίου Διευθύνσεων",
     "Share with users or groups" : "Διαμοιρασμός με χρήστες ή ομάδες",

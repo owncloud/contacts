@@ -4,7 +4,6 @@ OC.L10N.register(
     "Contacts" : "אנשי קשר",
     "Copy Url to clipboard" : "העתקת נתיב אינטרנט ללוח הגזירים",
     "Download" : "הורדה",
-    "ShowURL" : "הצגת נתיב אינטרנט",
     "Share Addressbook" : "שיתוף פנקס כתובות",
     "Delete Addressbook" : "מחיקת פנקס כתובות",
     "Share with users or groups" : "שיתוף עם משתמשים או קבוצות",
