@@ -4,6 +4,7 @@ OC.L10N.register(
     "Contacts" : "Kontakte",
     "Copy Url to clipboard" : "Kopjoje URL-në në të papastër",
     "Download" : "Shkarkoje",
+    "Show URL" : "Shfaq URL",
     "Share Addressbook" : "Ndajeni Librin e Adresave Me të Tjerë",
     "Delete Addressbook" : "Fshijeni Librin e Adresave",
     "Share with users or groups" : "Ndajeni me përdorues ose grupe",
