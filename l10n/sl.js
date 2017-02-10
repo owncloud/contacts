@@ -4,6 +4,7 @@ OC.L10N.register(
     "Contacts" : "Stiki",
     "Copy Url to clipboard" : "Kopiraj naslov URL v odložišče",
     "Download" : "Prejmi",
+    "Show URL" : "Pokaži naslov URL",
     "Share Addressbook" : "Souporaba imenika",
     "Delete Addressbook" : "Izbriši imenik",
     "Share with users or groups" : "Souporaba z uporabniki ali skupinami",
