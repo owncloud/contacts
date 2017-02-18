@@ -4,6 +4,7 @@ OC.L10N.register(
     "Contacts" : "アドレス帳",
     "Copy Url to clipboard" : "クリップボードにURLをコピーしました",
     "Download" : "ダウンロード",
+    "Show URL" : "URLを表示",
     "Share Addressbook" : "共有アドレス帳",
     "Delete Addressbook" : "アドレス帳を削除",
     "Share with users or groups" : "ユーザーもしくはグループと共有",
