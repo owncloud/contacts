@@ -1,6 +1,10 @@
 { "translations": {
     "Contacts" : "Kontakter",
+    "Copy Url to clipboard" : "Kopier URL til udklipsholderen",
     "Download" : "Hent",
+    "Show URL" : "Vis URL",
+    "Share Addressbook" : "Del Addressebog",
+    "Delete Addressbook" : "Slet Addressebog",
     "Share with users or groups" : "Del med brugere eller grupper",
     "Delete" : "Slet",
     "can edit" : "kan redigere",
@@ -33,6 +37,7 @@
     "{addressbook} shared by {owner}" : "{addressbook} delt af {owner}",
     "Contact could not be created." : "Kontakt kunne ikke oprettes.",
     "No contacts in file. Only VCard files are allowed." : "Ingen kontakter i filen. Kun vCard filer accepteres.",
+    "Only VCard version 4.0 (RFC6350) or version 3.0 (RFC2426) are supported." : "Kun VCard version 4.0 (RFC6350) or version 3.0 (RFC2426) understøttes.",
     "Display name" : "Vist navn",
     "Nickname" : "Kaldenavn",
     "Detailed name" : "Detaljeret navn",
