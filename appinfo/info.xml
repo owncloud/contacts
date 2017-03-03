@@ -15,6 +15,7 @@
     <website>https://github.com/owncloud/contacts</website>
     <bugs>https://github.com/owncloud/contacts/issues</bugs>
     <repository type="git">https://github.com/owncloud/contacts.git</repository>
+    <screenshot>https://raw.githubusercontent.com/owncloud/screenshots/760f2783b03fd26cbc920188b672f5f5efe548c0/contacts/contacts.png</screenshot>
     <dependencies>
         <owncloud min-version="9.0" max-version="10.0" />
     </dependencies>

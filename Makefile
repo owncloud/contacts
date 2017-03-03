@@ -50,8 +50,8 @@ npm=$(shell which npm 2> /dev/null)
 composer=$(shell which composer 2> /dev/null)
 
 occ=$(CURDIR)/../../occ
-private_key=$(HOME)/.owncloud/$(app_name).key
-certificate=$(HOME)/.owncloud/$(app_name).crt
+private_key=$(HOME)/.owncloud/certificates/$(app_name).key
+certificate=$(HOME)/.owncloud/certificates/$(app_name).crt
 sign=php -f $(occ) integrity:sign-app --privateKey="$(private_key)" --certificate="$(certificate)"
 sign_skip_msg="Skipping signing, either no key and certificate found in $(private_key) and $(certificate) or occ can not be found at $(occ)"
 ifneq (,$(wildcard $(private_key)))
