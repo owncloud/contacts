@@ -2,7 +2,9 @@ OC.L10N.register(
     "contacts",
     {
     "Contacts" : "Névjegyek",
+    "Copy Url to clipboard" : "Másold az URL-t a vágólapra",
     "Download" : "Letöltés",
+    "Show URL" : "URL megjelnítése",
     "Share with users or groups" : "Megosztás felhasználókkal vagy csoportokkal",
     "Delete" : "Törlés",
     "can edit" : "szerkesztheti",
