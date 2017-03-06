@@ -5,6 +5,8 @@ OC.L10N.register(
     "Copy Url to clipboard" : "Másold az URL-t a vágólapra",
     "Download" : "Letöltés",
     "Show URL" : "URL megjelnítése",
+    "Share Addressbook" : "Címjegyzék megosztása",
+    "Delete Addressbook" : "Címjegyzék törlése",
     "Share with users or groups" : "Megosztás felhasználókkal vagy csoportokkal",
     "Delete" : "Törlés",
     "can edit" : "szerkesztheti",
