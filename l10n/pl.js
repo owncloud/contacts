@@ -2,7 +2,11 @@ OC.L10N.register(
     "contacts",
     {
     "Contacts" : "Kontakty",
+    "Copy Url to clipboard" : "Skopiuj adres do schowka",
     "Download" : "Pobierz",
+    "Show URL" : "Pokaż adres",
+    "Share Addressbook" : "Udostępnij książkę adresową",
+    "Delete Addressbook" : "Usuń książkę adresową",
     "Share with users or groups" : "Współdziel z grupami bądź użytkownikami",
     "Delete" : "Usuń",
     "can edit" : "może edytować",
