@@ -4,6 +4,7 @@ OC.L10N.register(
     "Contacts" : "Yhteystiedot",
     "Copy Url to clipboard" : "Kopioi osoite leikepöydälle",
     "Download" : "Lataa",
+    "Show URL" : "Näytä osoite",
     "Share Addressbook" : "Jaa osoitekirja",
     "Delete Addressbook" : "Poista osoitekirja",
     "Share with users or groups" : "Jaa käyttäjien tai ryhmien kanssa",
