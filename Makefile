@@ -184,12 +184,10 @@ endif
 ifneq (,$(wildcard $(CURDIR)/package.json))
 	$(npm) run test
 endif
-ifeq (, $(shell which phpunit 2> /dev/null))
-	@echo "No phpunit command available, downloading a copy from the web"
-	mkdir -p $(build_tools_directory)
-	curl -sSL https://phar.phpunit.de/phpunit.phar -o $(build_tools_directory)/phpunit.phar
-	php $(build_tools_directory)/phpunit.phar -c phpunit.xml --coverage-clover build/php-unit.clover
-	php $(build_tools_directory)/phpunit.phar -c phpunit.integration.xml --coverage-clover build/php-integration.clover
+
+ifneq (,$(wildcard $(CURDIR)/../../lib/composer/bin/phpunit))
+	$(CURDIR)/../../lib/composer/bin/phpunit -c phpunit.xml --coverage-clover build/php-unit.clover
+	$(CURDIR)/../../lib/composer/bin/phpunit -c phpunit.integration.xml --coverage-clover build/php-unit.clover
 else
 	phpunit -c phpunit.xml --coverage-clover build/php-unit.clover
 	phpunit -c phpunit.integration.xml --coverage-clover build/php-unit.clover
