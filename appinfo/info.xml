@@ -7,11 +7,11 @@
     <author>Hendrik Leppelsack, Thomas Müller, Alexander Weidinger, Jan-Christoph Borchardt, Tom Needham</author>
     <version>1.5.1</version>
     <documentation>
-    	<user>https://doc.owncloud.org/server/9.1/user_manual/pim/contacts.html</user>
-    	<admin>https://doc.owncloud.org/server/9.1/admin_manual/configuration_server/occ_command.html?highlight=contact#dav-commands</admin>
+    	<user>https://doc.owncloud.org/server/10.0/user_manual/pim/contacts.html</user>
+    	<admin>https://doc.owncloud.org/server/10.0/admin_manual/configuration_server/occ_command.html?highlight=contact#dav-commands</admin>
     	<developer>https://github.com/owncloud/contacts/blob/master/README.md</developer>
     </documentation>
-    <category>tool</category>
+    <category>collaboration</category>
     <website>https://github.com/owncloud/contacts</website>
     <bugs>https://github.com/owncloud/contacts/issues</bugs>
     <repository type="git">https://github.com/owncloud/contacts.git</repository>
