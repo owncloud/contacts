@@ -70,6 +70,20 @@
 	color: #fff;
 	opacity: .8;
 }
+/* fix placeholder color */
+.contactdetails__header .contactdetails__name::-webkit-input-placeholder { /* WebKit, Blink, Edge */
+	color: #ddd;
+}
+.contactdetails__header .contactdetails__name::-moz-placeholder { /* Mozilla Firefox 19+ */
+	color: #ddd;
+	opacity: 1;
+}
+.contactdetails__header .contactdetails__name:-ms-input-placeholder { /* Internet Explorer 10-11 */
+	color: #ddd;
+}
+.contactdetails__header .contactdetails__name { /* Standard (https://drafts.csswg.org/selectors-4/#placeholder) */
+	color: #ddd;
+}
 
 .contactdetails__header .icon-delete-white,
 .contactdetails__header #contact-export-link {
