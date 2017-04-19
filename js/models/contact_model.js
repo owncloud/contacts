@@ -336,7 +336,8 @@ angular.module('contactsApp')
 
 		var property = this.getProperty('categories');
 		if(!property) {
-			this.categories('');
+			// categories should always have the same type (an array)
+			this.categories([]);
 		} else {
 			if (angular.isString(property.value)) {
 				this.categories([property.value]);
