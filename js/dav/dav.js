@@ -2740,7 +2740,11 @@ function getProps(propstats) {
 }
 
 function setRequestHeaders(request, options) {
-  request.setRequestHeader('Content-Type', 'application/xml;charset=utf-8');
+  if ('contentType' in options) {
+    request.setRequestHeader('Content-Type', options.contentType);
+  } else {
+    request.setRequestHeader('Content-Type', 'application/xml;charset=utf-8');
+  }
 
   if ('depth' in options) {
     request.setRequestHeader('Depth', options.depth);
@@ -3406,12 +3410,14 @@ var debug = require('./debug')('dav:webdav');
  */
 
 function createObject(objectUrl, objectData, options) {
-  var req = request.basic({ method: 'PUT', data: objectData });
+  // ugly (breaks calendar), but we will get rid of the lib anyway... hopefully... soon...
+  var req = request.basic({ method: 'PUT', data: objectData, contentType: 'text/vcard;charset=utf-8' });
   return options.xhr.send(req, objectUrl, { sandbox: options.sandbox });
 }
 
 function updateObject(objectUrl, objectData, etag, options) {
-  var req = request.basic({ method: 'PUT', data: objectData, etag: etag });
+  // ugly (breaks calendar), but we will get rid of the lib anyway... hopefully... soon...
+  var req = request.basic({ method: 'PUT', data: objectData, etag: etag, contentType: 'text/vcard;charset=utf-8' });
   return options.xhr.send(req, objectUrl, { sandbox: options.sandbox });
 }
 
