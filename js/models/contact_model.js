@@ -38,6 +38,16 @@ angular.module('contactsApp')
 				return [this.lastName(), this.firstName()];
 			},
 
+			sortPhoneticFirstName: function() {
+				return [this.phoneticFirstName() ? this.phoneticFirstName() : this.firstName(),
+					this.phoneticLastName() ? this.phoneticLastName() : this.lastName()];
+			},
+
+			sortPhoneticLastName: function() {
+				return [this.phoneticLastName() ? this.phoneticLastName() : this.lastName(),
+					this.phoneticFirstName() ? this.phoneticFirstName() : this.firstName()];
+			},
+
 			sortDisplayName: function() {
 				return this.displayName();
 			},
@@ -61,6 +71,36 @@ angular.module('contactsApp')
 					return property.value[0];
 				} else {
 					return this.displayName();
+				}
+			},
+
+			phoneticFirstName: function(value) {
+				var model = this;
+				if (angular.isDefined(value)) {
+					// setter
+					return this.setProperty('X-PHONETIC-FIRST-NAME', { value: value });
+				} else {
+					// getter
+					var property = model.getProperty('X-PHONETIC-FIRST-NAME');
+					if(property) {
+						return property.value;
+					}
+					return undefined;
+				}
+			},
+
+			phoneticLastName: function(value) {
+				var model = this;
+				if (angular.isDefined(value)) {
+					// setter
+					return this.setProperty('X-PHONETIC-LAST-NAME', { value: value });
+				} else {
+					// getter
+					var property = model.getProperty('X-PHONETIC-LAST-NAME');
+					if(property) {
+						return property.value;
+					}
+					return undefined;
 				}
 			},
 

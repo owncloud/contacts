@@ -1,5 +1,5 @@
 angular.module('contactsApp')
-.controller('detailsItemCtrl', function($templateRequest, vCardPropertiesService, ContactService) {
+.controller('detailsItemCtrl', function($templateRequest, vCardPropertiesService, ContactService, SettingsService) {
 	var ctrl = this;
 
 	ctrl.meta = vCardPropertiesService.getMeta(ctrl.name);
@@ -15,11 +15,19 @@ angular.module('contactsApp')
 		newGroup: t('contacts', '(new group)'),
 		familyName: t('contacts', 'Last name'),
 		firstName: t('contacts', 'First name'),
+		phoneticFirstName: t('contacts', 'Phonetic first name'),
+		phoneticLastName: t('contacts', 'Phonetic last name'),
 		additionalNames: t('contacts', 'Additional names'),
 		honorificPrefix: t('contacts', 'Prefix'),
 		honorificSuffix: t('contacts', 'Suffix'),
 		delete: t('contacts', 'Delete')
 	};
+
+	function updateOptions() {
+		ctrl.phoneticEnable = SettingsService.get('phoneticEnable');
+	}
+	SettingsService.subscribe(updateOptions);
+	updateOptions();
 
 	ctrl.availableOptions = ctrl.meta.options || [];
 	if (!_.isUndefined(ctrl.data) && !_.isUndefined(ctrl.data.meta) && !_.isUndefined(ctrl.data.meta.type)) {
@@ -61,6 +69,9 @@ angular.module('contactsApp')
 	ContactService.getGroups().then(function(groups) {
 		ctrl.availableGroups = _.unique(groups);
 	});
+
+	ctrl.data.phoneticFirstName = ctrl.model.contact.phoneticFirstName();
+	ctrl.data.phoneticLastName = ctrl.model.contact.phoneticLastName();
 
 	ctrl.changeType = function (val) {
 		if (ctrl.isPreferred) {
@@ -104,6 +115,16 @@ angular.module('contactsApp')
 		}
 
 		ctrl.model.contact.fullName(fn);
+		ctrl.model.updateContact();
+	};
+
+	ctrl.updatePhoneticFirstName = function () {
+		ctrl.model.contact.phoneticFirstName(ctrl.data.phoneticFirstName);
+		ctrl.model.updateContact();
+	};
+
+	ctrl.updatePhoneticLastName = function () {
+		ctrl.model.contact.phoneticLastName(ctrl.data.phoneticLastName);
 		ctrl.model.updateContact();
 	};
 

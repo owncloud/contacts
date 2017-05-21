@@ -41,6 +41,7 @@ vendor_style('select2/select2');
 				<addressBookList></addressBookList>
 				<contactImport></contactImport>
 				<sortBy></sortBy>
+				<Options></Options>
 			</div>
 		</div>
 	</div>
