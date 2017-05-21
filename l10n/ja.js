@@ -29,6 +29,8 @@ OC.L10N.register(
     "(new group)" : "(新規グループ)",
     "Last name" : "姓",
     "First name" : "名",
+    "Phonetic last name" : "せい",
+    "Phonetic first name" : "めい",
     "Additional names" : "ミドルネーム",
     "Prefix" : "プレフィックス",
     "Suffix" : "サフィックス",

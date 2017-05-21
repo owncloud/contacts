@@ -32,7 +32,9 @@ angular.module('contactsApp')
 			return {
 				sortDisplayName: t('contacts', 'Display name'),
 				sortFirstName: t('contacts', 'First name'),
-				sortLastName: t('contacts', 'Last name')
+				sortLastName: t('contacts', 'Last name'),
+				sortPhoneticFirstName: t('contacts', 'Phonetic first name'),
+				sortPhoneticLastName: t('contacts', 'Phonetic last name'),
 			};
 		}
 	};
