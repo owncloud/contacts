@@ -25,6 +25,7 @@ angular.module('contactsApp')
 
 	function updateOptions() {
 		ctrl.phoneticEnable = SettingsService.get('phoneticEnable');
+		ctrl.reverseNameOrder = SettingsService.get('reverseNameOrder');
 	}
 	SettingsService.subscribe(updateOptions);
 	updateOptions();
@@ -98,21 +99,19 @@ angular.module('contactsApp')
 
 	ctrl.updateDetailedName = function () {
 		var fn = '';
-		if (ctrl.data.value[3]) {
-			fn += ctrl.data.value[3] + ' ';
+		var order;
+		var fnItem = [];
+		if (ctrl.reverseNameOrder) {
+			order = [ 3, 0, 2, 1, 4 ];
+		} else {
+			order = [ 3, 1, 2, 0, 4 ];
 		}
-		if (ctrl.data.value[1]) {
-			fn += ctrl.data.value[1] + ' ';
-		}
-		if (ctrl.data.value[2]) {
-			fn += ctrl.data.value[2] + ' ';
-		}
-		if (ctrl.data.value[0]) {
-			fn += ctrl.data.value[0] + ' ';
-		}
-		if (ctrl.data.value[4]) {
-			fn += ctrl.data.value[4];
-		}
+		angular.forEach(order, function(index) {
+			if (ctrl.data.value[index]) {
+				fnItem.push(ctrl.data.value[index]);
+			}
+		});
+		fn = fnItem.join(' ');
 
 		ctrl.model.contact.fullName(fn);
 		ctrl.model.updateContact();

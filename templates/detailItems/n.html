@@ -5,6 +5,7 @@
 	<input type="text" id="details-honorificPrefix" name="honorificPrefix" ng-model="ctrl.data.value[3]" ng-model-options="{ debounce: 500 }" ng-change="ctrl.updateDetailedName()" 
 		   autocomplete="off" autocorrect="off" spellcheck="false" value="" />
 </div>
+<div ng-if="!ctrl.reverseNameOrder">
 <div>
 	<label for="details-firstName">{{ctrl.t.firstName}}</label>
 	<input type="text" id="details-firstName" name="firstName" ng-model="ctrl.data.value[1]" ng-model-options="{ debounce: 500 }" ng-change="ctrl.updateDetailedName()" 
@@ -15,11 +16,8 @@
 	<input type="text" id="details-phonetic-firstName" name="phoneticFirstName" ng-model="ctrl.data.phoneticFirstName" ng-model-options="{ debounce: 500 }" ng-change="ctrl.updatePhoneticFirstName()"
 		   autocomplete="off" autocorrect="off" spellcheck="false"  value="" />
 </div>
-<div>
-	<label for="details-additionalNames">{{ctrl.t.additionalNames}}</label>
-	<input type="text" id="details-additionalNames" name="additionalNames" ng-model="ctrl.data.value[2]" ng-model-options="{ debounce: 500 }" ng-change="ctrl.updateDetailedName()" 
-		   autocomplete="off" autocorrect="off" spellcheck="false"  value="" />
 </div>
+<div ng-if="ctrl.reverseNameOrder">
 <div>
 	<label for="details-familyName">{{ctrl.t.familyName}}</label>
 	<input type="text" id="details-familyName" name="familyName" ng-model="ctrl.data.value[0]" ng-model-options="{ debounce: 500 }" ng-change="ctrl.updateDetailedName()" 
@@ -29,6 +27,36 @@
 	<label for="details-phonetic-lastName">{{ctrl.t.phoneticLastName}}</label>
 	<input type="text" id="details-phonetic-lastName" name="phoneticLastName" ng-model="ctrl.data.phoneticLastName" ng-model-options="{ debounce: 500 }" ng-change="ctrl.updatePhoneticLastName()"
 		   autocomplete="off" autocorrect="off" spellcheck="false"  value="" />
+</div>
+</div>
+<div>
+	<label for="details-additionalNames">{{ctrl.t.additionalNames}}</label>
+	<input type="text" id="details-additionalNames" name="additionalNames" ng-model="ctrl.data.value[2]" ng-model-options="{ debounce: 500 }" ng-change="ctrl.updateDetailedName()" 
+		   autocomplete="off" autocorrect="off" spellcheck="false"  value="" />
+</div>
+<div ng-if="!ctrl.reverseNameOrder">
+<div>
+	<label for="details-familyName">{{ctrl.t.familyName}}</label>
+	<input type="text" id="details-familyName" name="familyName" ng-model="ctrl.data.value[0]" ng-model-options="{ debounce: 500 }" ng-change="ctrl.updateDetailedName()" 
+		   autocomplete="off" autocorrect="off" spellcheck="false"  value="" />
+</div>
+<div ng-if="ctrl.phoneticEnable">
+	<label for="details-phonetic-lastName">{{ctrl.t.phoneticLastName}}</label>
+	<input type="text" id="details-phonetic-lastName" name="phoneticLastName" ng-model="ctrl.data.phoneticLastName" ng-model-options="{ debounce: 500 }" ng-change="ctrl.updatePhoneticLastName()"
+		   autocomplete="off" autocorrect="off" spellcheck="false"  value="" />
+</div>
+</div>
+<div ng-if="ctrl.reverseNameOrder">
+<div>
+	<label for="details-firstName">{{ctrl.t.firstName}}</label>
+	<input type="text" id="details-firstName" name="firstName" ng-model="ctrl.data.value[1]" ng-model-options="{ debounce: 500 }" ng-change="ctrl.updateDetailedName()" 
+		   autocomplete="off" autocorrect="off" spellcheck="false"  value="" />
+</div>
+<div ng-if="ctrl.phoneticEnable">
+	<label for="details-phonetic-firstName">{{ctrl.t.phoneticFirstName}}</label>
+	<input type="text" id="details-phonetic-firstName" name="phoneticFirstName" ng-model="ctrl.data.phoneticFirstName" ng-model-options="{ debounce: 500 }" ng-change="ctrl.updatePhoneticFirstName()"
+		   autocomplete="off" autocorrect="off" spellcheck="false"  value="" />
+</div>
 </div>
 <div>
 	<label for="details-honorificSuffix">{{ctrl.t.honorificSuffix}}</label>
