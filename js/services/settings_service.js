@@ -6,6 +6,7 @@ angular.module('contactsApp')
 			'testAddr'
 		],
 		phoneticEnable: false,
+		reverseNameOrder: false,
 	};
 
 	Object.assign(settings, JSON.parse(window.localStorage.getItem('contacts_settings')));
