@@ -1,5 +1,7 @@
 { "translations": {
     "Contacts" : "Contatos",
+    "Enable phonetic" : "Habilitar fonética",
+    "Reverse name order" : "Ordem reversa do nome",
     "Copy Url to clipboard" : "Copiar URL para a área de transferência",
     "Download" : "Baixar",
     "Show URL" : "Mostrar a URL",
@@ -27,6 +29,8 @@
     "(new group)" : "(novo grupo)",
     "Last name" : "Sobrenome",
     "First name" : "Primeiro nome",
+    "Phonetic first name" : "Fonética do primeiro nome",
+    "Phonetic last name" : "Fonética do último nome",
     "Additional names" : "Nomes adicionais",
     "Prefix" : "Prefixo",
     "Suffix" : "Sufixo",

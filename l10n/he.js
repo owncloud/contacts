@@ -2,6 +2,8 @@ OC.L10N.register(
     "contacts",
     {
     "Contacts" : "אנשי קשר",
+    "Enable phonetic" : "אפשר פונטי",
+    "Reverse name order" : "סידור שמי הפוך",
     "Copy Url to clipboard" : "העתקת נתיב אינטרנט ללוח הגזירים",
     "Download" : "הורדה",
     "Show URL" : "הצג נתיב אינטרנט",
@@ -29,6 +31,8 @@ OC.L10N.register(
     "(new group)" : "(קבוצה חדשה)",
     "Last name" : "שם משפחה",
     "First name" : "שם פרטי",
+    "Phonetic first name" : "שם פרטי פונטי",
+    "Phonetic last name" : "שם משפחה פונטי",
     "Additional names" : "שמות נוספים",
     "Prefix" : "תואר",
     "Suffix" : "סיומת",
