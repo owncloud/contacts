@@ -2,6 +2,8 @@ OC.L10N.register(
     "contacts",
     {
     "Contacts" : "Kontakte",
+    "Enable phonetic" : "Lautschrift aktivieren",
+    "Reverse name order" : "Namenssortierung umkehren",
     "Copy Url to clipboard" : "URL in die Zwischenablage kopieren",
     "Download" : "Herunterladen",
     "Show URL" : "URL anzeigen",
@@ -29,6 +31,8 @@ OC.L10N.register(
     "(new group)" : "(neue Gruppe)",
     "Last name" : "Nachname",
     "First name" : "Vorname",
+    "Phonetic first name" : "Vorname in Lautschrift",
+    "Phonetic last name" : "Nachname in Lautschrift",
     "Additional names" : "Zusätzliche Namen",
     "Prefix" : "Präfix",
     "Suffix" : "Suffix",

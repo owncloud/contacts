@@ -2,6 +2,8 @@ OC.L10N.register(
     "contacts",
     {
     "Contacts" : "ข้อมูลผู้ติดต่อ",
+    "Enable phonetic" : "เปิดใช้การออกเสียง",
+    "Reverse name order" : "เปลี่ยนชื่อคำสั่งซื้อ",
     "Copy Url to clipboard" : "ดลอก URL ไปยังคลิปบอร์ด",
     "Download" : "ดาวน์โหลด",
     "Show URL" : "แสดง URL",
@@ -29,6 +31,8 @@ OC.L10N.register(
     "(new group)" : "(กลุ่มใหม่)",
     "Last name" : "นามสกุลจริง",
     "First name" : "ชื่อจริง",
+    "Phonetic first name" : "ออกเสียงชื่อจริง",
+    "Phonetic last name" : "ออกเสียงนามสกุล",
     "Additional names" : "ชื่ออื่นๆ",
     "Prefix" : "คำนำหน้า",
     "Suffix" : "คำต่อท้าย",
