@@ -28,18 +28,40 @@
 				<button ng-click="ctrl.deleteContact()" class="icon-delete-white" title="{{ctrl.t.download}}"></button>
 			</div>
 		</header>
-		<section>
-			<div ng-repeat="prop in ctrl.contact.props | toArray | orderDetailItems:'$key'">
-				<detailsItem ng-repeat="propData in prop" name="prop.$key" data="propData" model="ctrl" index="$index" ng-class="[ 'details-item-' + prop.$key ]"></detailsItem>
+		<div>
+			<div class="contactdetails__nonaddresses">
+				<div ng-repeat="prop in ctrl.contact.nonAddresses | toArray | orderDetailItems:'$key'">
+					<detailsItem ng-repeat="propData in prop" name="prop.$key" data="propData" model="ctrl" index="$index" ng-class="[ 'details-item-' + prop.$key ]"></detailsItem>
+				</div>
+				<div class="contactdetails__meta">
+					<div class="select-addressbook" ng-if="ctrl.addressBooks.length > 1">
+						<select ng-model="ctrl.addressBook" ng-change="ctrl.changeAddressBook(ctrl.addressBook)" ng-options="book.displayName for book in ctrl.addressBooks">
+						</select>
+					</div>
+					<select class="add-field" ng-model="ctrl.field" ng-change="ctrl.addField(ctrl.field)">
+						<option value=''>{{ctrl.t.selectField}}</option>
+						<option ng-repeat="field in ctrl.fieldDefinitions | fieldFilter: ctrl.contact | orderBy : 'name'" value="{{field.id}}">{{field.name}}</option>
+					</select>
+				</div>
 			</div>
-			<div class="select-addressbook" ng-if="ctrl.addressBooks.length > 1">
-				<select ng-model="ctrl.addressBook" ng-change="ctrl.changeAddressBook(ctrl.addressBook)" ng-options="book.displayName for book in ctrl.addressBooks">
-				</select>
+
+			<div class="contactdetails__addresses">
+				<div ng-repeat="prop in ctrl.contact.addresses | toArray | orderDetailItems:'$key'">
+					<detailsItem ng-repeat="propData in prop" name="prop.$key" data="propData" model="ctrl" index="$index" ng-class="[ 'details-item-' + prop.$key ]"></detailsItem>
+				</div>
+				<div class="contactdetails__meta">
+					<div class="select-addressbook" ng-if="ctrl.addressBooks.length > 1">
+						<select ng-model="ctrl.addressBook" ng-change="ctrl.changeAddressBook(ctrl.addressBook)" ng-options="book.displayName for book in ctrl.addressBooks">
+						</select>
+					</div>
+					<select class="add-field" ng-model="ctrl.field" ng-change="ctrl.addField(ctrl.field)">
+						<option value=''>{{ctrl.t.selectField}}</option>
+						<option ng-repeat="field in ctrl.fieldDefinitions | fieldFilter: ctrl.contact | orderBy : 'name'" value="{{field.id}}">{{field.name}}</option>
+					</select>
+				</div>
 			</div>
-			<select class="add-field" ng-model="ctrl.field" ng-change="ctrl.addField(ctrl.field)">
-				<option value=''>{{ctrl.t.selectField}}</option>
-				<option ng-repeat="field in ctrl.fieldDefinitions | fieldFilter: ctrl.contact | orderBy : 'name'" value="{{field.id}}">{{field.name}}</option>
-			</select>
-		</section>
+
+		</div>
+
 	</div>
 </div>

@@ -5,6 +5,9 @@ angular.module('contactsApp')
 
 			data: {},
 			props: {},
+			// Allow addresses & non-address props to be displayed in separate columns
+			addresses: {},
+			nonAddresses: {},
 
 			dateProperties: ['bday', 'anniversary', 'deathdate'],
 
@@ -280,6 +283,8 @@ angular.module('contactsApp')
 				var idx = this.props[name].length;
 				this.props[name][idx] = data;
 
+				this.setPropsForDisplay();
+
 				// keep vCard in sync
 				this.data.addressData = $filter('JSON2vCard')(this.props);
 				return idx;
@@ -297,6 +302,7 @@ angular.module('contactsApp')
 			removeProperty: function (name, prop) {
 				angular.copy(_.without(this.props[name], prop), this.props[name]);
 				this.data.addressData = $filter('JSON2vCard')(this.props);
+				this.setPropsForDisplay();
 			},
 			setETag: function(etag) {
 				this.data.etag = etag;
@@ -364,6 +370,12 @@ angular.module('contactsApp')
 					return false;
 				});
 				return matchingProps.length > 0;
+			},
+
+			setPropsForDisplay: function() {
+				angular.extend(this.nonAddresses, this.props);
+				delete(this.nonAddresses.adr);
+				this.addresses.adr = this.props.adr;
 			}
 
 		});
@@ -387,5 +399,8 @@ angular.module('contactsApp')
 				this.categories([property.value]);
 			}
 		}
+
+		this.setPropsForDisplay();
+
 	};
 });
