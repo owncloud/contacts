@@ -31,6 +31,8 @@ OC.L10N.register(
     "(new group)" : "(nuevo grupo)",
     "Last name" : "Apellido",
     "First name" : "Nombre",
+    "Phonetic first name" : "Nombre",
+    "Phonetic last name" : "Apellidos",
     "Additional names" : "Nombres adicionales",
     "Prefix" : "Prefijo",
     "Suffix" : "Sufijo",
