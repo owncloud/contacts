@@ -313,7 +313,7 @@ div.app-contacts span.utils {
 	position: relative !important;
 }
 
-input.newAddressBookInput, input.shareeInput, input.addressBookUrl {
+input.newAddressBookInput, input.shareeInput {
 	width: 100% !important;
 }
 
@@ -479,6 +479,67 @@ ul.addressBook-share-list li {
 	height: calc(100% - 24px);
 }
 
+.app-navigation-entry-menu .icon-link {
+	background-size: 16px;
+}
+
+#app-navigation .app-navigation-entry-menu li {
+	width: auto !important;
+	float: inherit;
+	height: 36px;
+}
+
+#app-navigation .app-navigation-entry-menu li button {
+	float: inherit !important;
+	margin: 0;
+	padding: 0;
+	width: 100% !important;
+}
+
+#app-navigation .app-navigation-entry-menu li span {
+	display: inline-block;
+	height: 36px;
+	line-height: 36px;
+	padding-right: 10px;
+	font-weight: 400;
+	float: left;
+}
+
+#app-navigation .app-navigation-entry-menu li span.svg {
+	padding: 5px;
+	width: 36px;
+	box-sizing: border-box;
+}
+
+#app-navigation .buttongroups .accept-button {
+	width: 47%;
+	padding: 17px;
+	margin-right: 7px;
+}
+
+#app-navigation .editfieldset .close-button {
+	width: 48%;
+	padding: 17px;
+	margin-right: 0px;
+}
+
+#app-navigation .app-navigation-input {
+	width: 100% !important;
+}
+
+.input-with-button-on-right-side {
+	width: 83% !important;
+	float: left;
+	margin-right: 6px !important;
+}
+
+.button-next-to-input {
+	height: 32px;
+	width: 32px;
+	margin-right: 0;
+	padding-right: 0;
+}
+
 /* styling for contact count in contact list */
 .contacts-list-count {
 	text-align:center;
@@ -597,14 +658,10 @@ detailsitem .select2-container {
 	position: relative;
 }
 
-.addressBookUrl {
-	width: 100% !important;
-}
-
-#copyButton {
+.copy-button {
 	position: absolute;
-	right: 0;
+	right: 40px;
 	top: 1px;
-	background-color: white;
-	border: none;
+	background-color: white !important;
+	border: none !important;
 }
