@@ -4,20 +4,45 @@ angular.module('contactsApp')
 
 	ctrl.t = {
 		copyUrlTitle : t('contacts', 'Copy Url to clipboard'),
+		edit: t('contacts', 'Rename'),
 		download: t('contacts', 'Download'),
-		showURL:t('contacts', 'Show URL'),
-		shareAddressbook: t('contacts', 'Share Addressbook'),
-		deleteAddressbook: t('contacts', 'Delete Addressbook'),
+		showURL:t('contacts', 'Link'),
+		shareAddressbook: t('contacts', 'Share'),
+		deleteAddressbook: t('contacts', 'Delete'),
 		shareInputPlaceHolder: t('contacts', 'Share with users or groups'),
 		delete: t('contacts', 'Delete'),
+		more: t('contacts', 'More'),
 		canEdit: t('contacts', 'can edit')
 	};
 
 	ctrl.showUrl = false;
+	ctrl.editing = false;
 	/* globals oc_config */
 	/* eslint-disable camelcase */
 	ctrl.canExport = oc_config.version.split('.') >= [9, 0, 2, 0];
 	/* eslint-enable camelcase */
+
+	ctrl.openNameEditor = function () {
+		ctrl.displayName = ctrl.addressBook.displayName;
+
+		ctrl.editing = true;
+	};
+
+	ctrl.cancelNameEditor = function () {
+		ctrl.displayName = '';
+
+		ctrl.editing = false;
+	};
+
+	ctrl.saveNameEditor = function() {
+		AddressBookService.rename(ctrl.addressBook, ctrl.displayName).then(function() {
+			ctrl.addressBook.displayName = ctrl.displayName;
+			ctrl.displayname = '';
+
+			ctrl.editing = false;
+			$scope.$apply();
+		});
+	};
 
 	ctrl.toggleShowUrl = function() {
 		ctrl.showUrl = !ctrl.showUrl;
@@ -125,6 +150,10 @@ angular.module('contactsApp')
 		AddressBookService.delete(ctrl.addressBook).then(function() {
 			$scope.$apply();
 		});
+	};
+
+	ctrl.download = function() {
+		window.open(ctrl.addressBook.url + '?export');
 	};
 
 });

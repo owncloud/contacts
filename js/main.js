@@ -22,3 +22,29 @@ angular.module('contactsApp', ['uuid4', 'angular-cache', 'ngRoute', 'ui.bootstra
 	$routeProvider.otherwise('/' + t('contacts', 'All contacts'));
 
 });
+
+angular.module('contactsApp')
+.directive('onToggleShow', ['$document', function($document) {
+	'use strict';
+
+	return {
+		restrict: 'A',
+		scope: {
+			'onToggleShow': '@'
+		},
+		link: function link(scope, elem) {
+			elem.click(function () {
+				var target = $(scope.onToggleShow);
+				target.toggle();
+			});
+
+			$document.click(function (event) {
+				var target = $(scope.onToggleShow);
+
+				if (event.target !== elem[0]) {
+					target.hide();
+				}
+			});
+		}
+	};
+}]);

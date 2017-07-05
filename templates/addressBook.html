@@ -1,19 +1,6 @@
-<span class="addressBookName" title="{{ctrl.addressBook.displayName}}">{{ctrl.addressBook.displayName}}</span>
-<span class="utils">
-	<span class="action" ng-show="ctrl.canExport">
-		<a href="{{ctrl.addressBook.url}}?export"
-			  id="addressBooklist-icon download"
-			  title="{{ctrl.t.download}}"
-			  class="icon-download">
-		</a>
-	</span>
-    <span class="action">
-        <span
-            class="addressbooklist-icon icon-public"
-            title="{{ctrl.t.showURL}}"
-            ng-click="ctrl.toggleShowUrl()">
-        </span>
-    </span>
+<span class="addressBookName" ng-show="!ctrl.editing" title="{{ctrl.addressBook.displayName}}">{{ctrl.addressBook.displayName}}</span>
+<span ng-show="!ctrl.editing" class="utils">
+
     <span class="action">
         <span
             class="addressbooklist-icon icon-share"
@@ -21,18 +8,74 @@
             ng-click="ctrl.toggleSharesEditor(ctrl.addressBook)">
         </span>
     </span>
-    <span class="action">
-        <span
-            class="addressbooklist-icon icon-delete"
-			ng-class="{hidden: ctrl.list.length === 1}"
-            title="{{ctrl.t.deleteAddressbook}}"
-            ng-click="ctrl.deleteAddressBook()">
-        </span>
-    </span>
+
+
+		<span class="action">
+			<span class="icon-more"
+				href="#"
+				on-toggle-show="#more-actions-{{ $id }}"
+				title="{{ctrl.t.more}}"
+				role="button">
+		</span>
+	</span>
 </span>
-<div class="oneline">
-	<input id="addressBookUrl-{{index}}" class="addressBookUrl" ng-show="ctrl.showUrl" type="url" value="{{ctrl.addressBook.url}}" readonly />
-	<input id="copyButton" type="submit" value="" class="icon-clippy pull-right" ngclipboard ng-show="ctrl.showUrl" title="{{ctrl.t.copyUrlTitle}}" data-clipboard-target="#addressBookUrl-{{index}}">
+
+<div ng-show="!ctrl.editing" id="more-actions-{{ $id }}"
+	 class="app-navigation-entry-menu">
+	<ul>
+		<li>
+			<button	ng-click="ctrl.openNameEditor()">
+				<span class="icon-rename svg"></span>
+				<span>{{ctrl.t.edit}}</span>
+			</button>
+		</li>
+		<li>
+			<button	ng-click="ctrl.toggleShowUrl()">
+				<span class="icon-public svg"></span>
+				<span>{{ctrl.t.showURL}}</span>
+			</button>
+		</li>
+
+		<li>
+			<button	ng-click="ctrl.download()">
+				<span class="icon-download svg"></span>
+				<span>{{ctrl.t.download}}</span>
+			</button>
+		</li>
+
+		<li>
+			<button	ng-click="ctrl.deleteAddressBook()">
+				<span class="icon-delete svg"></span>
+				<span>{{ctrl.t.deleteAddressbook}}</span>
+			</button>
+		</li>
+	</ul>
+</div>
+
+<form ng-show="ctrl.editing" ng-submit="ctrl.saveNameEditor()">
+	<fieldset class="editfieldset">
+		<input class="app-navigation-input"
+			   ng-model="ctrl.displayName"
+			   type="text"/>
+
+		<div class="buttongroups">
+			<button class="primary icon-checkmark-white accept-button">
+			</button>
+			<button type="button" class="btn close-button icon-close"
+					ng-click="ctrl.cancelNameEditor()">
+			</button>
+		</div>
+	</fieldset>
+</form>
+
+<div class="oneline" ng-show="ctrl.showUrl">
+	<div>
+		<input id="addressBookUrl-{{index}}" class="input-with-button-on-right-side" type="url" value="{{ctrl.addressBook.url}}" readonly />
+		<input type="submit" value="" class="copy-button icon-clippy pull-right" ngclipboard title="{{ctrl.t.copyUrlTitle}}" data-clipboard-target="#addressBookUrl-{{index}}">
+	</div>
+	<button class="btn icon-close button-next-to-input"
+		ng-click="ctrl.toggleShowUrl()">
+	</button>
 </div>
 <div class="addressBookShares" ng-show="ctrl.editingShares">
 	<i ng-show="ctrl.loadingSharees" class="glyphicon glyphicon-refresh"></i>
