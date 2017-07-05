@@ -1,7 +1,9 @@
 OC.L10N.register(
     "contacts",
     {
-    "Contacts" : "Контакты",
+    "Contacts" : "Контаt",
+    "Enable phonetic" : "Включить фонетически",
+    "Reverse name order" : "Обратный порядок имён",
     "Copy Url to clipboard" : "Копировать адрес в буфер обмена",
     "Download" : "Скачать",
     "Show URL" : "Показать адрес",
@@ -29,6 +31,8 @@ OC.L10N.register(
     "(new group)" : "(новая группа)",
     "Last name" : "Фамилия",
     "First name" : "Имя",
+    "Phonetic first name" : "Имя фонетически",
+    "Phonetic last name" : "Фамилия фонетически",
     "Additional names" : "Отчество",
     "Prefix" : "Префикс",
     "Suffix" : "Суффикс",
