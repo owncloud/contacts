@@ -2,6 +2,7 @@ OC.L10N.register(
     "contacts",
     {
     "Contacts" : "Kontakty",
+    "Enable phonetic" : "Włącz zapis fonetyczny",
     "Copy Url to clipboard" : "Skopiuj adres do schowka",
     "Download" : "Pobierz",
     "Show URL" : "Pokaż adres",
@@ -29,6 +30,8 @@ OC.L10N.register(
     "(new group)" : "Nowa grupa",
     "Last name" : "Nazwisko",
     "First name" : "Imię",
+    "Phonetic first name" : "Imię fonetycznie",
+    "Phonetic last name" : "Nazwisko fonetycznie",
     "Additional names" : "Dodatkowe nazwy",
     "Prefix" : "Przedrostek",
     "Suffix" : "Przyrostek",
