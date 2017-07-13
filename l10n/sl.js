@@ -2,6 +2,7 @@ OC.L10N.register(
     "contacts",
     {
     "Contacts" : "Stiki",
+    "Reverse name order" : "Obrni imensko razvrstitev",
     "Copy Url to clipboard" : "Kopiraj naslov URL v odložišče",
     "Download" : "Prejmi",
     "Show URL" : "Pokaži naslov URL",
