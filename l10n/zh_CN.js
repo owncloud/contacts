@@ -2,6 +2,8 @@ OC.L10N.register(
     "contacts",
     {
     "Contacts" : "联系人",
+    "Enable phonetic" : "启用拼写",
+    "Reverse name order" : "按名称倒序排列",
     "Copy Url to clipboard" : "复制链接到剪贴板 ",
     "Download" : "下载",
     "Show URL" : "显示链接",
@@ -29,6 +31,8 @@ OC.L10N.register(
     "(new group)" : "(新建群组)",
     "Last name" : "姓",
     "First name" : "名",
+    "Phonetic first name" : "名（拼写）",
+    "Phonetic last name" : "姓（拼写）",
     "Additional names" : "其他名称",
     "Prefix" : "前缀",
     "Suffix" : "后缀",
