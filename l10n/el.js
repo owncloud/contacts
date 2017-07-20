@@ -2,6 +2,8 @@ OC.L10N.register(
     "contacts",
     {
     "Contacts" : "Επαφές",
+    "Enable phonetic" : "Ενεργοποιήστε τη φωνητική",
+    "Reverse name order" : "Αναστροφή σειράς ονόματος",
     "Copy Url to clipboard" : "Αντιγραφή Url στο πρόχειρο",
     "Download" : "Λήψη",
     "Show URL" : "Εμφάνιση URL",
