@@ -38,8 +38,6 @@ OC.L10N.register(
     "Sort by" : "Sorteeri",
     "{addressbook} shared by {owner}" : "{owner} jagas aadressiraamatut {addressbook}",
     "Contact could not be created." : "Kontakti loomine ebaõnnestus.",
-    "No contacts in file. Only VCard files are allowed." : "Failis pole kontakte. Lubatud on ainult VCard.",
-    "Only VCard version 4.0 (RFC6350) or version 3.0 (RFC2426) are supported." : "Toetatud on ainult VCard versioon 4.0 (RFC6350) või versioon 3.0 (RFC2426).",
     "Display name" : "Näidatav nimi",
     "Nickname" : "Hüüdnimi",
     "Detailed name" : "Üksikasjalik nimi",

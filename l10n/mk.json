@@ -36,8 +36,6 @@
     "Sort by" : "Сортирај по",
     "{addressbook} shared by {owner}" : "{addressbook} споделено од {owner}",
     "Contact could not be created." : "Контактот не може да се креира.",
-    "No contacts in file. Only VCard files are allowed." : "Нема контакти во датотеката. Само VCard датотеки се дозволени.",
-    "Only VCard version 4.0 (RFC6350) or version 3.0 (RFC2426) are supported." : "Само VCard верзија 4.0 (RFC6350) или верзија 3.0 (RFC2426) се поддржани.",
     "Display name" : "Прикажи го Името",
     "Nickname" : "Прекар",
     "Detailed name" : "Детално име",

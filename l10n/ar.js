@@ -33,7 +33,6 @@ OC.L10N.register(
     "New contact" : "جهة إتصال جديدة",
     "Sort by" : "ترتيب بـ",
     "{addressbook} shared by {owner}" : "{owner} شارك {addressbook}",
-    "No contacts in file. Only VCard files are allowed." : "لاتوجد جهات في الملف.  ملفات VCard مسموح بها فقط.",
     "Display name" : "اسم العرض",
     "Nickname" : "كنية.\nلقب.",
     "Detailed name" : "الاسم بالتفصيل",

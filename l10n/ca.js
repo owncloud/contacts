@@ -35,7 +35,6 @@ OC.L10N.register(
     "Sort by" : "Ordena per",
     "{addressbook} shared by {owner}" : "{addressbook} compartida per {owner}",
     "Contact could not be created." : "No s'ha pogut crear el contacte.",
-    "No contacts in file. Only VCard files are allowed." : "No hi ha contactes a l'arxiu. Només s'accepten arxius en format VCard.",
     "Display name" : "Nom a mostrar",
     "Nickname" : "Sobrenom",
     "Detailed name" : "Nom complet",

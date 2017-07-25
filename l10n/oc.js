@@ -34,7 +34,6 @@ OC.L10N.register(
     "Sort by" : "Triar",
     "{addressbook} shared by {owner}" : "{addressbook} partejat per {owner}",
     "Contact could not be created." : "Aqueste contacte a pas pogut èsser creat.",
-    "No contacts in file. Only VCard files are allowed." : "Pas cap de contacte dins aqueste fichièr. Solament los fichièrs VCard son autorizats.",
     "Display name" : "Nom d'afichatge",
     "Nickname" : "Escais",
     "Detailed name" : "Nom complet",

@@ -42,8 +42,6 @@ OC.L10N.register(
     "Sort by" : "Упорядочить по",
     "{addressbook} shared by {owner}" : "{addressbook} поделился {owner}",
     "Contact could not be created." : "Не удалось создать контакт.",
-    "No contacts in file. Only VCard files are allowed." : "В файле нет контактов. Допустимы только файлы VCard.",
-    "Only VCard version 4.0 (RFC6350) or version 3.0 (RFC2426) are supported." : "Поддерживаются только VCard версии 4.0 (RFC6350) или версии 3.0 (RFC2426).",
     "Display name" : "Отображаемое имя",
     "Nickname" : "Псевдоним",
     "Detailed name" : "Подробное имя",

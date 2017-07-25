@@ -33,7 +33,6 @@ OC.L10N.register(
     "New contact" : "Contautu nuevu",
     "Sort by" : "Ordenar por",
     "{addressbook} shared by {owner}" : "{addressbook} compartíu por {owner}",
-    "No contacts in file. Only VCard files are allowed." : "Nengúncontactu nel ficheru. Namás s'almiten ficheros vCard.",
     "Display name" : "Nome a amosar",
     "Nickname" : "Nomatu",
     "Detailed name" : "Nome detalláu",

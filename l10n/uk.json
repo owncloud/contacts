@@ -38,8 +38,6 @@
     "New contact" : "Новий контакт",
     "Sort by" : "Сортувати за",
     "Contact could not be created." : "Контакт не може бути створено.",
-    "No contacts in file. Only VCard files are allowed." : "У файлі немає контактів. Лише VCard файли дозволені.",
-    "Only VCard version 4.0 (RFC6350) or version 3.0 (RFC2426) are supported." : "Підтримується лише версія VCard 4.0 (RFC6350) або 3.0 (RFC2426).",
     "Display name" : "Показати Ім'я",
     "Nickname" : "Прізвисько",
     "Detailed name" : "Детальна назва",

@@ -33,7 +33,6 @@ OC.L10N.register(
     "New contact" : "Új névjegy",
     "Sort by" : "Rendezés elve",
     "{addressbook} shared by {owner}" : "{addressbook} megosztója {owner}",
-    "No contacts in file. Only VCard files are allowed." : "A fájl nem tartalmaz névjegyeket. Kizárólag VCard fájlok engedélyezettek.",
     "Display name" : "Megjelenített név",
     "Nickname" : "Becenév",
     "Notes" : "Jegyzetek",
