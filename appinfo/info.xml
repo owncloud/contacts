@@ -2,10 +2,11 @@
 <info>
     <id>contacts</id>
     <name>Contacts</name>
-    <summary>A contacts app for ownCloud</summary>
+    <summary>Manage and sync your contacts across multiple devices</summary>
     <description>
-The ownCloud contacts app is a user interface for ownCloud's CardDAV server.
-Easily sync contacts from various devices with your ownCloud and edit them online.</description>
+The ownCloud Contacts App is a user interface for ownCloud's CardDAV server. It provides your ownCloud with a feature-rich frontend for the CardDAV server component and supports multiple address books.
+Therefore ownCloud Contacts empowers users to backup, restore, manage and sync their contacts across devices using the CardDAV protocol. 
+Whether on your mobile device or desktop, with the Contacts App you can always keep your address books in sync with your ownCloud!</description>
     <licence>AGPL</licence>
     <author>Hendrik Leppelsack, Thomas Müller, Alexander Weidinger, Jan-Christoph Borchardt, Tom Needham</author>
     <version>1.5.2</version>
