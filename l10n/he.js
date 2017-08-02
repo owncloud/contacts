@@ -42,6 +42,8 @@ OC.L10N.register(
     "Sort by" : "מיון על בסיס",
     "{addressbook} shared by {owner}" : "{addressbook} שותף על ידי {owner}",
     "Contact could not be created." : "לא ניתן היה ליצור איש קשר.",
+    "No contacts in file. Only vCard files are allowed." : "אין אנשי קשר בקובץ. רק קובצי vCard מותרים לשימוש.",
+    "Only vCard version 4.0 (RFC6350) or version 3.0 (RFC2426) are supported." : "נתמכים רק קובצי vCard מגרסה 4.0 (RFC6350) או מגרסה 3.0 (RFC2426).",
     "Display name" : "שם תצוגה",
     "Nickname" : "כינוי",
     "Detailed name" : "פרטי שם",
