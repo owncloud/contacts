@@ -5,7 +5,7 @@
     <summary>Manage your CardDAV contacts from a feature-rich web-interface</summary>
     <description>
 Contacts is a user interface for ownCloud's CardDAV server. ownCloud Server comes with a CardDAV component that allows users to synchronize and backup their address books with ownCloud and across multiple devices.
-Thanks to this feature users are provided with an alternative to proprietary contact synchronization services giving them back control over their data once more.
+It provides users with an alternative to proprietary contact synchronization services giving them back control over their data once more.
 
 The Contacts application is an extension to ownCloud's CardDAV interface. It equips ownCloud with a feature-rich frontend for the CardDAV server component, supports multiple address books and empowers users to easily manage their contacts from a web interface for ownCloud.
 Users may find the URL for device synchronization (to configure synchronization in iOS, Android or other CardDAV-capable applications) in the 'Settings' section on the bottom left inside the application (link symbol).
