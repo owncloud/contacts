@@ -16,7 +16,7 @@ In addition to managing synchronized contacts the application also offers a feat
     <version>1.5.2</version>
     <documentation>
     	<user>https://doc.owncloud.org/server/10.0/user_manual/pim/index.html</user>
-    	<admin>https://doc.owncloud.com/server/10.0/admin_manual/configuration/server/occ_command.html?highlight=contacts#dav-commands</admin>
+    	<admin>https://doc.owncloud.org/server/10.0/admin_manual/configuration/server/occ_command.html?highlight=contacts#dav-commands</admin>
     	<developer>https://github.com/owncloud/contacts/blob/master/README.md</developer>
     </documentation>
     <category>productivity</category>
