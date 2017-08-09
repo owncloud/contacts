@@ -42,6 +42,8 @@ OC.L10N.register(
     "Sort by" : "Ordenar por",
     "{addressbook} shared by {owner}" : "{addressbook} compartido por {owner}",
     "Contact could not be created." : "No se puede crear el contacto.",
+    "No contacts in file. Only vCard files are allowed." : "No hay contactos en el archivo. Solo se admiten archivos vCard.",
+    "Only vCard version 4.0 (RFC6350) or version 3.0 (RFC2426) are supported." : "Solo se soportan la versión 4.0 (RFC6350) y la versión 3.0 (RFC2426) de vCard.",
     "Display name" : "Nombre para mostrar",
     "Nickname" : "Apodo",
     "Detailed name" : "Nombre",
