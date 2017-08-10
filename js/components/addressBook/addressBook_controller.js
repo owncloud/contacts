@@ -16,7 +16,7 @@ angular.module('contactsApp')
 	ctrl.showUrl = false;
 	/* globals oc_config */
 	/* eslint-disable camelcase */
-	ctrl.canExport = oc_config.version.split('.') >= [9, 0, 2, 0];
+	ctrl.canExport = oc_config.version.split('.')[0] >= 9 || oc_config.version.split('.') >= [9, 0, 2, 0];
 	/* eslint-enable camelcase */
 
 	ctrl.toggleShowUrl = function() {
