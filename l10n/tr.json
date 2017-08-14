@@ -35,8 +35,6 @@
     "New contact" : "Yeni kişi",
     "Sort by" : "Şuna göre sırala",
     "{addressbook} shared by {owner}" : "{owner} tarafından paylaşılmış {addressbook}",
-    "No contacts in file. Only VCard files are allowed." : "Dosyada kişi yok. Sadece vCard dosyalarına izin verilir.",
-    "Only VCard version 4.0 (RFC6350) or version 3.0 (RFC2426) are supported." : "Yalnızca VCard versiyon 4.0 (RFC6350) ya da versiyon 3.0 (RFC2426) desteklenmektedir. ",
     "Display name" : "Görünen ad",
     "Nickname" : "Takma ad",
     "Detailed name" : "Ayrıntılı isim",

@@ -35,8 +35,6 @@
     "Sort by" : "Сортирай по",
     "{addressbook} shared by {owner}" : "{addressbook} споделена с {owner}",
     "Contact could not be created." : "Контактът не може да бъде създаден.",
-    "No contacts in file. Only VCard files are allowed." : "Няма контакти в файла. Само VCard файлове са разрешени.",
-    "Only VCard version 4.0 (RFC6350) or version 3.0 (RFC2426) are supported." : "Подържат се само VCard версия 4.0 (RFC6350) или версия 3.0 (RFC2426).",
     "Display name" : "Видимо име",
     "Nickname" : "Псевдоним",
     "Detailed name" : "Подробно име",

@@ -36,8 +36,6 @@
     "Sort by" : "Renditi sipas",
     "{addressbook} shared by {owner}" : "{addressbook} ndarë nga {owner}",
     "Contact could not be created." : "Kontakti s’u krijua dot.",
-    "No contacts in file. Only VCard files are allowed." : "S’ka kontakte në kartelë. Lejohen vetëm kartela VCard.",
-    "Only VCard version 4.0 (RFC6350) or version 3.0 (RFC2426) are supported." : "Mbulohen vetëm VCard version 4.0 (RFC6350) ose version 3.0 (RFC2426).",
     "Display name" : "Emër në ekran",
     "Nickname" : "Nofkë",
     "Detailed name" : "Emri i hollësishëm",
