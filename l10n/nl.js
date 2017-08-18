@@ -2,6 +2,7 @@ OC.L10N.register(
     "contacts",
     {
     "Contacts" : "Contactpersonen",
+    "Reverse name order" : "Omgekeerde sortering op naam",
     "Copy Url to clipboard" : "Kopiëren URL naar klembord",
     "Download" : "Downloaden",
     "Show URL" : "Toon URL",
@@ -38,6 +39,7 @@ OC.L10N.register(
     "Sort by" : "Sorteer op",
     "{addressbook} shared by {owner}" : "{addressbook} gedeeld door {owner}",
     "Contact could not be created." : "Contact kon niet worden aangemaakt.",
+    "No contacts in file. Only vCard files are allowed." : "Geen contacten in bestand. Alleen vCard bestanden zijn toegestaan.",
     "Display name" : "Weergavenaam",
     "Nickname" : "Roepnaam",
     "Detailed name" : "Gedetailleerde naam",
