@@ -3,8 +3,8 @@ OC.L10N.register(
     {
     "Contacts" : "Contactes",
     "Download" : "Telecargar",
-    "Share with users or groups" : "Partejar amb d'utilizaires o de gropes",
     "Delete" : "Suprimir",
+    "Share with users or groups" : "Partejar amb d'utilizaires o de gropes",
     "can edit" : "pòt modificar",
     "Address book name" : "Nom del quasernet d'adreças",
     "Import" : "Importar",

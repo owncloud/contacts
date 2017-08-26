@@ -3,8 +3,8 @@ OC.L10N.register(
     {
     "Contacts" : "جهات الاتصال",
     "Download" : "تحميل",
-    "Share with users or groups" : "شارِك مع مستخدمين أو مجموعات",
     "Delete" : "حذف ",
+    "Share with users or groups" : "شارِك مع مستخدمين أو مجموعات",
     "can edit" : "يمكن التحرير",
     "Address book name" : "اسم دفتر العناوين",
     "Import" : "استيراد",

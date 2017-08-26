@@ -3,8 +3,8 @@ OC.L10N.register(
     {
     "Contacts" : "Contautos",
     "Download" : "Baxar",
-    "Share with users or groups" : "Compartir con usuarios o grupos",
     "Delete" : "Desaniciar",
+    "Share with users or groups" : "Compartir con usuarios o grupos",
     "can edit" : "pue editar",
     "Address book name" : "Nome de la Llibreta de direiciones",
     "Import" : "Importar",
