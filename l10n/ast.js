@@ -2,9 +2,13 @@ OC.L10N.register(
     "contacts",
     {
     "Contacts" : "Contautos",
+    "Rename" : "Renomar",
     "Download" : "Baxar",
+    "Link" : "Enllaz",
+    "Share" : "Compartir",
     "Delete" : "Desaniciar",
     "Share with users or groups" : "Compartir con usuarios o grupos",
+    "More" : "Más",
     "can edit" : "pue editar",
     "Address book name" : "Nome de la Llibreta de direiciones",
     "Import" : "Importar",

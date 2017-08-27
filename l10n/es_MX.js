@@ -3,9 +3,13 @@ OC.L10N.register(
     {
     "Contacts" : "Contactos",
     "Copy Url to clipboard" : "Copiar URL al portapapeles",
+    "Rename" : "Renombrar",
     "Download" : "Descargar",
+    "Link" : "Enlace",
+    "Share" : "Compartir",
     "Delete" : "Eliminar",
     "Share with users or groups" : "Compartir con usuarios o grupos",
+    "More" : "Más",
     "can edit" : "puede editar",
     "Address book name" : "Nombre de la libreta de direcciones",
     "Import" : "Importar",

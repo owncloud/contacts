@@ -3,9 +3,13 @@ OC.L10N.register(
     {
     "Contacts" : "Kişiler",
     "Copy Url to clipboard" : "URL'yi panoya kopyala",
+    "Rename" : "Yeniden adlandır",
     "Download" : "İndir",
+    "Link" : "Bağlantı",
+    "Share" : "Paylaş",
     "Delete" : "Sil",
     "Share with users or groups" : "Kullanıcı ve gruplarla paylaş",
+    "More" : "Daha fazla",
     "can edit" : "düzenleyebilir",
     "Address book name" : "Adres defteri adı",
     "Import" : "İçe aktar",

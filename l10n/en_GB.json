@@ -1,9 +1,13 @@
 { "translations": {
     "Contacts" : "Contacts",
     "Copy Url to clipboard" : "Copy URL to clipboard",
+    "Rename" : "Rename",
     "Download" : "Download",
+    "Link" : "Link",
+    "Share" : "Share",
     "Delete" : "Delete",
     "Share with users or groups" : "Share with users or groups",
+    "More" : "More",
     "can edit" : "can edit",
     "Address book name" : "Address book name",
     "Import" : "Import",

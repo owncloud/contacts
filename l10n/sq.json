@@ -1,9 +1,13 @@
 { "translations": {
     "Contacts" : "Kontakte",
     "Copy Url to clipboard" : "Kopjoje URL-në në të papastër",
+    "Rename" : "Riemërtoje",
     "Download" : "Shkarkoje",
+    "Link" : "Lidhje",
+    "Share" : "Ndaje",
     "Delete" : "Fshije",
     "Share with users or groups" : "Ndajeni me përdorues ose grupe",
+    "More" : "Më tepër",
     "can edit" : "mund të përpunojnë",
     "Address book name" : "Emër libri adresash",
     "Import" : "Importoje",

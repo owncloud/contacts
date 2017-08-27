@@ -2,9 +2,13 @@ OC.L10N.register(
     "contacts",
     {
     "Contacts" : "Kontakty",
+    "Rename" : "Premenovať",
     "Download" : "Sťahovanie",
+    "Link" : "Odkaz",
+    "Share" : "Zdieľať",
     "Delete" : "Zmazať",
     "Share with users or groups" : "Sprístupniť používateľom alebo skupinám",
+    "More" : "Viac",
     "can edit" : "môže upraviť",
     "Address book name" : "Názov adresára kontaktov",
     "Import" : "Import",

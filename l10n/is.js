@@ -3,9 +3,13 @@ OC.L10N.register(
     {
     "Contacts" : "Tengiliðir",
     "Copy Url to clipboard" : "Afrita slóð á klippispjaldið",
+    "Rename" : "Endurnefna",
     "Download" : "Sækja",
+    "Link" : "Tengill",
+    "Share" : "deilt",
     "Delete" : "Eyða",
     "Share with users or groups" : "Deila með notendum eða hópum",
+    "More" : "Meira",
     "can edit" : "getur breytt",
     "Address book name" : "Heiti nafnaskrár",
     "Import" : "Flytja inn",

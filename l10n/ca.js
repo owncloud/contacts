@@ -2,9 +2,13 @@ OC.L10N.register(
     "contacts",
     {
     "Contacts" : "Contactes",
+    "Rename" : "Reanomena",
     "Download" : "Descàrrega",
+    "Link" : "Enllaç",
+    "Share" : "Compartir",
     "Delete" : "Esborra",
     "Share with users or groups" : "Comparteix amb usuaris o grups",
+    "More" : "Més",
     "can edit" : "pot editar",
     "Address book name" : "Nom de la llibreta d'adreces",
     "Import" : "Importar",

@@ -3,9 +3,13 @@ OC.L10N.register(
     {
     "Contacts" : "Yhteystiedot",
     "Copy Url to clipboard" : "Kopioi osoite leikepöydälle",
+    "Rename" : "Nimeä uudelleen",
     "Download" : "Lataa",
+    "Link" : "Linkki",
+    "Share" : "Jaa",
     "Delete" : "Poista",
     "Share with users or groups" : "Jaa käyttäjien tai ryhmien kanssa",
+    "More" : "Lisää",
     "can edit" : "voi muokata",
     "Address book name" : "Osoitekirjan nimi",
     "Import" : "Tuo",

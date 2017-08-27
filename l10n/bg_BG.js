@@ -3,9 +3,13 @@ OC.L10N.register(
     {
     "Contacts" : "Контакти",
     "Copy Url to clipboard" : "Копирване на интернет адреса",
+    "Rename" : "Преименуване",
     "Download" : "Изтегляне",
+    "Link" : "Връзка",
+    "Share" : "Споделяне",
     "Delete" : "Изтриване",
     "Share with users or groups" : "Споделяне с потребители или групи",
+    "More" : "Още",
     "can edit" : "може да променя",
     "Address book name" : "Име на адреснакнига ",
     "Import" : "Внасяне",

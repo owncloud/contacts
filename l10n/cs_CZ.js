@@ -3,9 +3,13 @@ OC.L10N.register(
     {
     "Contacts" : "Kontakty",
     "Copy Url to clipboard" : "Zkopírovat URL do schránky",
+    "Rename" : "Přejmenovat",
     "Download" : "Stáhnout",
+    "Link" : "Odkaz",
+    "Share" : "Sdílet",
     "Delete" : "Smazat",
     "Share with users or groups" : "Sdílet s uživateli nebo skupinami",
+    "More" : "Více",
     "can edit" : "lze upravovat",
     "Address book name" : "Název adresáře kontaktů",
     "Import" : "Importovat",
