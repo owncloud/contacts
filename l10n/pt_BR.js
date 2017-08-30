@@ -7,7 +7,7 @@ OC.L10N.register(
     "Copy Url to clipboard" : "Copiar URL para a área de transferência",
     "Rename" : "Renomear",
     "Download" : "Baixar",
-    "Link" : "Link",
+    "Link" : "Linque",
     "Share" : "Compartilhar",
     "Delete" : "Excluir",
     "Share with users or groups" : "Compartilhar com usuários ou grupos",
