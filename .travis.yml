@@ -42,7 +42,7 @@ matrix:
 before_install:
     - export DISPLAY=:99.0
     - sh -e /etc/init.d/xvfb start
-    - nvm install 5.6
+    - nvm install node
     - npm install -g npm@latest
     - make
     - make appstore
