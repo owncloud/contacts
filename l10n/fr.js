@@ -24,7 +24,7 @@ OC.L10N.register(
     "Post office box" : "Boîte postale",
     "Postal code" : "Code postal",
     "City" : "Ville",
-    "State or province" : "État ou région",
+    "State or province" : "État ou province",
     "Country" : "Pays",
     "Address" : "Adresse",
     "(new group)" : "(nouveau groupe)",
