@@ -266,6 +266,11 @@ detailsitem.details-item-note label {
 
 /* addressbook settings */
 
+.addressBookList {
+	overflow-x: hidden;
+	overflow-y: scroll;
+	height: 250px;
+}
 
 ul.addressBookList li {
 	padding: 6px 0;
