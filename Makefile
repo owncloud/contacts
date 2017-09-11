@@ -140,7 +140,7 @@ source:
 
 # Builds the source package for the app store, ignores php and js tests
 .PHONY: appstore
-appstore:
+appstore: build
 	rm -rf $(appstore_build_directory)
 	mkdir -p $(appstore_package_name)
 	cp --parents -r \
