@@ -2,6 +2,7 @@ OC.L10N.register(
     "contacts",
     {
     "Contacts" : "Contatti",
+    "Enable phonetic" : "Abilita fonetica",
     "Copy Url to clipboard" : "Copia URL negli appunti",
     "Rename" : "Rinomina",
     "Download" : "Scarica",

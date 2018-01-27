@@ -2,6 +2,7 @@ OC.L10N.register(
     "contacts",
     {
     "Contacts" : "Contactpersonen",
+    "Enable phonetic" : "Inschakelen fonetisch",
     "Reverse name order" : "Omgekeerde sortering op naam",
     "Copy Url to clipboard" : "Kopiëren URL naar klembord",
     "Rename" : "Naam wijzigen",

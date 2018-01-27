@@ -5,6 +5,7 @@ php:
     - 5.6
     - 7.0
     - 7.1
+    - 7.2
     
 services:
   - postgresql
@@ -42,7 +43,7 @@ matrix:
 before_install:
     - export DISPLAY=:99.0
     - sh -e /etc/init.d/xvfb start
-    - nvm install node
+    - nvm install 8
     - npm install -g npm@latest
     - make
     - make appstore
