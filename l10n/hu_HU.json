@@ -1,5 +1,7 @@
 { "translations": {
     "Contacts" : "Névjegyek",
+    "Enable phonetic" : "Hangtónus engedélyezése",
+    "Reverse name order" : "Fordított sorrendben nevek",
     "Copy Url to clipboard" : "Másold az URL-t a vágólapra",
     "Rename" : "Átnevezés",
     "Download" : "Letöltés",
@@ -31,13 +33,18 @@
     "Phonetic last name" : "Fonetikus családneve",
     "Additional names" : "További nevek",
     "Prefix" : "Előtag",
+    "Suffix" : "Képző",
     "All contacts" : "Összes névjegy",
     "Not grouped" : "Nem csoportosított",
     "New contact" : "Új névjegy",
     "Sort by" : "Rendezés elve",
     "{addressbook} shared by {owner}" : "{addressbook} megosztója {owner}",
+    "Contact could not be created." : "Kapcsolat nem található.",
+    "No contacts in file. Only vCard files are allowed." : "Nincsenek névjegyek a fájlban. Csak vCard fájlok engedélyezettek.",
+    "Only vCard version 4.0 (RFC6350) or version 3.0 (RFC2426) are supported." : "Csak a vCard 4.0 (RFC6350) vagy a 3.0-s verzió (RFC2426) támogatott.",
     "Display name" : "Megjelenített név",
     "Nickname" : "Becenév",
+    "Detailed name" : "Részletes Név",
     "Notes" : "Jegyzetek",
     "Website" : "Weboldal",
     "Federated Cloud ID" : "Egyesített Felhő Azonosító",
@@ -46,6 +53,8 @@
     "Other" : "más",
     "Groups" : "Csoportok",
     "Birthday" : "Születésap",
+    "Anniversary" : "Évforduló",
+    "Date of death" : "Halál dátuma",
     "Email" : "E-mail",
     "Instant messaging" : "Azonnali üzenetküldés",
     "Phone" : "Telefonszám",
@@ -55,6 +64,7 @@
     "Fax work" : "Munkahelyi fax",
     "Pager" : "Személyhívó",
     "Voice" : "Hang",
+    "Social network" : "Közösségi háló",
     "Settings" : "Beállítások"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }
