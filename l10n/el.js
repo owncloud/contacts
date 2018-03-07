@@ -21,6 +21,8 @@ OC.L10N.register(
     "Organization" : "Οργανισμός",
     "Title" : "Τίτλος",
     "Add field ..." : "Προσθήκη πεδίου...",
+    "Save changes" : "Αποθήκευση αλλαγών",
+    "Address book" : "Βιβλίο διευθύνσεων",
     "No search result for {query}" : "Δεν βρέθηκε αποτέλεσμα αναζήτησης για {query}",
     "_%n contact_::_%n contacts_" : ["%n επαφή","%n επαφές"],
     "Post office box" : "Ταχυδρομική θυρίδα",

@@ -21,6 +21,8 @@ OC.L10N.register(
     "Organization" : "หน่วยงาน",
     "Title" : "ชื่อเรื่อง",
     "Add field ..." : "เพิ่มช่อง ...",
+    "Save changes" : "บันทึกการเปลี่ยนแปลง\n",
+    "Address book" : "สมุดที่อยู่",
     "No search result for {query}" : "ไม่พบผลลัพธ์การค้นหาสำหรับ {query}",
     "_%n contact_::_%n contacts_" : ["%n รายชื่อผู้ติดต่อ"],
     "Post office box" : "กล่องจดหมาย",

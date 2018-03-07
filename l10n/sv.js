@@ -21,6 +21,8 @@ OC.L10N.register(
     "Organization" : "Organisation",
     "Title" : "Rubrik",
     "Add field ..." : "Lägg till fält ...",
+    "Save changes" : "Spara ändringar",
+    "Address book" : "Adressbok",
     "No search result for {query}" : "Inget sökresultat för {query}",
     "_%n contact_::_%n contacts_" : ["%n kontakt","%n kontakter"],
     "Post office box" : "Postbox",

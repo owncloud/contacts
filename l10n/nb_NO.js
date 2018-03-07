@@ -21,6 +21,8 @@ OC.L10N.register(
     "Organization" : "Organisasjon",
     "Title" : "Tittel",
     "Add field ..." : "Nytt felt ...",
+    "Save changes" : "Lagre endringer",
+    "Address book" : "Adressebok",
     "No search result for {query}" : "Intet søkeresultat for {query}",
     "_%n contact_::_%n contacts_" : ["%n kontakt","%n kontakter"],
     "Post office box" : "Postboks",

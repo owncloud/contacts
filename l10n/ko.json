@@ -19,6 +19,8 @@
     "Organization" : "조직",
     "Title" : "직위",
     "Add field ..." : "필드 추가...",
+    "Save changes" : "변경 사항 저장",
+    "Address book" : "주소록",
     "No search result for {query}" : "{query} 검색 결과가 없음",
     "_%n contact_::_%n contacts_" : ["연락처 %n개"],
     "Post office box" : "우편 사서함",

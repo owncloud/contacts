@@ -18,6 +18,7 @@ OC.L10N.register(
     "Organization" : "المؤسسة",
     "Title" : "العنوان",
     "Add field ..." : "أضف حقلاً ...",
+    "Address book" : "دفتر العناوين",
     "No search result for {query}" : "لم يظهر البحث عن {query} أي نتيجة",
     "_%n contact_::_%n contacts_" : ["جهة","جهة اتصال","جهتا اتصال","%n جهات اتصال","%n جهات اتصال","%n جهات"],
     "Post office box" : "صندوق البريد",

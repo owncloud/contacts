@@ -21,6 +21,8 @@ OC.L10N.register(
     "Organization" : "Organizacja",
     "Title" : "Tytuł",
     "Add field ..." : "Dodaj pole ...",
+    "Save changes" : "Zapisz zmiany",
+    "Address book" : "Książka adresowa",
     "No search result for {query}" : "Brak wyników wyszukiwania dla zapytania {query}",
     "_%n contact_::_%n contacts_" : ["%n kontakt","%n kontaktów","%n kontaktów","%n kontaktów"],
     "Post office box" : "Skrytka pocztowa",

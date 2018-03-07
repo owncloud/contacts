@@ -18,6 +18,7 @@ OC.L10N.register(
     "Organization" : "Societat",
     "Title" : "Títol",
     "Add field ..." : "Apondre un camp...",
+    "Address book" : "Quasernet d'adreças",
     "No search result for {query}" : "Pas cap de resultat per {query}",
     "_%n contact_::_%n contacts_" : ["%n contacte","%n contactes"],
     "Post office box" : "Bóstia postala",

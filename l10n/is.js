@@ -21,6 +21,8 @@ OC.L10N.register(
     "Organization" : "Stofnun/félag",
     "Title" : "Titill",
     "Add field ..." : "Bæta við reit...",
+    "Save changes" : "Save changes",
+    "Address book" : "Nafnaskrá",
     "No search result for {query}" : "Engar leitarniðurstöður fyrir {query}",
     "_%n contact_::_%n contacts_" : ["%n tengiliður","%d tengiliðir"],
     "Post office box" : "Pósthólf",

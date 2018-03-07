@@ -21,6 +21,8 @@ OC.L10N.register(
     "Organization" : "Organizzazione",
     "Title" : "Titolo",
     "Add field ..." : "Aggiungi campo...",
+    "Save changes" : "Salva le modifiche",
+    "Address book" : "Rubrica",
     "No search result for {query}" : "Nessun risultato di ricerca per {query}",
     "_%n contact_::_%n contacts_" : ["%n contatto","%n contatti"],
     "Post office box" : "Casella postale",

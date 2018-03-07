@@ -19,6 +19,8 @@
     "Organization" : "Organizëm",
     "Title" : "Titull",
     "Add field ..." : "Shtoni fushë...",
+    "Save changes" : "Ruaji ndryshimet",
+    "Address book" : "Libër adresash",
     "No search result for {query}" : "S’pat përfundime kërkimi për {query}",
     "_%n contact_::_%n contacts_" : ["%n kontakt","%n kontakte"],
     "Post office box" : "Kuti postare në postë",

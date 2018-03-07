@@ -21,6 +21,7 @@ OC.L10N.register(
     "Organization" : "Organisasie",
     "Title" : "Titel",
     "Add field ..." : "Voeg veld toe…",
+    "Save changes" : "Bewaar veranderinge",
     "No search result for {query}" : "Geen soekresultate vir {query} nie",
     "_%n contact_::_%n contacts_" : ["%n kontak","%n kontakte"],
     "Post office box" : "Posbus",

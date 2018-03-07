@@ -21,6 +21,8 @@ OC.L10N.register(
     "Organization" : "Ustanova",
     "Title" : "Naslov",
     "Add field ..." : "Dodaj polje ...",
+    "Save changes" : "Shrani spremembe",
+    "Address book" : "Imenik",
     "No search result for {query}" : "Ni zadetkov iskanja za {query}",
     "_%n contact_::_%n contacts_" : ["%n stik","%n stika","%n stiki","%n stikov"],
     "Post office box" : "Poštni predal",

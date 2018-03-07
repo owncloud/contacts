@@ -19,6 +19,7 @@ OC.L10N.register(
     "Organization" : "Организација",
     "Title" : "Наслов",
     "Add field ..." : "Додади поле...",
+    "Address book" : "Адресар",
     "No search result for {query}" : "Нема резултати од пребарувањето за {query}",
     "_%n contact_::_%n contacts_" : ["%n контакти","контакти"],
     "Post office box" : "Поштенски број",

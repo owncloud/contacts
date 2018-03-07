@@ -21,6 +21,7 @@ OC.L10N.register(
     "Organization" : "Szervezet",
     "Title" : "Cím",
     "Add field ..." : "Mező hozzáadása",
+    "Address book" : "Névjegyalbum",
     "No search result for {query}" : "{query} keresésre nincs találat.",
     "Post office box" : "Postaláda",
     "Postal code" : "Irányítószám",

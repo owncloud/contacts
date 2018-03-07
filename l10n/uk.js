@@ -21,6 +21,7 @@ OC.L10N.register(
     "Organization" : "Організація",
     "Title" : "Назва",
     "Add field ..." : "Додати поле ...",
+    "Address book" : "Адресна книга",
     "No search result for {query}" : "Для {query} результатів не знайдено",
     "_%n contact_::_%n contacts_" : ["%n контакт","%n контакт","%n контактів"],
     "Post office box" : "Поштова скринька",

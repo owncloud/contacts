@@ -19,6 +19,7 @@ OC.L10N.register(
     "Organization" : "Организация",
     "Title" : "Заглавие",
     "Add field ..." : "Добави приятел",
+    "Address book" : "Адресник",
     "No search result for {query}" : "Няма намерени резултати за {query}",
     "_%n contact_::_%n contacts_" : ["%n контакт","%n контакта"],
     "Post office box" : "Офисна пощенска кутия",

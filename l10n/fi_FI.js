@@ -20,6 +20,7 @@ OC.L10N.register(
     "Organization" : "Organisaatio",
     "Title" : "Otsikko",
     "Add field ..." : "Lisää kenttä...",
+    "Address book" : "Osoitekirja",
     "No search result for {query}" : "Ei tuloksia haulle {query}",
     "_%n contact_::_%n contacts_" : ["%n yhteystieto","%n yhteystietoa"],
     "Post office box" : "Postilokero",
