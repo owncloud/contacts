@@ -20,7 +20,7 @@ OC.L10N.register(
     "Add field ..." : "Pridať pole ...",
     "Address book" : "Adresár kontaktov",
     "No search result for {query}" : "Žiadne výsledky vyhľadávania pre {query}",
-    "_%n contact_::_%n contacts_" : ["%n kontakt","%n kontaktov","%n kontaktov"],
+    "_%n contact_::_%n contacts_" : ["%n kontakt","%n kontaktov","%n kontaktov","%n kontaktov"],
     "Post office box" : "Poštová adresa",
     "Postal code" : "PSČ",
     "City" : "Mesto",
@@ -63,4 +63,4 @@ OC.L10N.register(
     "Social network" : "Sociálna sieť",
     "Settings" : "Nastavenia"
 },
-"nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;");
+"nplurals=4; plural=(n % 1 == 0 ? 4: n==1 ? 1: n % 1 == 0 && n>=2 && n<=4 ? 3);");

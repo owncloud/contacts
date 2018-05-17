@@ -22,7 +22,6 @@
     "Save changes" : "שמירת שינויים",
     "Address book" : "ספר כתובות",
     "No search result for {query}" : "אין תוצאות חיפוש עבור {query}",
-    "_%n contact_::_%n contacts_" : ["%n איש קשר","%n אנשי קשר"],
     "Post office box" : "תיבת דואר",
     "Postal code" : "מיקוד",
     "City" : "עיר",
@@ -69,5 +68,5 @@
     "Voice" : "קולי",
     "Social network" : "רשת חברתית",
     "Settings" : "הגדרות"
-},"pluralForm" :"nplurals=2; plural=(n != 1);"
+},"pluralForm" :"nplurals=4; plural=(n==1 ? 1: n == 2 ? 2 : (n % 10 == 0 and n > 10) ? 4);"
 }

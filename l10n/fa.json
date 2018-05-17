@@ -21,7 +21,7 @@
     "Add field ..." : "اضافه کردن فیلد ...",
     "Address book" : "کتابچه آدرس",
     "No search result for {query}" : "نتیجه جستجو برای {سوال} موجود نیست",
-    "_%n contact_::_%n contacts_" : ["%n مخاطب ها"],
+    "_%n contact_::_%n contacts_" : ["%n مخاطب ها","%n مخاطب ها"],
     "Post office box" : "صندوق پست",
     "Postal code" : "کد پستی",
     "City" : "شهر",
@@ -68,5 +68,5 @@
     "Voice" : "صدا",
     "Social network" : "شبکه اجتماعی",
     "Settings" : "تنظیمات"
-},"pluralForm" :"nplurals=1; plural=0;"
+},"pluralForm" :"nplurals=2; plural=((n<=1 && n>= 0) ? 1);"
 }

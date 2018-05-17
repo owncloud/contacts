@@ -24,7 +24,6 @@ OC.L10N.register(
     "Save changes" : "שמירת שינויים",
     "Address book" : "ספר כתובות",
     "No search result for {query}" : "אין תוצאות חיפוש עבור {query}",
-    "_%n contact_::_%n contacts_" : ["%n איש קשר","%n אנשי קשר"],
     "Post office box" : "תיבת דואר",
     "Postal code" : "מיקוד",
     "City" : "עיר",
@@ -72,4 +71,4 @@ OC.L10N.register(
     "Social network" : "רשת חברתית",
     "Settings" : "הגדרות"
 },
-"nplurals=2; plural=(n != 1);");
+"nplurals=4; plural=(n==1 ? 1: n == 2 ? 2 : (n % 10 == 0 and n > 10) ? 4);");

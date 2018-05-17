@@ -23,7 +23,7 @@ OC.L10N.register(
     "Add field ..." : "اضافه کردن فیلد ...",
     "Address book" : "کتابچه آدرس",
     "No search result for {query}" : "نتیجه جستجو برای {سوال} موجود نیست",
-    "_%n contact_::_%n contacts_" : ["%n مخاطب ها"],
+    "_%n contact_::_%n contacts_" : ["%n مخاطب ها","%n مخاطب ها"],
     "Post office box" : "صندوق پست",
     "Postal code" : "کد پستی",
     "City" : "شهر",
@@ -71,4 +71,4 @@ OC.L10N.register(
     "Social network" : "شبکه اجتماعی",
     "Settings" : "تنظیمات"
 },
-"nplurals=1; plural=0;");
+"nplurals=2; plural=((n<=1 && n>= 0) ? 1);");

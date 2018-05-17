@@ -22,7 +22,7 @@ OC.L10N.register(
     "Save changes" : "Uložit změny",
     "Address book" : "Adresář kontaktů",
     "No search result for {query}" : "Žádný nález pro {query}",
-    "_%n contact_::_%n contacts_" : ["%n kontakt","%n kontakty","%n kontaktů"],
+    "_%n contact_::_%n contacts_" : ["%n kontakt","%n kontakty","%n kontaktů","%n kontaktů"],
     "Post office box" : "Poštovní schránka",
     "Postal code" : "Směrovací číslo",
     "City" : "Město",
@@ -66,4 +66,4 @@ OC.L10N.register(
     "Social network" : "Sociální síť",
     "Settings" : "Nastavení"
 },
-"nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;");
+"nplurals=4; plural=(n < 10 && n % 1 == 0) ? 1 : (n < 9999 && n >= 10 && n % 1 == 0) ? 3 : (n % 1 != 0) : 4;");
