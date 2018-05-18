@@ -68,5 +68,5 @@
     "Voice" : "صدا",
     "Social network" : "شبکه اجتماعی",
     "Settings" : "تنظیمات"
-},"pluralForm" :"nplurals=2; plural=((n<=1 && n>= 0) ? 1);"
+},"pluralForm" :"nplurals=2; plural=(n > 1);"
 }
