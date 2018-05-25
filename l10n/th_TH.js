@@ -38,7 +38,7 @@ OC.L10N.register(
     "Phonetic last name" : "ออกเสียงนามสกุล",
     "Additional names" : "ชื่ออื่นๆ",
     "Prefix" : "คำนำหน้า",
-    "Suffix" : "คำต่อท้าย",
+    "Suffix" : "ส่วนต่อท้าย",
     "All contacts" : "รายชื่อทั้งหมด",
     "Not grouped" : "ไม่ถูกจัดกลุ่ม",
     "New contact" : "รายชื่อผุ้ติดต่อใหม่",
