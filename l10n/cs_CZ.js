@@ -2,6 +2,7 @@ OC.L10N.register(
     "contacts",
     {
     "Contacts" : "Kontakty",
+    "Reverse name order" : "Opačné zaření jmen",
     "Copy Url to clipboard" : "Zkopírovat URL do schránky",
     "Rename" : "Přejmenovat",
     "Download" : "Stáhnout",
@@ -41,6 +42,7 @@ OC.L10N.register(
     "Sort by" : "Seřadit podle",
     "{addressbook} shared by {owner}" : "{addressbook} sdílí {owner}",
     "Contact could not be created." : "Kontakt se nepodařilo vytvořit.",
+    "Only vCard version 4.0 (RFC6350) or version 3.0 (RFC2426) are supported." : "Je podporován pouze vCard verze 4.0 (RFC6350) nebo verze 3.0 (RFC2426).",
     "Display name" : "Zobrazované jméno",
     "Nickname" : "Přezdívka",
     "Detailed name" : "Jméno podrobně",
