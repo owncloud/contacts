@@ -21,6 +21,7 @@ OC.L10N.register(
     "Organization" : "Organització",
     "Title" : "Títol",
     "Add field ..." : "Afegeix camp...",
+    "Save changes" : "Desar canvis",
     "Address book" : "Agenda",
     "No search result for {query}" : "No s'han trobat resultats per {query}",
     "_%n contact_::_%n contacts_" : ["%n contactes","%n contactes"],
