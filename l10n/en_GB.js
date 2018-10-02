@@ -21,6 +21,7 @@ OC.L10N.register(
     "Organization" : "Organisation",
     "Title" : "Title",
     "Add field ..." : "Add field ...",
+    "Save changes" : "Save changes",
     "Address book" : "Address book",
     "No search result for {query}" : "No search result for {query}",
     "_%n contact_::_%n contacts_" : ["%n contact","%n contacts"],
