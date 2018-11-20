@@ -40,7 +40,7 @@ OC.L10N.register(
     "Prefix" : "プレフィックス",
     "Suffix" : "サフィックス",
     "All contacts" : "すべての連絡先",
-    "Not grouped" : "グループ化されていません",
+    "Not grouped" : "グループ化されていない連絡先",
     "New contact" : "新しい連絡先",
     "Sort by" : "ソート: ",
     "{addressbook} shared by {owner}" : " {owner}と共有中の{addressbook} ",
