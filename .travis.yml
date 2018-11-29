@@ -59,6 +59,7 @@ before_script:
     - if [[ "$DB" == 'mysql' ]]; then mysql -u root -e "grant all on oc_autotest.* to 'oc_autotest'@'127.0.0.1';"; fi
     # fill owncloud with default configs and enable contacts
     - cd owncloud
+    - make
     - mkdir data
     - ./occ maintenance:install --database-name oc_autotest --database-user oc_autotest --admin-user admin --admin-pass admin --database $DB --database-pass='' --database-host='127.0.0.1'
     - ./occ app:enable contacts
@@ -67,7 +68,9 @@ before_script:
     - cd apps/contacts
 
 script:
-    - make test
+    - make test-js
+    - make test-php-unit
+    - make test-php-integration
     - if [[ "$APPSTORE" == 'YES' ]]; then make appstore; fi
 
 after_failure:

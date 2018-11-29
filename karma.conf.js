@@ -1,5 +1,5 @@
 module.exports = function(config) {
-	config.set({
+	var config_obj = {
 
 		// base path that will be used to resolve all patterns (eg. files, exclude)
 		basePath: '',
@@ -99,6 +99,30 @@ module.exports = function(config) {
 
 		// Concurrency level
 		// how many browser should be started simultaneous
-		concurrency: Infinity
-	})
+		concurrency: Infinity,
+
+		// to avoid DISCONNECTED messages
+		browserDisconnectTimeout : 10000,
+		browserDisconnectTolerance : 10,
+		browserNoActivityTimeout : 4*60*1000,
+		captureTimeout : 4*60*1000
+	}
+
+	if (process.env.DRONE === "true") {
+		config_obj.hostname = 'js-tests';
+		config_obj.browsers = ['firefox_custom'];
+		config_obj.customLaunchers = {
+				firefox_custom: {
+				base: 'WebDriver',
+				browserName: 'firefox',
+				platform: 'Linux',
+				config: {
+					hostname: 'selenium',
+					port: 4444
+				}
+			}
+		};
+	}
+
+	config.set(config_obj);
 };

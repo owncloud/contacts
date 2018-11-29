@@ -32,14 +32,15 @@
     "gulp-eslint": "^3.0.1",
     "gulp-ng-annotate": "^2.0.0",
     "gulp-sourcemaps": "^1.6.0",
-    "karma": "^1.2.0",
+    "karma": "^3.0",
     "karma-chai": "^0.1.0",
     "karma-coverage": "^1.1.1",
     "karma-firefox-launcher": "^1.0.0",
     "karma-mocha": "^1.1.1",
     "karma-mocha-reporter": "^2.2.4",
     "karma-sinon": "^1.0.5",
-    "mocha": "^3.5.0",
+    "karma-webdriver-launcher": "^1.0.5",
+    "mocha": "^5.2",
     "sinon": "^1.17.5"
   }
 }
