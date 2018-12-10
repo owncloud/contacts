@@ -38,6 +38,6 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 - Fix issues with group handling
 - Allow export of address books in ownCloud 10+
 
-[1.5.5]: https://github.com/owncloud/calendar/compare/v1.5.4...v1.5.5
-[1.5.4]: https://github.com/owncloud/calendar/compare/v1.5.3...v1.5.4
+[1.5.5]: https://github.com/owncloud/contacts/compare/v1.5.4...v1.5.5
+[1.5.4]: https://github.com/owncloud/contacts/compare/v1.5.3...v1.5.4
 

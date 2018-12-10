@@ -152,6 +152,7 @@ appstore: build
 	l10n \
 	templates \
 	CHANGELOG.md \
+	README.md \
 	js/public \
 	js/dav/dav.js \
 	js/vendor/angular/angular.js \
