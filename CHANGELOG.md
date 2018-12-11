@@ -3,7 +3,9 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
-## [1.5.5]
+## [Unreleased]
+
+## [1.5.5] - 2018-12-11
 
 ### Added
 
@@ -38,6 +40,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 - Fix issues with group handling
 - Allow export of address books in ownCloud 10+
 
+[Unreleased]: https://github.com/owncloud/contacts/compare/v1.5.5...master
 [1.5.5]: https://github.com/owncloud/contacts/compare/v1.5.4...v1.5.5
 [1.5.4]: https://github.com/owncloud/contacts/compare/v1.5.3...v1.5.4
 
