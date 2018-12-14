@@ -1,7 +1,24 @@
-node_modules
 build
 js/public
 js/vendor
 coverage
 npm-debug.log
 package-lock.json
+
+.php_cs.cache
+
+# Composer
+vendor/
+vendor-bin/**/vendor
+vendor-bin/**/composer.lock
+
+# Mac OS
+.DS_Store
+
+# Tests - auto-generated files
+/tests/acceptance/output*
+/tests/output/
+
+# Node.js modules
+node_modules/
+

@@ -62,6 +62,19 @@ endif
 endif
 endif
 
+# bin file definitions
+PHPUNIT=php -d zend.enable_gc=0 "$(PWD)/../../lib/composer/bin/phpunit"
+PHPUNITDBG=phpdbg -qrr -d memory_limit=4096M -d zend.enable_gc=0 "$(PWD)/../../lib/composer/bin/phpunit"
+PHP_CS_FIXER=php -d zend.enable_gc=0 vendor-bin/owncloud-codestyle/vendor/bin/php-cs-fixer
+PHAN=php -d zend.enable_gc=0 vendor-bin/phan/vendor/bin/phan
+PHPSTAN=php -d zend.enable_gc=0 vendor-bin/phpstan/vendor/bin/phpstan
+
+.DEFAULT_GOAL := help
+
+# start with displaying help
+help:
+	@fgrep -h "##" $(MAKEFILE_LIST) | fgrep -v fgrep | sed -e 's/\\$$//' | sed -e 's/##//' | sed -e 's/  */ /' | column -t -s :
+
 
 all: build
 
@@ -179,22 +192,9 @@ endif
 # Command for running JS and PHP tests. Works for package.json files in the js/
 # and root directory. If phpunit is not installed systemwide, a copy is fetched
 # from the internet
-.PHONY: test
-test:
-ifneq (,$(wildcard $(CURDIR)/js/package.json))
-	cd js && $(npm) run test
-endif
-ifneq (,$(wildcard $(CURDIR)/package.json))
-	$(npm) run test
-endif
-
-ifneq (,$(wildcard $(CURDIR)/../../lib/composer/bin/phpunit))
-	$(CURDIR)/../../lib/composer/bin/phpunit -c phpunit.xml --coverage-clover build/php-unit.clover
-	$(CURDIR)/../../lib/composer/bin/phpunit -c phpunit.integration.xml --coverage-clover build/php-unit.clover
-else
-	phpunit -c phpunit.xml --coverage-clover build/php-unit.clover
-	phpunit -c phpunit.integration.xml --coverage-clover build/php-unit.clover
-endif
+.PHONY: test-js
+test-js:
+	./js/tests/run-js-test.sh
 
 # watch out for changes and rebuild
 .PHONY: watch
@@ -205,3 +205,81 @@ endif
 ifneq (,$(wildcard $(CURDIR)/package.json))
 	$(npm) run watch
 endif
+
+##
+## Tests
+##--------------------------------------
+
+.PHONY: test-php-unit
+test-php-unit:             ## Run php unit tests
+	$(PHPUNIT) --configuration ./phpunit.xml --testsuite unit
+
+.PHONY: test-php-integration
+test-php-integration:             ## Run php integration tests
+	$(PHPUNIT) --configuration ./phpunit.integration.xml --testsuite integration
+
+.PHONY: test-php-unit-dbg
+test-php-unit-dbg:         ## Run php unit tests using phpdbg
+	$(PHPUNITDBG) --configuration ./phpunit.xml --testsuite unit
+
+.PHONY: test-php-integration-dbg
+test-php-integration-dbg:             ## Run php integration tests
+	$(PHPUNITDBG) --configuration ./phpunit.integration.xml --testsuite integration
+
+.PHONY: test-php-style
+test-php-style:            ## Run php-cs-fixer and check owncloud code-style
+test-php-style: vendor-bin/owncloud-codestyle/vendor
+	$(PHP_CS_FIXER) fix -v --diff --diff-format udiff --allow-risky yes --dry-run
+
+.PHONY: test-php-style-fix
+test-php-style-fix:        ## Run php-cs-fixer and fix code style issues
+test-php-style-fix: vendor-bin/owncloud-codestyle/vendor
+	$(PHP_CS_FIXER) fix -v --diff --diff-format udiff --allow-risky yes
+
+.PHONY: test-codecheck
+test-codecheck: test-syntax-php
+	$(occ) app:check-code $(app_name) -c private -c strong-comparison
+
+.PHONY: test-codecheck-deprecations
+test-codecheck-deprecations:
+	$(occ) app:check-code $(app_name) -c deprecation
+
+.PHONY: test-php-phan
+test-php-phan: ## Run phan
+test-php-phan: vendor-bin/phan/vendor
+	$(PHAN) --config-file .phan/config.php --require-config-exists
+
+.PHONY: test-php-phpstan
+test-php-phpstan: ## Run phpstan
+test-php-phpstan: vendor-bin/phpstan/vendor
+	$(PHPSTAN) analyse --memory-limit=4G --configuration=./phpstan.neon --no-progress --level=5 appinfo
+
+#
+# Dependency management
+#--------------------------------------
+composer.lock: composer.json
+	@echo composer.lock is not up to date.
+
+vendor: composer.lock
+	composer install --no-dev
+
+vendor/bamarni/composer-bin-plugin: composer.lock
+	composer install
+
+vendor-bin/owncloud-codestyle/vendor: vendor/bamarni/composer-bin-plugin vendor-bin/owncloud-codestyle/composer.lock
+	composer bin owncloud-codestyle install --no-progress
+
+vendor-bin/owncloud-codestyle/composer.lock: vendor-bin/owncloud-codestyle/composer.json
+	@echo owncloud-codestyle composer.lock is not up to date.
+
+vendor-bin/phan/vendor: vendor/bamarni/composer-bin-plugin vendor-bin/phan/composer.lock
+	composer bin phan install --no-progress
+
+vendor-bin/phan/composer.lock: vendor-bin/phan/composer.json
+	@echo phan composer.lock is not up to date.
+
+vendor-bin/phpstan/vendor: vendor/bamarni/composer-bin-plugin vendor-bin/phpstan/composer.lock
+	composer bin phpstan install --no-progress
+
+vendor-bin/phpstan/composer.lock: vendor-bin/phpstan/composer.json
+	@echo phpstan composer.lock is not up to date.
