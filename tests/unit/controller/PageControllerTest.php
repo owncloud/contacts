@@ -15,7 +15,6 @@ use PHPUnit_Framework_TestCase;
 
 use OCP\AppFramework\Http\TemplateResponse;
 
-
 class PageControllerTest extends PHPUnit_Framework_TestCase {
 
 	/** @var PageController */
@@ -33,5 +32,4 @@ class PageControllerTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals('main', $result->getTemplateName());
 		$this->assertTrue($result instanceof TemplateResponse);
 	}
-
 }
