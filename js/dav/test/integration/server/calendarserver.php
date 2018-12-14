@@ -9,7 +9,7 @@ This server features CalDAV support
 */
 
 // settings
-date_default_timezone_set('Canada/Eastern');
+\date_default_timezone_set('Canada/Eastern');
 
 // If you want to run the SabreDAV server in a custom location (using mod_rewrite for instance)
 // You can override the baseUri here.
@@ -17,20 +17,20 @@ date_default_timezone_set('Canada/Eastern');
 
 /* Database */
 $pdo = new PDO('sqlite:data/db.sqlite');
-$pdo->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
+$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 //Mapping PHP errors to exceptions
-function exception_error_handler($errno, $errstr, $errfile, $errline ) {
-    throw new ErrorException($errstr, 0, $errno, $errfile, $errline);
+function exception_error_handler($errno, $errstr, $errfile, $errline) {
+	throw new ErrorException($errstr, 0, $errno, $errfile, $errline);
 }
-set_error_handler("exception_error_handler");
+\set_error_handler("exception_error_handler");
 
 // Files we need
 require_once 'vendor/autoload.php';
 
 // Backends
-$authBackend = new Sabre\DAV\Auth\Backend\BasicCallBack(function($username, $password) {
-  return true;
+$authBackend = new Sabre\DAV\Auth\Backend\BasicCallBack(function ($username, $password) {
+	return true;
 });
 
 $calendarBackend = new Sabre\CalDAV\Backend\PDO($pdo);
@@ -39,18 +39,19 @@ $principalBackend = new Sabre\DAVACL\PrincipalBackend\PDO($pdo);
 
 // Directory structure
 $tree = [
-    new Sabre\CalDAV\Principal\Collection($principalBackend),
-    new Sabre\CalDAV\CalendarRootNode($principalBackend, $calendarBackend),
-    new Sabre\CardDAV\AddressBookRoot($principalBackend, $contactsBackend),
+	new Sabre\CalDAV\Principal\Collection($principalBackend),
+	new Sabre\CalDAV\CalendarRootNode($principalBackend, $calendarBackend),
+	new Sabre\CardDAV\AddressBookRoot($principalBackend, $contactsBackend),
 ];
 
 $server = new Sabre\DAV\Server($tree);
 
-if (isset($baseUri))
-    $server->setBaseUri($baseUri);
+if (isset($baseUri)) {
+	$server->setBaseUri($baseUri);
+}
 
 /* Server Plugins */
-$authPlugin = new Sabre\DAV\Auth\Plugin($authBackend,'SabreDAV');
+$authPlugin = new Sabre\DAV\Auth\Plugin($authBackend, 'SabreDAV');
 $server->addPlugin($authPlugin);
 
 $aclPlugin = new Sabre\DAVACL\Plugin();
@@ -66,12 +67,12 @@ $server->addPlugin($carddavPlugin);
 
 /* Calendar subscription support */
 $server->addPlugin(
-    new Sabre\CalDAV\Subscriptions\Plugin()
+	new Sabre\CalDAV\Subscriptions\Plugin()
 );
 
 /* WebDAV Sync */
 $server->addPlugin(
-    new Sabre\DAV\Sync\Plugin()
+	new Sabre\DAV\Sync\Plugin()
 );
 
 // Support for html frontend

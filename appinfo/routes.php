@@ -10,7 +10,7 @@
  */
 
 return [
-    'routes' => [
+	'routes' => [
 	   ['name' => 'page#index', 'url' => '/', 'verb' => 'GET'],
-    ]
+	]
 ];
