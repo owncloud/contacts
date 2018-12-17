@@ -1,5 +1,6 @@
 { "translations": {
     "Contacts" : "Kontakty",
+    "Enable phonetic" : "Povolit fonetické",
     "Reverse name order" : "Opačné zaření jmen",
     "Copy Url to clipboard" : "Zkopírovat URL do schránky",
     "Rename" : "Přejmenovat",
@@ -31,6 +32,8 @@
     "(new group)" : "(nová skupina)",
     "Last name" : "Příjmení",
     "First name" : "Křestní jméno",
+    "Phonetic first name" : "Fonetické jméno",
+    "Phonetic last name" : "Fonetické příjmení",
     "Additional names" : "Další jména",
     "Prefix" : "Předpona",
     "Suffix" : "Přípona",
@@ -40,6 +43,7 @@
     "Sort by" : "Seřadit podle",
     "{addressbook} shared by {owner}" : "{addressbook} sdílí {owner}",
     "Contact could not be created." : "Kontakt se nepodařilo vytvořit.",
+    "No contacts in file. Only vCard files are allowed." : "Soubor neobsahuje žádné kontakty. Jsou povoleny pouze soubory vCard.",
     "Only vCard version 4.0 (RFC6350) or version 3.0 (RFC2426) are supported." : "Je podporován pouze vCard verze 4.0 (RFC6350) nebo verze 3.0 (RFC2426).",
     "Display name" : "Zobrazované jméno",
     "Nickname" : "Přezdívka",
