@@ -9,7 +9,7 @@
 # Dependencies:
 # * make
 # * which
-# * curl: used if phpunit and composer are not installed to fetch them from the web
+# * curl: used if phpunit is not installed to fetch them from the web
 # * tar: for building the archive
 # * npm: for building and testing everything JS
 #
@@ -39,6 +39,11 @@
 #        "build": "node node_modules/gulp-cli/bin/gulp.js"
 #    },
 
+COMPOSER_BIN := $(shell command -v composer 2> /dev/null)
+ifndef COMPOSER_BIN
+    $(error composer is not available on your system, please install composer)
+endif
+
 app_name=$(notdir $(CURDIR))
 project_directory=$(CURDIR)/../$(app_name)
 build_tools_directory=$(CURDIR)/build/tools
@@ -47,7 +52,6 @@ source_package_name=$(source_build_directory)/$(app_name)
 appstore_build_directory=$(CURDIR)/build/artifacts/appstore
 appstore_package_name=$(appstore_build_directory)/$(app_name)
 npm=$(shell which npm 2> /dev/null)
-composer=$(shell which composer 2> /dev/null)
 
 occ=$(CURDIR)/../../occ
 private_key=$(HOME)/.owncloud/certificates/$(app_name).key
@@ -93,21 +97,11 @@ ifneq (,$(wildcard $(CURDIR)/js/package.json))
 	make npm
 endif
 
-# Installs and updates the composer dependencies. If composer is not installed
-# a copy is fetched from the web
+# Installs and updates the composer dependencies.
 .PHONY: composer
 composer:
-ifeq (, $(composer))
-	@echo "No composer command available, downloading a copy from the web"
-	mkdir -p $(build_tools_directory)
-	curl -sS https://getcomposer.org/installer | php
-	mv composer.phar $(build_tools_directory)
-	php $(build_tools_directory)/composer.phar install --prefer-dist
-	php $(build_tools_directory)/composer.phar update --prefer-dist
-else
 	composer install --prefer-dist
 	composer update --prefer-dist
-endif
 
 # Installs npm dependencies
 .PHONY: npm
@@ -131,6 +125,7 @@ distclean: clean
 	rm -rf node_modules
 	rm -rf js/vendor
 	rm -rf js/node_modules
+	rm -Rf vendor-bin/**/vendor vendor-bin/**/composer.lock
 
 # Builds the source and appstore package
 .PHONY: dist
