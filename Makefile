@@ -232,7 +232,7 @@ test-php-style-fix: vendor-bin/owncloud-codestyle/vendor
 	$(PHP_CS_FIXER) fix -v --diff --diff-format udiff --allow-risky yes
 
 .PHONY: test-codecheck
-test-codecheck: test-syntax-php
+test-codecheck:
 	$(occ) app:check-code $(app_name) -c private -c strong-comparison
 
 .PHONY: test-codecheck-deprecations
