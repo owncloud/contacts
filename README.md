@@ -8,6 +8,8 @@
 
 **A contacts app for [ownCloud](https://owncloud.org)**
 
+Run CI again now the core has PHPUnit 6
+
 This is the new contacts app that has replaced the [old contacts app](https://github.com/owncloudarchive/contacts), and is only the frontend for the new server-integrated CardDAV-Backend.
 
 ![](https://raw.githubusercontent.com/owncloud/screenshots/master/contacts/contacts.png)
