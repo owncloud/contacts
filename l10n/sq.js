@@ -8,7 +8,7 @@ OC.L10N.register(
     "Rename" : "Riemërtoje",
     "Download" : "Shkarkoje",
     "Link" : "Lidhje",
-    "Share" : "Ndaje",
+    "Share" : "Ndaje me të tjerë",
     "Delete" : "Fshije",
     "Share with users or groups" : "Ndajeni me përdorues ose grupe",
     "More" : "Më tepër",
