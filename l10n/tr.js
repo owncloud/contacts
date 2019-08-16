@@ -21,6 +21,7 @@ OC.L10N.register(
     "Organization" : "Kurum",
     "Title" : "Başlık",
     "Add field ..." : "Alan ekle...",
+    "Save changes" : "Değişiklikleri Kaydet",
     "Address book" : "Adres defteri",
     "No search result for {query}" : "{query} için arama sonucu yok",
     "_%n contact_::_%n contacts_" : ["%n kişi","%n kişi"],
