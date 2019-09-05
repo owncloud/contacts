@@ -1822,7 +1822,7 @@ steps:
   settings:
     channel: builds
     webhook:
-      from_secret: public_rocketchat
+      from_secret: private_rocketchat
 
 trigger:
   ref:
