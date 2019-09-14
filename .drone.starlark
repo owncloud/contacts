@@ -120,8 +120,8 @@ def codestyle():
 
 	if 'defaults' in config:
 		if 'codestyle' in config['defaults']:
-			if 'phpVersions' in config['defaults']['codestyle']:
-				default['phpVersions'] = config['defaults']['codestyle']['phpVersions']
+			for item in config['defaults']['codestyle']:
+				default[item] = config['defaults']['codestyle'][item]
 
 	codestyleConfig = config['codestyle']
 
@@ -137,9 +137,11 @@ def codestyle():
 		codestyleConfig = {'doDefault': {}}
 
 	for category, matrix in codestyleConfig.items():
-		phpVersions = matrix['phpVersions'] if 'phpVersions' in matrix else default['phpVersions']
+		params = {}
+		for item in default:
+			params[item] = matrix[item] if item in matrix else default[item]
 
-		for phpVersion in phpVersions:
+		for phpVersion in params['phpVersions']:
 			name = 'coding-standard-php%s' % phpVersion
 
 			result = {
@@ -189,10 +191,8 @@ def phpstan():
 
 	if 'defaults' in config:
 		if 'phpstan' in config['defaults']:
-			if 'phpVersions' in config['defaults']['phpstan']:
-				default['phpVersions'] = config['defaults']['phpstan']['phpVersions']
-			if 'logLevel' in config['defaults']['phpstan']:
-				default['logLevel'] = config['defaults']['phpstan']['logLevel']
+			for item in config['defaults']['phpstan']:
+				default[item] = config['defaults']['phpstan'][item]
 
 	phpstanConfig = config['phpstan']
 
@@ -208,10 +208,11 @@ def phpstan():
 		phpstanConfig = {'doDefault': {}}
 
 	for category, matrix in phpstanConfig.items():
-		phpVersions = matrix['phpVersions'] if 'phpVersions' in matrix else default['phpVersions']
-		logLevel = matrix['logLevel'] if 'logLevel' in matrix else default['logLevel']
+		params = {}
+		for item in default:
+			params[item] = matrix[item] if item in matrix else default[item]
 
-		for phpVersion in phpVersions:
+		for phpVersion in params['phpVersions']:
 			name = 'phpstan-php%s' % phpVersion
 
 			result = {
@@ -224,7 +225,7 @@ def phpstan():
 				},
 				'steps': [
 					installCore('daily-master-qa', 'sqlite', False),
-					setupServerAndApp(phpVersion, logLevel),
+					setupServerAndApp(phpVersion, params['logLevel']),
 					{
 						'name': 'phpstan',
 						'image': 'owncloudci/php:%s' % phpVersion,
@@ -262,8 +263,8 @@ def phan():
 
 	if 'defaults' in config:
 		if 'phan' in config['defaults']:
-			if 'phpVersions' in config['defaults']['phan']:
-				default['phpVersions'] = config['defaults']['phan']['phpVersions']
+			for item in config['defaults']['phan']:
+				default[item] = config['defaults']['phan'][item]
 
 	phanConfig = config['phan']
 
@@ -279,9 +280,11 @@ def phan():
 		phanConfig = {'doDefault': {}}
 
 	for category, matrix in phanConfig.items():
-		phpVersions = matrix['phpVersions'] if 'phpVersions' in matrix else default['phpVersions']
+		params = {}
+		for item in default:
+			params[item] = matrix[item] if item in matrix else default[item]
 
-		for phpVersion in phpVersions:
+		for phpVersion in params['phpVersions']:
 			name = 'phan-php%s' % phpVersion
 
 			result = {
@@ -328,30 +331,29 @@ def javascript():
 	default = {
 		'coverage': False,
 		'logLevel': '2',
+		'extraSetup': None,
 		'extraServices': [],
+		'extraEnvironment': {},
+		'extraCommandsBeforeTestRun': [],
 	}
 
 	if 'defaults' in config:
 		if 'javascript' in config['defaults']:
-			if 'coverage' in config['defaults']['javascript']:
-				default['coverage'] = config['defaults']['javascript']['coverage']
-			if 'logLevel' in config['defaults']['javascript']:
-				default['logLevel'] = config['defaults']['javascript']['logLevel']
-			if 'extraServices' in config['defaults']['javascript']:
-				default['extraServices'] = config['defaults']['javascript']['extraServices']
+			for item in config['defaults']['javascript']:
+				default[item] = config['defaults']['javascript'][item]
 
-	javascriptConfig = config['javascript']
+	matrix = config['javascript']
 
-	if type(javascriptConfig) == "bool":
-		if javascriptConfig:
+	if type(matrix) == "bool":
+		if matrix:
 			# the config has 'javascript' true, so specify an empty dict that will get the defaults
-			javascriptConfig = {}
+			matrix = {}
 		else:
 			return pipelines
 
-	coverage = javascriptConfig['coverage'] if 'coverage' in javascriptConfig else default['coverage']
-	logLevel = javascriptConfig['logLevel'] if 'logLevel' in javascriptConfig else default['logLevel']
-	extraServices = javascriptConfig['extraServices'] if 'extraServices' in javascriptConfig else default['extraServices']
+	params = {}
+	for item in default:
+		params[item] = matrix[item] if item in matrix else default[item]
 
 	result = {
 		'kind': 'pipeline',
@@ -363,17 +365,19 @@ def javascript():
 		},
 		'steps': [
 			installCore('daily-master-qa', 'sqlite', False),
-			setupServerAndApp('7.0', logLevel),
+			setupServerAndApp('7.0', params['logLevel']),
+			params['extraSetup'],
 			{
 				'name': 'js-tests',
 				'image': 'owncloudci/php:7.0',
 				'pull': 'always',
-				'commands': [
+				'environment': params['extraEnvironment'],
+				'commands': params['extraCommandsBeforeTestRun'] + [
 					'make test-js'
 				]
 			}
 		],
-		'services': extraServices,
+		'services': params['extraServices'],
 		'depends_on': [],
 		'trigger': {
 			'ref': [
@@ -383,7 +387,7 @@ def javascript():
 		}
 	}
 
-	if coverage:
+	if params['coverage']:
 		result['steps'].append({
 			'name': 'codecov-js',
 			'image': 'plugins/codecov:2',
@@ -416,16 +420,16 @@ def phptests(testType):
 		],
 		'coverage': True,
 		'logLevel': '2',
+		'extraSetup': None,
+		'extraServices': [],
+		'extraEnvironment': {},
+		'extraCommandsBeforeTestRun': [],
 	}
 
 	if 'defaults' in config:
 		if testType in config['defaults']:
-			if 'databases' in config['defaults'][testType]:
-				default['databases'] = config['defaults'][testType]['databases']
-			if 'coverage' in config['defaults'][testType]:
-				default['coverage'] = config['defaults'][testType]['coverage']
-			if 'logLevel' in config['defaults'][testType]:
-				default['logLevel'] = config['defaults'][testType]['logLevel']
+			for item in config['defaults'][testType]:
+				default[item] = config['defaults'][testType][item]
 
 	phptestConfig = config[testType]
 
@@ -441,25 +445,24 @@ def phptests(testType):
 		phptestConfig = {'doDefault': {}}
 
 	for category, matrix in phptestConfig.items():
-		databases = matrix['databases'] if 'databases' in matrix else default['databases']
-		coverage = matrix['coverage'] if 'coverage' in matrix else default['coverage']
-		logLevel = matrix['logLevel'] if 'logLevel' in matrix else default['logLevel']
-		phpVersions = matrix['phpVersions'] if 'phpVersions' in matrix else default['phpVersions']
+		params = {}
+		for item in default:
+			params[item] = matrix[item] if item in matrix else default[item]
 
-		for phpVersion in phpVersions:
+		for phpVersion in params['phpVersions']:
 
 			if testType == 'phpunit':
-				if coverage:
+				if params['coverage']:
 					command = 'make test-php-unit-dbg'
 				else:
 					command = 'make test-php-unit'
 			else:
-				if coverage:
+				if params['coverage']:
 					command = 'make test-php-integration-dbg'
 				else:
 					command = 'make test-php-integration'
 
-			for db in databases:
+			for db in params['databases']:
 				result = {
 					'kind': 'pipeline',
 					'type': 'docker',
@@ -470,17 +473,19 @@ def phptests(testType):
 					},
 					'steps': [
 						installCore('daily-master-qa', db, False),
-						setupServerAndApp(phpVersion, logLevel),
+						setupServerAndApp(phpVersion, params['logLevel']),
+						params['extraSetup'],
 						{
 							'name': '%s-tests' % testType,
 							'image': 'owncloudci/php:%s' % phpVersion,
 							'pull': 'always',
-							'commands': [
+							'environment': params['extraEnvironment'],
+							'commands': params['extraCommandsBeforeTestRun'] + [
 								command
 							]
 						}
 					],
-					'services': databaseService(db),
+					'services': databaseService(db) + params['extraServices'],
 					'depends_on': [],
 					'trigger': {
 						'ref': [
@@ -490,7 +495,7 @@ def phptests(testType):
 					}
 				}
 
-				if coverage:
+				if params['coverage']:
 					result['steps'].append({
 						'name': 'codecov-upload',
 						'image': 'plugins/codecov:2',
@@ -531,36 +536,16 @@ def acceptance():
 		'emailNeeded': False,
 		'extraSetup': None,
 		'extraServices': [],
+		'extraEnvironment': {},
+		'extraCommandsBeforeTestRun': [],
 		'extraApps': [],
 		'useBundledApp': False,
 	}
 
 	if 'defaults' in config:
 		if 'acceptance' in config['defaults']:
-			if 'servers' in config['defaults']['acceptance']:
-				default['servers'] = config['defaults']['acceptance']['servers']
-			if 'browsers' in config['defaults']['acceptance']:
-				default['browsers'] = config['defaults']['acceptance']['browsers']
-			if 'phpVersions' in config['defaults']['acceptance']:
-				default['phpVersions'] = config['defaults']['acceptance']['phpVersions']
-			if 'databases' in config['defaults']['acceptance']:
-				default['databases'] = config['defaults']['acceptance']['databases']
-			if 'federatedServerNeeded' in config['defaults']['acceptance']:
-				default['federatedServerNeeded'] = config['defaults']['acceptance']['federatedServerNeeded']
-			if 'filterTags' in config['defaults']['acceptance']:
-				default['filterTags'] = config['defaults']['acceptance']['filterTags']
-			if 'logLevel' in config['defaults']['acceptance']:
-				default['logLevel'] = config['defaults']['acceptance']['logLevel']
-			if 'emailNeeded' in config['defaults']['acceptance']:
-				default['emailNeeded'] = config['defaults']['acceptance']['emailNeeded']
-			if 'extraSetup' in config['defaults']['acceptance']:
-				default['extraSetup'] = config['defaults']['acceptance']['extraSetup']
-			if 'extraServices' in config['defaults']['acceptance']:
-				default['extraServices'] = config['defaults']['acceptance']['extraServices']
-			if 'extraApps' in config['defaults']['acceptance']:
-				default['extraApps'] = config['defaults']['acceptance']['extraApps']
-			if 'useBundledApp' in config['defaults']['acceptance']:
-				default['useBundledApp'] = config['defaults']['acceptance']['useBundledApp']
+			for item in config['defaults']['acceptance']:
+				default[item] = config['defaults']['acceptance'][item]
 
 	for category, matrix in config['acceptance'].items():
 		if type(matrix['suites']) == "list":
@@ -578,23 +563,14 @@ def acceptance():
 			if isAPI or isCLI:
 				default['browsers'] = ['']
 
-			servers = matrix['servers'] if 'servers' in matrix else default['servers']
-			browsers = matrix['browsers'] if 'browsers' in matrix else default['browsers']
-			phpVersions = matrix['phpVersions'] if 'phpVersions' in matrix else default['phpVersions']
-			databases = matrix['databases'] if 'databases' in matrix else default['databases']
-			federatedServerNeeded = matrix['federatedServerNeeded'] if 'federatedServerNeeded' in matrix else default['federatedServerNeeded']
-			filterTags = matrix['filterTags'] if 'filterTags' in matrix else default['filterTags']
-			logLevel = matrix['logLevel'] if 'logLevel' in matrix else default['logLevel']
-			emailNeeded = matrix['emailNeeded'] if 'emailNeeded' in matrix else default['emailNeeded']
-			extraSetup = matrix['extraSetup'] if 'extraSetup' in matrix else default['extraSetup']
-			extraServices = matrix['extraServices'] if 'extraServices' in matrix else default['extraServices']
-			extraApps = matrix['extraApps'] if 'extraApps' in matrix else default['extraApps']
-			useBundledApp = matrix['useBundledApp'] if 'useBundledApp' in matrix else default['useBundledApp']
+			params = {}
+			for item in default:
+				params[item] = matrix[item] if item in matrix else default[item]
 
-			for server in servers:
-				for browser in browsers:
-					for phpVersion in phpVersions:
-						for db in databases:
+			for server in params['servers']:
+				for browser in params['browsers']:
+					for phpVersion in params['phpVersions']:
+						for db in params['databases']:
 							name = 'unknown'
 
 							if isWebUI or isAPI or isCLI:
@@ -606,11 +582,13 @@ def acceptance():
 									print("Error: generated stage name of length", nameLength, "is not supported. The maximum length is " + str(maxLength) + ".", name)
 									errorFound = True
 
-							environment = {
-								'TEST_SERVER_URL': 'http://server',
-								'BEHAT_FILTER_TAGS': filterTags,
-								'BEHAT_SUITE': suite,
-							}
+							environment = {}
+							for env in params['extraEnvironment']:
+								environment[env] = params['extraEnvironment'][env]
+
+							environment['TEST_SERVER_URL'] = 'http://server'
+							environment['BEHAT_FILTER_TAGS'] = params['filterTags']
+							environment['BEHAT_SUITE'] = suite
 
 							if isWebUI:
 								environment['SELENIUM_HOST'] = 'selenium'
@@ -625,7 +603,7 @@ def acceptance():
 							if isCLI:
 								makeParameter = 'test-acceptance-cli'
 
-							if emailNeeded:
+							if params['emailNeeded']:
 								environment['MAILHOG_HOST'] = 'email'
 
 							result = {
@@ -637,8 +615,8 @@ def acceptance():
 									'path': 'testrunner/apps/%s' % config['app']
 								},
 								'steps': [
-									installCore(server, db, useBundledApp),
-									installTestrunner(phpVersion, useBundledApp)
+									installCore(server, db, params['useBundledApp']),
+									installTestrunner(phpVersion, params['useBundledApp'])
 								] + ([
 									{
 										'name': 'install-federation',
@@ -660,23 +638,23 @@ def acceptance():
 											'php occ a:e testing',
 											'php occ a:l',
 											'php occ config:system:set trusted_domains 1 --value=federated',
-											'php occ log:manage --level %s' % logLevel,
+											'php occ log:manage --level %s' % params['logLevel'],
 											'php occ config:list'
 										]
 									},
 									owncloudLog('federated')
-								] if federatedServerNeeded else []) + [
-									setupServerAndApp(phpVersion, logLevel),
+								] if params['federatedServerNeeded'] else []) + [
+									setupServerAndApp(phpVersion, params['logLevel']),
 									owncloudLog('server'),
-									installExtraApps(phpVersion, extraApps),
-									extraSetup,
-									fixPermissions(phpVersion, federatedServerNeeded),
+									installExtraApps(phpVersion, params['extraApps']),
+									params['extraSetup'],
+									fixPermissions(phpVersion, params['federatedServerNeeded']),
 									({
 										'name': 'acceptance-tests',
 										'image': 'owncloudci/php:%s' % phpVersion,
 										'pull': 'always',
 										'environment': environment,
-										'commands': [
+										'commands': params['extraCommandsBeforeTestRun'] + [
 											'touch /var/www/owncloud/saved-settings.sh',
 											'. /var/www/owncloud/saved-settings.sh',
 											'make %s' % makeParameter
@@ -685,10 +663,10 @@ def acceptance():
 								],
 								'services': databaseService(db)
 									+ browserService(browser)
-									+ emailService(emailNeeded)
-									+ extraServices
+									+ emailService(params['emailNeeded'])
+									+ params['extraServices']
 									+ owncloudService(server, phpVersion, 'server', '/var/www/owncloud/server', False)
-									+ (owncloudService(server, phpVersion, 'federated', '/var/www/owncloud/federated', False) if federatedServerNeeded else []),
+									+ (owncloudService(server, phpVersion, 'federated', '/var/www/owncloud/federated', False) if params['federatedServerNeeded'] else []),
 								'depends_on': [],
 								'trigger': {
 									'ref': [
@@ -931,13 +909,24 @@ def installTestrunner(phpVersion, useBundledApp):
 	}
 
 def installExtraApps(phpVersion, extraApps):
-	if extraApps == []:
-		return None
+	if type(extraApps) == "list":
+		if extraApps == []:
+			return None
+		apps = {}
+		for app in extraApps:
+			apps[app] = None
+	else:
+		apps = {}
+		for app, command in extraApps.items():
+			apps[app] = command
 
 	commandArray = []
-	for app in extraApps:
+	for app, command in apps.items():
 		commandArray.append('git clone https://github.com/owncloud/%s.git /var/www/owncloud/testrunner/apps/%s' % (app, app))
 		commandArray.append('cp -r /var/www/owncloud/testrunner/apps/%s /var/www/owncloud/server/apps/' % app)
+		if (command != None):
+			commandArray.append('cd /var/www/owncloud/server/apps/%s' % app)
+			commandArray.append(command)
 		commandArray.append('cd /var/www/owncloud/server')
 		commandArray.append('php occ a:l')
 		commandArray.append('php occ a:e %s' % app)
