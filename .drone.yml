@@ -129,12 +129,17 @@ steps:
     exclude: apps/contacts
     version: daily-master-qa
 
-- name: setup-server-contacts
+- name: install-app-contacts
   pull: always
   image: owncloudci/php:7.0
   commands:
   - cd /var/www/owncloud/server/apps/contacts
   - make npm
+
+- name: setup-server-contacts
+  pull: always
+  image: owncloudci/php:7.0
+  commands:
   - cd /var/www/owncloud/server
   - php occ a:l
   - php occ a:e contacts
@@ -202,12 +207,17 @@ steps:
     exclude: apps/contacts
     version: daily-master-qa
 
-- name: setup-server-contacts
+- name: install-app-contacts
   pull: always
   image: owncloudci/php:7.0
   commands:
   - cd /var/www/owncloud/server/apps/contacts
   - make npm
+
+- name: setup-server-contacts
+  pull: always
+  image: owncloudci/php:7.0
+  commands:
   - cd /var/www/owncloud/server
   - php occ a:l
   - php occ a:e contacts
@@ -270,12 +280,17 @@ steps:
     exclude: apps/contacts
     version: daily-master-qa
 
-- name: setup-server-contacts
+- name: install-app-contacts
   pull: always
   image: owncloudci/php:7.0
   commands:
   - cd /var/www/owncloud/server/apps/contacts
   - make npm
+
+- name: setup-server-contacts
+  pull: always
+  image: owncloudci/php:7.0
+  commands:
   - cd /var/www/owncloud/server
   - php occ a:l
   - php occ a:e contacts
@@ -348,12 +363,17 @@ steps:
     exclude: apps/contacts
     version: daily-master-qa
 
-- name: setup-server-contacts
+- name: install-app-contacts
   pull: always
   image: owncloudci/php:7.0
   commands:
   - cd /var/www/owncloud/server/apps/contacts
   - make npm
+
+- name: setup-server-contacts
+  pull: always
+  image: owncloudci/php:7.0
+  commands:
   - cd /var/www/owncloud/server
   - php occ a:l
   - php occ a:e contacts
@@ -426,12 +446,17 @@ steps:
     exclude: apps/contacts
     version: daily-master-qa
 
-- name: setup-server-contacts
+- name: install-app-contacts
   pull: always
   image: owncloudci/php:7.0
   commands:
   - cd /var/www/owncloud/server/apps/contacts
   - make npm
+
+- name: setup-server-contacts
+  pull: always
+  image: owncloudci/php:7.0
+  commands:
   - cd /var/www/owncloud/server
   - php occ a:l
   - php occ a:e contacts
@@ -504,12 +529,17 @@ steps:
     exclude: apps/contacts
     version: daily-master-qa
 
-- name: setup-server-contacts
+- name: install-app-contacts
   pull: always
   image: owncloudci/php:7.0
   commands:
   - cd /var/www/owncloud/server/apps/contacts
   - make npm
+
+- name: setup-server-contacts
+  pull: always
+  image: owncloudci/php:7.0
+  commands:
   - cd /var/www/owncloud/server
   - php occ a:l
   - php occ a:e contacts
@@ -581,12 +611,17 @@ steps:
     exclude: apps/contacts
     version: daily-master-qa
 
-- name: setup-server-contacts
+- name: install-app-contacts
   pull: always
   image: owncloudci/php:7.0
   commands:
   - cd /var/www/owncloud/server/apps/contacts
   - make npm
+
+- name: setup-server-contacts
+  pull: always
+  image: owncloudci/php:7.0
+  commands:
   - cd /var/www/owncloud/server
   - php occ a:l
   - php occ a:e contacts
@@ -659,12 +694,17 @@ steps:
     exclude: apps/contacts
     version: daily-master-qa
 
-- name: setup-server-contacts
+- name: install-app-contacts
   pull: always
   image: owncloudci/php:7.1
   commands:
   - cd /var/www/owncloud/server/apps/contacts
   - make npm
+
+- name: setup-server-contacts
+  pull: always
+  image: owncloudci/php:7.1
+  commands:
   - cd /var/www/owncloud/server
   - php occ a:l
   - php occ a:e contacts
@@ -718,12 +758,17 @@ steps:
     exclude: apps/contacts
     version: daily-master-qa
 
-- name: setup-server-contacts
+- name: install-app-contacts
   pull: always
   image: owncloudci/php:7.1
   commands:
   - cd /var/www/owncloud/server/apps/contacts
   - make npm
+
+- name: setup-server-contacts
+  pull: always
+  image: owncloudci/php:7.1
+  commands:
   - cd /var/www/owncloud/server
   - php occ a:l
   - php occ a:e contacts
@@ -787,12 +832,17 @@ steps:
     exclude: apps/contacts
     version: daily-master-qa
 
-- name: setup-server-contacts
+- name: install-app-contacts
   pull: always
   image: owncloudci/php:7.2
   commands:
   - cd /var/www/owncloud/server/apps/contacts
   - make npm
+
+- name: setup-server-contacts
+  pull: always
+  image: owncloudci/php:7.2
+  commands:
   - cd /var/www/owncloud/server
   - php occ a:l
   - php occ a:e contacts
@@ -846,12 +896,17 @@ steps:
     exclude: apps/contacts
     version: daily-master-qa
 
-- name: setup-server-contacts
+- name: install-app-contacts
   pull: always
   image: owncloudci/php:7.2
   commands:
   - cd /var/www/owncloud/server/apps/contacts
   - make npm
+
+- name: setup-server-contacts
+  pull: always
+  image: owncloudci/php:7.2
+  commands:
   - cd /var/www/owncloud/server
   - php occ a:l
   - php occ a:e contacts
@@ -915,12 +970,17 @@ steps:
     exclude: apps/contacts
     version: daily-master-qa
 
-- name: setup-server-contacts
+- name: install-app-contacts
   pull: always
   image: owncloudci/php:7.3
   commands:
   - cd /var/www/owncloud/server/apps/contacts
   - make npm
+
+- name: setup-server-contacts
+  pull: always
+  image: owncloudci/php:7.3
+  commands:
   - cd /var/www/owncloud/server
   - php occ a:l
   - php occ a:e contacts
@@ -974,12 +1034,17 @@ steps:
     exclude: apps/contacts
     version: daily-master-qa
 
-- name: setup-server-contacts
+- name: install-app-contacts
   pull: always
   image: owncloudci/php:7.3
   commands:
   - cd /var/www/owncloud/server/apps/contacts
   - make npm
+
+- name: setup-server-contacts
+  pull: always
+  image: owncloudci/php:7.3
+  commands:
   - cd /var/www/owncloud/server
   - php occ a:l
   - php occ a:e contacts
@@ -1043,12 +1108,17 @@ steps:
     exclude: apps/contacts
     version: daily-master-qa
 
-- name: setup-server-contacts
+- name: install-app-contacts
   pull: always
   image: owncloudci/php:7.0
   commands:
   - cd /var/www/owncloud/server/apps/contacts
   - make npm
+
+- name: setup-server-contacts
+  pull: always
+  image: owncloudci/php:7.0
+  commands:
   - cd /var/www/owncloud/server
   - php occ a:l
   - php occ a:e contacts
@@ -1102,12 +1172,17 @@ steps:
     exclude: apps/contacts
     version: daily-master-qa
 
-- name: setup-server-contacts
+- name: install-app-contacts
   pull: always
   image: owncloudci/php:7.0
   commands:
   - cd /var/www/owncloud/server/apps/contacts
   - make npm
+
+- name: setup-server-contacts
+  pull: always
+  image: owncloudci/php:7.0
+  commands:
   - cd /var/www/owncloud/server
   - php occ a:l
   - php occ a:e contacts
@@ -1171,12 +1246,17 @@ steps:
     exclude: apps/contacts
     version: daily-master-qa
 
-- name: setup-server-contacts
+- name: install-app-contacts
   pull: always
   image: owncloudci/php:7.0
   commands:
   - cd /var/www/owncloud/server/apps/contacts
   - make npm
+
+- name: setup-server-contacts
+  pull: always
+  image: owncloudci/php:7.0
+  commands:
   - cd /var/www/owncloud/server
   - php occ a:l
   - php occ a:e contacts
@@ -1240,12 +1320,17 @@ steps:
     exclude: apps/contacts
     version: daily-master-qa
 
-- name: setup-server-contacts
+- name: install-app-contacts
   pull: always
   image: owncloudci/php:7.0
   commands:
   - cd /var/www/owncloud/server/apps/contacts
   - make npm
+
+- name: setup-server-contacts
+  pull: always
+  image: owncloudci/php:7.0
+  commands:
   - cd /var/www/owncloud/server
   - php occ a:l
   - php occ a:e contacts
@@ -1309,12 +1394,17 @@ steps:
     exclude: apps/contacts
     version: daily-master-qa
 
-- name: setup-server-contacts
+- name: install-app-contacts
   pull: always
   image: owncloudci/php:7.0
   commands:
   - cd /var/www/owncloud/server/apps/contacts
   - make npm
+
+- name: setup-server-contacts
+  pull: always
+  image: owncloudci/php:7.0
+  commands:
   - cd /var/www/owncloud/server
   - php occ a:l
   - php occ a:e contacts
@@ -1377,12 +1467,17 @@ steps:
     exclude: apps/contacts
     version: daily-master-qa
 
-- name: setup-server-contacts
+- name: install-app-contacts
   pull: always
   image: owncloudci/php:7.0
   commands:
   - cd /var/www/owncloud/server/apps/contacts
   - make npm
+
+- name: setup-server-contacts
+  pull: always
+  image: owncloudci/php:7.0
+  commands:
   - cd /var/www/owncloud/server
   - php occ a:l
   - php occ a:e contacts
@@ -1446,12 +1541,17 @@ steps:
     exclude: apps/contacts
     version: daily-master-qa
 
-- name: setup-server-contacts
+- name: install-app-contacts
   pull: always
   image: owncloudci/php:7.1
   commands:
   - cd /var/www/owncloud/server/apps/contacts
   - make npm
+
+- name: setup-server-contacts
+  pull: always
+  image: owncloudci/php:7.1
+  commands:
   - cd /var/www/owncloud/server
   - php occ a:l
   - php occ a:e contacts
@@ -1505,12 +1605,17 @@ steps:
     exclude: apps/contacts
     version: daily-master-qa
 
-- name: setup-server-contacts
+- name: install-app-contacts
   pull: always
   image: owncloudci/php:7.1
   commands:
   - cd /var/www/owncloud/server/apps/contacts
   - make npm
+
+- name: setup-server-contacts
+  pull: always
+  image: owncloudci/php:7.1
+  commands:
   - cd /var/www/owncloud/server
   - php occ a:l
   - php occ a:e contacts
@@ -1574,12 +1679,17 @@ steps:
     exclude: apps/contacts
     version: daily-master-qa
 
-- name: setup-server-contacts
+- name: install-app-contacts
   pull: always
   image: owncloudci/php:7.2
   commands:
   - cd /var/www/owncloud/server/apps/contacts
   - make npm
+
+- name: setup-server-contacts
+  pull: always
+  image: owncloudci/php:7.2
+  commands:
   - cd /var/www/owncloud/server
   - php occ a:l
   - php occ a:e contacts
@@ -1633,12 +1743,17 @@ steps:
     exclude: apps/contacts
     version: daily-master-qa
 
-- name: setup-server-contacts
+- name: install-app-contacts
   pull: always
   image: owncloudci/php:7.2
   commands:
   - cd /var/www/owncloud/server/apps/contacts
   - make npm
+
+- name: setup-server-contacts
+  pull: always
+  image: owncloudci/php:7.2
+  commands:
   - cd /var/www/owncloud/server
   - php occ a:l
   - php occ a:e contacts
@@ -1702,12 +1817,17 @@ steps:
     exclude: apps/contacts
     version: daily-master-qa
 
-- name: setup-server-contacts
+- name: install-app-contacts
   pull: always
   image: owncloudci/php:7.3
   commands:
   - cd /var/www/owncloud/server/apps/contacts
   - make npm
+
+- name: setup-server-contacts
+  pull: always
+  image: owncloudci/php:7.3
+  commands:
   - cd /var/www/owncloud/server
   - php occ a:l
   - php occ a:e contacts
@@ -1761,12 +1881,17 @@ steps:
     exclude: apps/contacts
     version: daily-master-qa
 
-- name: setup-server-contacts
+- name: install-app-contacts
   pull: always
   image: owncloudci/php:7.3
   commands:
   - cd /var/www/owncloud/server/apps/contacts
   - make npm
+
+- name: setup-server-contacts
+  pull: always
+  image: owncloudci/php:7.3
+  commands:
   - cd /var/www/owncloud/server
   - php occ a:l
   - php occ a:e contacts
