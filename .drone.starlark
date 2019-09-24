@@ -91,7 +91,7 @@ def main(ctx):
 	return before + stages + after
 
 def beforePipelines():
-	return codestyle() + phpstan() + phan()
+	return codestyle() + jscodestyle() + phpstan() + phan()
 
 def stagePipelines():
 	jsPipelines = javascript()
@@ -178,6 +178,50 @@ def codestyle():
 
 	return pipelines
 
+def jscodestyle():
+	pipelines = []
+
+	if 'jscodestyle' not in config:
+		return pipelines
+
+	if type(config['jscodestyle']) == "bool":
+		if not config['jscodestyle']:
+			return pipelines
+
+	result = {
+		'kind': 'pipeline',
+		'type': 'docker',
+		'name': 'coding-standard-js',
+		'workspace' : {
+			'base': '/var/www/owncloud',
+			'path': 'server/apps/%s' % config['app']
+		},
+		'steps': [
+			{
+				'name': 'coding-standard-js',
+				'image': 'owncloudci/php:7.2',
+				'pull': 'always',
+				'commands': [
+					'make test-js-style'
+				]
+			}
+		],
+		'depends_on': [],
+		'trigger': {
+			'ref': [
+				'refs/pull/**',
+				'refs/tags/**'
+			]
+		}
+	}
+
+	for branch in config['branches']:
+		result['trigger']['ref'].append('refs/heads/%s' % branch)
+
+	pipelines.append(result)
+
+	return pipelines
+
 def phpstan():
 	pipelines = []
 
@@ -225,6 +269,7 @@ def phpstan():
 				},
 				'steps': [
 					installCore('daily-master-qa', 'sqlite', False),
+					installApp(phpVersion),
 					setupServerAndApp(phpVersion, params['logLevel']),
 					{
 						'name': 'phpstan',
@@ -365,6 +410,7 @@ def javascript():
 		},
 		'steps': [
 			installCore('daily-master-qa', 'sqlite', False),
+			installApp('7.0'),
 			setupServerAndApp('7.0', params['logLevel']),
 			params['extraSetup'],
 			{
@@ -413,17 +459,21 @@ def phptests(testType):
 	if testType not in config:
 		return pipelines
 
+	errorFound = False
+
 	default = {
 		'phpVersions': ['7.0', '7.1', '7.2', '7.3'],
 		'databases': [
 			'sqlite', 'mariadb:10.2', 'mysql:5.5', 'mysql:5.7', 'postgres:9.4', 'oracle'
 		],
 		'coverage': True,
+		'includeKeyInMatrixName': False,
 		'logLevel': '2',
 		'extraSetup': None,
 		'extraServices': [],
 		'extraEnvironment': {},
 		'extraCommandsBeforeTestRun': [],
+		'extraApps': [],
 	}
 
 	if 'defaults' in config:
@@ -463,16 +513,26 @@ def phptests(testType):
 					command = 'make test-php-integration'
 
 			for db in params['databases']:
+				keyString = '-' + category if params['includeKeyInMatrixName'] else ''
+				name = '%s%s-php%s-%s' % (testType, keyString, phpVersion, db.replace(":", ""))
+				maxLength = 50
+				nameLength = len(name)
+				if nameLength > maxLength:
+					print("Error: generated phpunit stage name of length", nameLength, "is not supported. The maximum length is " + str(maxLength) + ".", name)
+					errorFound = True
+
 				result = {
 					'kind': 'pipeline',
 					'type': 'docker',
-					'name': '%s-php%s-%s' % (testType, phpVersion, db.replace(":", "")),
+					'name': name,
 					'workspace' : {
 						'base': '/var/www/owncloud',
 						'path': 'server/apps/%s' % config['app']
 					},
 					'steps': [
 						installCore('daily-master-qa', db, False),
+						installApp(phpVersion),
+						installExtraApps(phpVersion, params['extraApps']),
 						setupServerAndApp(phpVersion, params['logLevel']),
 						params['extraSetup'],
 						{
@@ -515,6 +575,9 @@ def phptests(testType):
 
 				pipelines.append(result)
 
+	if errorFound:
+		return False
+
 	return pipelines
 
 def acceptance():
@@ -523,10 +586,14 @@ def acceptance():
 	if 'acceptance' not in config:
 		return pipelines
 
+	if type(config['acceptance']) == "bool":
+		if not config['acceptance']:
+			return pipelines
+
 	errorFound = False
 
 	default = {
-		'servers': ['daily-master-qa', '10.2.1'],
+		'servers': ['daily-master-qa', 'latest'],
 		'browsers': ['chrome'],
 		'phpVersions': ['7.0'],
 		'databases': ['mariadb:10.2'],
@@ -540,6 +607,7 @@ def acceptance():
 		'extraCommandsBeforeTestRun': [],
 		'extraApps': [],
 		'useBundledApp': False,
+		'includeKeyInMatrixName': False,
 	}
 
 	if 'defaults' in config:
@@ -575,7 +643,8 @@ def acceptance():
 
 							if isWebUI or isAPI or isCLI:
 								browserString = '' if browser == '' else '-' + browser
-								name = '%s-%s%s-%s-php%s' % (shortSuiteName, server.replace('daily-', '').replace('-qa', ''), browserString, db.replace(':', ''), phpVersion)
+								keyString = '-' + category if params['includeKeyInMatrixName'] else ''
+								name = '%s%s-%s%s-%s-php%s' % (shortSuiteName, keyString, server.replace('daily-', '').replace('-qa', ''), browserString, db.replace(':', ''), phpVersion)
 								maxLength = 50
 								nameLength = len(name)
 								if nameLength > maxLength:
@@ -644,9 +713,10 @@ def acceptance():
 									},
 									owncloudLog('federated')
 								] if params['federatedServerNeeded'] else []) + [
+									installApp(phpVersion),
+									installExtraApps(phpVersion, params['extraApps']),
 									setupServerAndApp(phpVersion, params['logLevel']),
 									owncloudLog('server'),
-									installExtraApps(phpVersion, params['extraApps']),
 									params['extraSetup'],
 									fixPermissions(phpVersion, params['federatedServerNeeded']),
 									({
@@ -939,15 +1009,26 @@ def installExtraApps(phpVersion, extraApps):
 		'commands': commandArray
 	}
 
+def installApp(phpVersion):
+	if 'appInstallCommand' not in config:
+		return None
+
+	return {
+		'name': 'install-app-%s' % config['app'],
+		'image': 'owncloudci/php:%s' % phpVersion,
+		'pull': 'always',
+		'commands': [
+			'cd /var/www/owncloud/server/apps/%s' % config['app'],
+			config['appInstallCommand']
+		]
+	}
+
 def setupServerAndApp(phpVersion, logLevel):
 	return {
 		'name': 'setup-server-%s' % config['app'],
 		'image': 'owncloudci/php:%s' % phpVersion,
 		'pull': 'always',
-		'commands': ([
-			'cd /var/www/owncloud/server/apps/%s' % config['app'],
-			config['appInstallCommand']
-		] if 'appInstallCommand' in config else []) + [
+		'commands': [
 			'cd /var/www/owncloud/server',
 			'php occ a:l',
 			'php occ a:e %s' % config['app'],
