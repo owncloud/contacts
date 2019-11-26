@@ -60,7 +60,7 @@ OC.L10N.register(
     "Birthday" : "Verjaardag",
     "Anniversary" : "Verjaardag",
     "Date of death" : "Overlijdensdatum",
-    "Email" : "mailadres",
+    "Email" : "E-mailadres",
     "Instant messaging" : "Instant messaging",
     "Phone" : "Telefoon",
     "Mobile" : "Mobiel",
