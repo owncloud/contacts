@@ -44,7 +44,7 @@
     "{addressbook} shared by {owner}" : "{owner} tarafından paylaşılmış {addressbook}",
     "Contact could not be created." : "Kişi oluşturulamadı.",
     "No contacts in file. Only vCard files are allowed." : "Dosyada kişi bilgisi bulunamadı. Sadece vCard dosyalarına izin verilir.",
-    "Only vCard version 4.0 (RFC6350) or version 3.0 (RFC2426) are supported." : "vCard 'ın, 4.0 (RFC6350) veya 3.0 (RFC2426) versiyonları desteklenir.",
+    "Only vCard version 4.0 (RFC6350) or version 3.0 (RFC2426) are supported." : "Sadece vCard versiyon 4.0 (RFC6350) veya versiyon 3.0 (RFC2426) desteklenir.",
     "Display name" : "Görünen ad",
     "Nickname" : "Takma ad",
     "Detailed name" : "Ayrıntılı isim",
