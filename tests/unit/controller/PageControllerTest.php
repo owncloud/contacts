@@ -20,7 +20,7 @@ class PageControllerTest extends TestCase {
 	/** @var PageController */
 	private $controller;
 
-	public function setUp() {
+	public function setUp(): void {
 		$request = $this->getMockBuilder('OCP\IRequest')->getMock();
 
 		$this->controller = new PageController('contacts', $request);
