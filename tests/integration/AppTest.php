@@ -20,7 +20,7 @@ use Test\TestCase;
 class AppTest extends TestCase {
 	private $container;
 
-	public function setUp() {
+	public function setUp(): void {
 		parent::setUp();
 		$app = new App('contacts');
 		$this->container = $app->getContainer();
