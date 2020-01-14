@@ -126,6 +126,7 @@ steps:
   pull: always
   image: owncloudci/php:7.1
   commands:
+  - sleep 30
   - make test-js
 
 - name: codecov-js

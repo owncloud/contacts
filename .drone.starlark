@@ -23,6 +23,9 @@ config = {
 
 	'javascript': {
 		'coverage': True,
+		'extraCommandsBeforeTestRun': [
+			'sleep 30'
+		],
 		'extraServices': [
 			{
 				'name': 'selenium',
