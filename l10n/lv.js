@@ -37,6 +37,7 @@ OC.L10N.register(
     "New contact" : "Jauns kontakts",
     "Sort by" : "Kārtot pēc",
     "Contact could not be created." : "Neizdevās izveidot kontaktu",
+    "Display name" : "Redzamais vārds",
     "Nickname" : "Iesauka",
     "Notes" : "Piezīmes",
     "Website" : "Mājaslapa",
