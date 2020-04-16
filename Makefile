@@ -73,6 +73,17 @@ PHP_CS_FIXER=php -d zend.enable_gc=0 vendor-bin/owncloud-codestyle/vendor/bin/ph
 PHAN=php -d zend.enable_gc=0 vendor-bin/phan/vendor/bin/phan
 PHPSTAN=php -d zend.enable_gc=0 vendor-bin/phpstan/vendor/bin/phpstan
 
+doc_files=README.md CHANGELOG.md CONTRIBUTING.md
+src_dirs=appinfo css img js l10n lib templates
+all_src=$(src_dirs) $(doc_files)
+build_dir=$(CURDIR)/build
+dist_dir=$(build_dir)/dist
+
+# dependency folders (leave empty if not required)
+nodejs_deps=node_modules
+bower_deps=
+composer_deps=vendor
+
 .DEFAULT_GOAL := help
 
 # start with displaying help
@@ -114,8 +125,7 @@ endif
 
 # Removes the appstore build
 .PHONY: clean
-clean:
-	rm -rf ./build
+clean: clean-deps clean-dist clean-build
 
 # Same as clean but also removes dependencies installed by composer, bower and
 # npm
@@ -248,6 +258,19 @@ test-php-phan: vendor-bin/phan/vendor
 test-php-phpstan: ## Run phpstan
 test-php-phpstan: vendor-bin/phpstan/vendor
 	$(PHPSTAN) analyse --memory-limit=4G --configuration=./phpstan.neon --no-progress --level=5 appinfo
+
+.PHONY: clean-dist
+clean-dist:
+	rm -Rf $(dist_dir)
+
+.PHONY: clean-build
+clean-build:
+	rm -Rf $(build_dir)
+
+.PHONY: clean-deps
+clean-deps:
+	rm -Rf $(nodejs_deps) $(bower_deps) ${composer_deps}
+	rm -Rf vendor-bin/**/vendor vendor-bin/**/composer.lock
 
 #
 # Dependency management

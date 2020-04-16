@@ -21,6 +21,8 @@ config = {
 		},
 	},
 
+	'phpstan': True,
+
 	'javascript': {
 		'coverage': True,
 		'extraServices': [
