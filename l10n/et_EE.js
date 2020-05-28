@@ -19,6 +19,7 @@ OC.L10N.register(
     "Organization" : "Organisatsioon",
     "Title" : "Tiitel",
     "Add field ..." : "Lisa väli ...",
+    "Save changes" : "Salvesta muudatused",
     "Address book" : "Aadressiraamat",
     "No search result for {query}" : "Otsingutulemused sõnadele {query}",
     "_%n contact_::_%n contacts_" : ["%n kontakt","%n kontakti"],
