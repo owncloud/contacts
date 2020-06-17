@@ -28,7 +28,7 @@ config = {
 		'extraServices': [
 			{
 				'name': 'selenium',
-				'image': 'selenium/standalone-firefox-debug:3.141.59-20200525',
+				'image': 'selenium/standalone-firefox-debug:4.0.0-alpha-5-20200515',
 				'pull': 'always',
 			}
 		]
