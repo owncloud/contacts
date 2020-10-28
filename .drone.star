@@ -23,6 +23,8 @@ config = {
 
 	'phpstan': True,
 
+	'phan': True,
+
 	'javascript': {
 		'coverage': True,
 		'extraServices': [

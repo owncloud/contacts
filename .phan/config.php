@@ -35,7 +35,7 @@
 	// your application should be included in this list.
 	'directory_list' => [
 		'appinfo',
-		'lib',
+		'controller',
 		'vendor',
 		'../../lib',
 		'../../core'
