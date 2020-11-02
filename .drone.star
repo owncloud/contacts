@@ -233,6 +233,7 @@ def phpstan():
 	default = {
 		'phpVersions': ['7.2'],
 		'logLevel': '2',
+		'extraApps': {},
 	}
 
 	if 'defaults' in config:
@@ -272,6 +273,7 @@ def phpstan():
 				'steps':
 					installCore('daily-master-qa', 'sqlite', False) +
 					installApp(phpVersion) +
+					installExtraApps(phpVersion, params['extraApps']) +
 					setupServerAndApp(phpVersion, params['logLevel']) +
 				[
 					{
