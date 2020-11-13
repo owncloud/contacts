@@ -46,7 +46,7 @@ OC.L10N.register(
     "{addressbook} shared by {owner}" : "{addressbook} ถูกแชร์โดย {owner}",
     "Contact could not be created." : "ไม่สามารถสร้างรายชื่อผู้ติดต่อ",
     "No contacts in file. Only vCard files are allowed." : "ไม่มีรายชื่อผู้ติดต่อในไฟล์ อนุญาตเฉพาะไฟล์ vCard เท่านั้น",
-    "Only vCard version 4.0 (RFC6350) or version 3.0 (RFC2426) are supported." : "รองรับเฉพาะ vCard รุ่น 4.0 (RFC6350) หรือ 3.0 (RFC2426) เท่านั้น",
+    "Only vCard version 4.0 (RFC6350) or version 3.0 (RFC2426) are supported." : "รองรับเฉพาะ vCard เวอร์ชัน 4.0 (RFC6350) หรือ 3.0 (RFC2426) เท่านั้น",
     "Display name" : "ชื่อที่แสดง",
     "Nickname" : "ชื่อเล่น",
     "Detailed name" : "รายละเอียดชื่อ",
