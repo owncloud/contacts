@@ -23,3 +23,5 @@ vendor-bin/**/composer.lock
 # Node.js modules
 node_modules/
 
+# SonarCloud scanner
+.scannerwork
