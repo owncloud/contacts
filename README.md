@@ -2,9 +2,9 @@
 
 [![irc](https://img.shields.io/badge/irc%20channel-%23owncloud--contacts%20on%20freenode-blue.svg)](https://webchat.freenode.net/?channels=owncloud-contacts)
 [![Build Status](https://scrutinizer-ci.com/g/owncloud/contacts/badges/build.png?b=master)](https://scrutinizer-ci.com/g/owncloud/contacts/build-status/master)
-[![codecov.io](https://codecov.io/github/owncloud/contacts/coverage.svg?branch=master)](https://codecov.io/github/owncloud/contacts?branch=master)
-
-![codecov.io](https://codecov.io/github/owncloud/contacts/branch.svg?branch=master)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=owncloud_contacts&metric=alert_status)](https://sonarcloud.io/dashboard?id=owncloud_contacts)
+[![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=owncloud_contacts&metric=security_rating)](https://sonarcloud.io/dashboard?id=owncloud_contacts)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=owncloud_contacts&metric=coverage)](https://sonarcloud.io/dashboard?id=owncloud_contacts)
 
 **A contacts app for [ownCloud](https://owncloud.org)**
 
