@@ -21,6 +21,7 @@ OC.L10N.register(
     "Organization" : "نهاد(ارگان)",
     "Title" : "عنوان",
     "Add field ..." : "اضافه کردن فیلد ...",
+    "Save changes" : "ذخیره تغییرات",
     "Address book" : "کتابچه آدرس",
     "No search result for {query}" : "نتیجه جستجو برای {سوال} موجود نیست",
     "_%n contact_::_%n contacts_" : ["%n مخاطب ها","%n مخاطب ها"],
