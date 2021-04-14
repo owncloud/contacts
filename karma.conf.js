@@ -22,7 +22,7 @@ module.exports = function(config) {
 			'js/dav/dav.js',
 			'js/vendor/vcard/src/vcard.js',
 
-			'js/vendor/underscore/underscore.js',
+			'js/vendor/underscore/underscore-umd.js',
 			'js/vendor/angular-mocks/angular-mocks.js',
 
 			'js/main.js',

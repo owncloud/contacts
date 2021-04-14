@@ -40,8 +40,10 @@ gulp.task('watch', ['default'], function() {
 });
 
 gulp.task('karma', function(done){
-    new KarmaServer({
-        configFile: __dirname + '/karma.conf.js',
-        singleRun: true
-    }, done).start();
+	KarmaServer.start({
+		configFile: __dirname + '/karma.conf.js',
+		singleRun: true
+	}, function() {
+		done();
+	});
 });
