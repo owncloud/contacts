@@ -234,12 +234,12 @@ test-php-integration-dbg:             ## Run php integration tests
 .PHONY: test-php-style
 test-php-style:            ## Run php-cs-fixer and check owncloud code-style
 test-php-style: vendor-bin/owncloud-codestyle/vendor
-	$(PHP_CS_FIXER) fix -v --diff --diff-format udiff --allow-risky yes --dry-run
+	$(PHP_CS_FIXER) fix -v --diff --allow-risky yes --dry-run
 
 .PHONY: test-php-style-fix
 test-php-style-fix:        ## Run php-cs-fixer and fix code style issues
 test-php-style-fix: vendor-bin/owncloud-codestyle/vendor
-	$(PHP_CS_FIXER) fix -v --diff --diff-format udiff --allow-risky yes
+	$(PHP_CS_FIXER) fix -v --diff --allow-risky yes
 
 .PHONY: test-codecheck
 test-codecheck:
