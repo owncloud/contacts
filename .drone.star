@@ -15,15 +15,7 @@ config = {
         "master",
     ],
     "appInstallCommand": "make npm",
-    "codestyle": {
-        "ordinary": {
-            "phpVersions": [
-                "7.2",
-                "7.3",
-                "7.4",
-            ],
-        },
-    },
+    "codestyle": True,
     "phpstan": True,
     "phan": True,
     "javascript": {
@@ -39,12 +31,11 @@ config = {
     "phpunit": {
         "allDatabases": {
             "phpVersions": [
-                "7.2",
+                "7.3",
             ],
         },
         "reducedDatabases": {
             "phpVersions": [
-                "7.3",
                 "7.4",
             ],
             "databases": [
@@ -57,13 +48,12 @@ config = {
     "phpintegration": {
         "allDatabases": {
             "phpVersions": [
-                "7.2",
+                "7.3",
             ],
             "coverage": False,
         },
         "reducedDatabases": {
             "phpVersions": [
-                "7.3",
                 "7.4",
             ],
             "databases": [
@@ -111,7 +101,7 @@ def main(ctx):
     return before + coverageTests + afterCoverageTests + nonCoverageTests + stages + after
 
 def beforePipelines(ctx):
-    return codestyle(ctx) + jscodestyle(ctx) + checkForRecentBuilds(ctx) + phpstan(ctx) + phan(ctx) + checkStarlark()
+    return codestyle(ctx) + jscodestyle(ctx) + checkForRecentBuilds(ctx) + phpstan(ctx) + phan(ctx) + phplint(ctx) + checkStarlark()
 
 def coveragePipelines(ctx):
     # All unit test pipelines that have coverage or other test analysis reported
@@ -158,7 +148,7 @@ def codestyle(ctx):
         return pipelines
 
     default = {
-        "phpVersions": ["7.2"],
+        "phpVersions": ["7.3"],
     }
 
     if "defaults" in config:
@@ -323,9 +313,10 @@ def phpstan(ctx):
         return pipelines
 
     default = {
-        "phpVersions": ["7.2"],
+        "phpVersions": ["7.3"],
         "logLevel": "2",
         "extraApps": {},
+        "enableApp": True,
     }
 
     if "defaults" in config:
@@ -365,7 +356,7 @@ def phpstan(ctx):
                 "steps": installCore(ctx, "daily-master-qa", "sqlite", False) +
                          installApp(ctx, phpVersion) +
                          installExtraApps(phpVersion, params["extraApps"]) +
-                         setupServerAndApp(ctx, phpVersion, params["logLevel"]) +
+                         setupServerAndApp(ctx, phpVersion, params["logLevel"], False, params["enableApp"]) +
                          [
                              {
                                  "name": "phpstan",
@@ -399,7 +390,7 @@ def phan(ctx):
         return pipelines
 
     default = {
-        "phpVersions": ["7.2", "7.3", "7.4"],
+        "phpVersions": ["7.3", "7.4"],
     }
 
     if "defaults" in config:
@@ -470,7 +461,7 @@ def build(ctx):
         return pipelines
 
     default = {
-        "phpVersions": ["7.2"],
+        "phpVersions": ["7.3"],
         "commands": [
             "make dist",
         ],
@@ -567,6 +558,7 @@ def javascript(ctx, withCoverage):
         "extraCommandsBeforeTestRun": [],
         "extraTeardown": [],
         "skip": False,
+        "enableApp": True,
     }
 
     if "defaults" in config:
@@ -608,12 +600,12 @@ def javascript(ctx, withCoverage):
         },
         "steps": installCore(ctx, "daily-master-qa", "sqlite", False) +
                  installApp(ctx, "7.4") +
-                 setupServerAndApp(ctx, "7.4", params["logLevel"]) +
+                 setupServerAndApp(ctx, "7.4", params["logLevel"], False, params["enableApp"]) +
                  params["extraSetup"] +
                  [
                      {
                          "name": "js-tests",
-                         "image": "owncloudci/php:8.0",
+                         "image": "owncloudci/nodejs:%s" % getNodeJsVersion(),
                          "pull": "always",
                          "environment": params["extraEnvironment"],
                          "commands": params["extraCommandsBeforeTestRun"] + [
@@ -668,7 +660,7 @@ def phpTests(ctx, testType, withCoverage):
     errorFound = False
 
     default = {
-        "phpVersions": ["7.2", "7.3", "7.4"],
+        "phpVersions": ["7.3", "7.4"],
         "databases": [
             "sqlite",
             "mariadb:10.2",
@@ -688,6 +680,7 @@ def phpTests(ctx, testType, withCoverage):
         "extraApps": {},
         "extraTeardown": [],
         "skip": False,
+        "enableApp": True,
     }
 
     if "defaults" in config:
@@ -780,7 +773,7 @@ def phpTests(ctx, testType, withCoverage):
                     "steps": installCore(ctx, "daily-master-qa", db, False) +
                              installApp(ctx, phpVersion) +
                              installExtraApps(phpVersion, params["extraApps"]) +
-                             setupServerAndApp(ctx, phpVersion, params["logLevel"]) +
+                             setupServerAndApp(ctx, phpVersion, params["logLevel"], False, params["enableApp"]) +
                              setupCeph(params["cephS3"]) +
                              setupScality(params["scalityS3"]) +
                              params["extraSetup"] +
@@ -864,7 +857,7 @@ def acceptance(ctx):
     default = {
         "servers": ["daily-master-qa", "latest"],
         "browsers": ["chrome"],
-        "phpVersions": ["7.2"],
+        "phpVersions": ["7.4"],
         "databases": ["mariadb:10.2"],
         "esVersions": ["none"],
         "federatedServerNeeded": False,
@@ -894,6 +887,7 @@ def acceptance(ctx):
         "debugSuites": [],
         "skipExceptParts": [],
         "earlyFail": True,
+        "enableApp": True,
     }
 
     if "defaults" in config:
@@ -944,7 +938,7 @@ def acceptance(ctx):
                 params["extraSetup"] = [
                     {
                         "name": "configure-app",
-                        "image": "owncloudci/php:7.2",
+                        "image": "owncloudci/php:7.4",
                         "pull": "always",
                         "commands": [
                             "cd /var/www/owncloud/server/apps/files_primary_s3",
@@ -1110,7 +1104,7 @@ def acceptance(ctx):
                              (installFederated(testConfig["server"], testConfig["phpVersion"], testConfig["logLevel"], testConfig["database"], federationDbSuffix) + owncloudLog("federated") if testConfig["federatedServerNeeded"] else []) +
                              installApp(ctx, testConfig["phpVersion"]) +
                              installExtraApps(testConfig["phpVersion"], testConfig["extraApps"]) +
-                             setupServerAndApp(ctx, testConfig["phpVersion"], testConfig["logLevel"], testConfig["federatedServerNeeded"]) +
+                             setupServerAndApp(ctx, testConfig["phpVersion"], testConfig["logLevel"], testConfig["federatedServerNeeded"], params["enableApp"]) +
                              owncloudLog("server") +
                              setupCeph(testConfig["cephS3"]) +
                              setupScality(testConfig["scalityS3"]) +
@@ -1407,10 +1401,11 @@ def elasticSearchService(esVersion):
 
     return [{
         "name": "elasticsearch",
-        "image": "webhippie/elasticsearch:%s" % esVersion,
+        "image": "owncloudops/elasticsearch:%s" % esVersion,
         "pull": "always",
         "environment": {
-            "ELASTICSEARCH_PLUGINS_INSTALL": "ingest-attachment",
+            "ELASTICSEARCH_ROOT_LOG_LEVEL": "warn",
+            "ELASTICSEARCH_BOOTSTRAP_MEMORY_LOCK": "false",
         },
     }]
 
@@ -1522,6 +1517,13 @@ def getDbDatabase(db):
         return "XE"
 
     return "owncloud"
+
+def getNodeJsVersion():
+    if "nodeJsVersion" not in config:
+        # We use nodejs 14 as the default
+        return "14"
+    else:
+        return config["nodeJsVersion"]
 
 def cacheRestore():
     return [{
@@ -1639,7 +1641,23 @@ def installApp(ctx, phpVersion):
     if "appInstallCommand" not in config:
         return []
 
-    return [{
+    if "buildJsDeps" not in config:
+        installJsDeps = False
+    else:
+        installJsDeps = config["buildJsDeps"]
+
+    return [
+        {
+            "name": "install-app-js-%s" % config["app"],
+            "image": "owncloudci/nodejs:%s" % getNodeJsVersion(),
+            "pull": "always",
+            "commands": [
+                "cd /var/www/owncloud/server/apps/%s" % config["app"],
+                "make install-js-deps",
+                "make build-dev",
+            ],
+        },
+    ] if installJsDeps else [] + [{
         "name": "install-app-%s" % ctx.repo.name,
         "image": "owncloudci/php:%s" % phpVersion,
         "pull": "always",
@@ -1649,7 +1667,7 @@ def installApp(ctx, phpVersion):
         ],
     }]
 
-def setupServerAndApp(ctx, phpVersion, logLevel, federatedServerNeeded = False):
+def setupServerAndApp(ctx, phpVersion, logLevel, federatedServerNeeded = False, enableApp = True):
     return [{
         "name": "setup-server-%s" % ctx.repo.name,
         "image": "owncloudci/php:%s" % phpVersion,
@@ -1657,7 +1675,7 @@ def setupServerAndApp(ctx, phpVersion, logLevel, federatedServerNeeded = False):
         "commands": [
             "cd %s" % dir["server"],
             "php occ a:l",
-            "php occ a:e %s" % ctx.repo.name,
+            "php occ a:e %s" % ctx.repo.name if enableApp else "",
             "php occ a:e testing",
             "php occ a:l",
             "php occ config:system:set trusted_domains 1 --value=server",
@@ -1684,7 +1702,7 @@ def setupCeph(serviceParams):
 
     return [{
         "name": "setup-ceph",
-        "image": "owncloudci/php:7.2",
+        "image": "owncloudci/php:7.4",
         "pull": "always",
         "commands": setupCommands + ([
             "./apps/files_primary_s3/tests/drone/create-bucket.sh",
@@ -1712,7 +1730,7 @@ def setupScality(serviceParams):
 
     return [{
         "name": "setup-scality",
-        "image": "owncloudci/php:7.2",
+        "image": "owncloudci/php:7.4",
         "pull": "always",
         "commands": setupCommands + ([
             "php occ s3:create-bucket owncloud --accept-warning",
@@ -1727,7 +1745,7 @@ def setupElasticSearch(esVersion):
 
     return [{
         "name": "setup-es",
-        "image": "owncloudci/php:7.2",
+        "image": "owncloudci/php:7.4",
         "pull": "always",
         "commands": [
             "cd %s" % dir["server"],
@@ -1965,4 +1983,61 @@ def checkStarlark():
                 "refs/pull/**",
             ],
         },
+    }]
+
+def phplint(ctx):
+    pipelines = []
+
+    if "phplint" not in config:
+        return pipelines
+
+    if type(config["phplint"]) == "bool":
+        if not config["phplint"]:
+            return pipelines
+
+    result = {
+        "kind": "pipeline",
+        "type": "docker",
+        "name": "lint-test",
+        "workspace": {
+            "base": "/var/www/owncloud",
+            "path": "server/apps/%s" % ctx.repo.name,
+        },
+        "steps": installNPM() +
+                 lintTest(),
+        "depends_on": [],
+        "trigger": {
+            "ref": [
+                "refs/heads/master",
+                "refs/tags/**",
+                "refs/pull/**",
+            ],
+        },
+    }
+
+    for branch in config["branches"]:
+        result["trigger"]["ref"].append("refs/heads/%s" % branch)
+
+    pipelines.append(result)
+
+    return pipelines
+
+def installNPM():
+    return [{
+        "name": "npm-install",
+        "image": "owncloudci/nodejs:%s" % getNodeJsVersion(),
+        "pull": "always",
+        "commands": [
+            "yarn install --frozen-lockfile",
+        ],
+    }]
+
+def lintTest():
+    return [{
+        "name": "lint-test",
+        "image": "owncloudci/php:7.4",
+        "pull": "always",
+        "commands": [
+            "make test-lint",
+        ],
     }]
