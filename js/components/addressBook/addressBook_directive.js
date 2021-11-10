@@ -1,7 +1,7 @@
 angular.module('contactsApp')
 .directive('addressbook', function(ContactService) {
 	return {
-		link: function(scope, element, ctrl) {
+		link: function(scope, element, attrs, ctrl) {
 			var input = element.find('input');
 			input.bind('change', function() {
 				angular.forEach(input.get(0).files, function(file) {
