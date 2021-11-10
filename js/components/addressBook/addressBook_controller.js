@@ -1,5 +1,5 @@
 angular.module('contactsApp')
-.controller('addressbookCtrl', function($scope, AddressBookService) {
+.controller('addressbookCtrl', function($scope, $document, AddressBookService) {
 	var ctrl = this;
 
 	ctrl.t = {
@@ -12,7 +12,8 @@ angular.module('contactsApp')
 		shareInputPlaceHolder: t('contacts', 'Share with users or groups'),
 		delete: t('contacts', 'Delete'),
 		more: t('contacts', 'More'),
-		canEdit: t('contacts', 'can edit')
+		canEdit: t('contacts', 'can edit'),
+		import: t('contacts', 'Import')
 	};
 
 	ctrl.showUrl = false;
@@ -150,6 +151,13 @@ angular.module('contactsApp')
 		AddressBookService.delete(ctrl.addressBook).then(function() {
 			$scope.$apply();
 		});
+	};
+
+	ctrl.triggerImport = function() {
+		var element = $document.find('#contact-import-' + $scope.index);
+		if (element) {
+			element.click();
+		}
 	};
 
 	ctrl.download = function() {
