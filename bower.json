@@ -27,7 +27,7 @@
     "jquery-timepicker": "883bb2cd94",
     "ui-select": "angular-ui/ui-select#0.14.9",
     "ngclipboard": "^1.1.1",
-    "vcard": "0.2.7"
+    "vcard": "JankariTech/vcard#0.2.7"
   },
   "devDependencies": {
     "angular-mocks": "1.5.8",
