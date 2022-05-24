@@ -24,7 +24,7 @@ OC.L10N.register(
     "Save changes" : "Salva le modifiche",
     "Address book" : "Rubrica",
     "No search result for {query}" : "Nessun risultato di ricerca per {query}",
-    "_%n contact_::_%n contacts_" : ["%n contatto","%n contatti"],
+    "_%n contact_::_%n contacts_" : ["%n contatto","%n contatti","%n contatti"],
     "Post office box" : "Casella postale",
     "Postal code" : "CAP",
     "City" : "Città",
@@ -72,4 +72,4 @@ OC.L10N.register(
     "Social network" : "Rete sociale",
     "Settings" : "Impostazioni"
 },
-"nplurals=2; plural=(n != 1);");
+"nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;");
