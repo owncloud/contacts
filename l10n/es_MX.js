@@ -24,6 +24,7 @@ OC.L10N.register(
     "Save changes" : "Guardar cambios",
     "Address book" : "Libreta de direcciones",
     "No search result for {query}" : "No hay resultados en la busquede para {query}",
+    "_%n contact_::_%n contacts_" : ["%n contacto","%n contactos","%n contactos"],
     "Post office box" : "Apartado de correos",
     "Postal code" : "Código postal",
     "City" : "Ciudad",
