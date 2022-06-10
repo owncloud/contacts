@@ -20,7 +20,8 @@ gulp.task('eslint', function() {
 		'js/components/**/*.js',
 		'js/models/**/*.js',
 		'js/services/**/*.js',
-		'js/filters/**/*.js'
+		'js/filters/**/*.js',
+		'js/vcard/vcard.js'
 	])
 		.pipe(eslint())
 		.pipe(eslint.format())
@@ -34,7 +35,8 @@ gulp.task('default', gulp.series('eslint', function() {
 		'js/components/**/*.js',
 		'js/models/**/*.js',
 		'js/services/**/*.js',
-		'js/filters/**/*.js'
+		'js/filters/**/*.js',
+		'js/vcard/vcard.js'
 	])
 		// concat (+sourcemaps)
 		.pipe(sourcemaps.init())

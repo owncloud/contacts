@@ -170,6 +170,7 @@ appstore: build
 	README.md \
 	js/public \
 	js/dav/dav.js \
+	js/vcard/vcard.js \
 	js/vendor/angular/angular.js \
 	js/vendor/angular-bootstrap/ui-bootstrap.min.js \
 	js/vendor/angular-bootstrap/ui-bootstrap-tpls.min.js \
@@ -181,7 +182,6 @@ appstore: build
 	js/vendor/jquery-timepicker/jquery.ui.timepicker.js \
 	js/vendor/ngclipboard/dist/ngclipboard.min.js \
 	js/vendor/ui-select/dist/select.js \
-	js/vendor/vcard/src/vcard.js \
 	$(appstore_package_name)
 
 ifdef CAN_SIGN

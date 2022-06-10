@@ -29,3 +29,6 @@ node_modules/
 
 # drone CI is in .drone.star, do not let someone accidentally commit a local .drone.yml
 .drone.yml
+# IDE Caches
+.idea/
+.vscode/
