@@ -25,12 +25,12 @@
 	},
 	"globals": {
 		"angular": false,
-		"vCard": false,
 		"_": false,
 		"OC": false,
 		"t": false,
 		"n": false,
 		"dav": false,
-		"OCA": false
+		"OCA": false,
+		"vCard": false
 	}
 }
