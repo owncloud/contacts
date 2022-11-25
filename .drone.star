@@ -49,7 +49,14 @@ config = {
     "appInstallCommandJavaScript": "make npm",
     "codestyle": True,
     "phpstan": True,
-    "phan": True,
+    "phan": {
+        "multipleVersions": {
+            "phpVersions": [
+                DEFAULT_PHP_VERSION,
+                "7.3",
+            ],
+        },
+    },
     "javascript": {
         "coverage": True,
         "extraServices": [
