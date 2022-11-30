@@ -55,7 +55,7 @@ OC.L10N.register(
     "Federated Cloud ID" : "Федеративно Cloud ID",
     "Home" : "Домашен",
     "Work" : "Служебен",
-    "Other" : "Друго...",
+    "Other" : "Друго",
     "Groups" : "Групи",
     "Birthday" : "Рожден ден",
     "Anniversary" : "Годишнина",
