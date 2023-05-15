@@ -16,7 +16,7 @@ In addition to managing synchronized contacts the application also offers a feat
     <version>1.5.5</version>
     <documentation>
     	<user>https://doc.owncloud.com/webui/next/classic_ui/pim/</user>
-    	<admin>https://doc.owncloud.com/server/next/admin_manual/configuration/server/occ_command.html</admin>
+    	<admin>https://doc.owncloud.com/server/next/admin_manual/configuration/server/occ_command.html#dav-commands</admin>
     	<developer>https://github.com/owncloud/contacts/blob/master/README.md</developer>
     </documentation>
     <category>productivity</category>
