@@ -110,7 +110,7 @@ def main(ctx):
     return before + coverageTests + afterCoverageTests + nonCoverageTests + stages + after
 
 def beforePipelines(ctx):
-    return codestyle(ctx) + jscodestyle(ctx) + cancelPreviousBuilds() + phpstan(ctx) + phan(ctx) + phplint(ctx) + checkStarlark()
+    return validateDailyTarballBuild() + codestyle(ctx) + jscodestyle(ctx) + cancelPreviousBuilds() + phpstan(ctx) + phan(ctx) + phplint(ctx) + checkStarlark()
 
 def coveragePipelines(ctx):
     # All unit test pipelines that have coverage or other test analysis reported
@@ -374,6 +374,7 @@ def phan(ctx):
 
     default = {
         "phpVersions": [DEFAULT_PHP_VERSION],
+        "extraApps": {},
     }
 
     if "defaults" in config:
@@ -412,6 +413,7 @@ def phan(ctx):
                 },
                 "steps": skipIfUnchanged(ctx, "lint") +
                          installCore(ctx, "daily-master-qa", "sqlite", False) +
+                         installExtraApps(phpVersion, params["extraApps"], False) +
                          [
                              {
                                  "name": "phan",
@@ -883,6 +885,7 @@ def acceptance(ctx):
         "databases": ["mariadb:10.2"],
         "esVersions": ["none"],
         "federatedServerNeeded": False,
+        "federatedServerVersion": "",
         "filterTags": "",
         "logLevel": "2",
         "emailNeeded": False,
@@ -1118,7 +1121,11 @@ def acceptance(ctx):
                         environment["S3_TYPE"] = "ceph"
                     if (testConfig["scalityS3"] != False):
                         environment["S3_TYPE"] = "scality"
+
                 federationDbSuffix = "-federated"
+
+                if len(testConfig["federatedServerVersion"]) == 0:
+                    testConfig["federatedServerVersion"] = testConfig["server"]
 
                 result = {
                     "kind": "pipeline",
@@ -1131,7 +1138,7 @@ def acceptance(ctx):
                     "steps": skipIfUnchanged(ctx, "acceptance-tests") +
                              installCore(ctx, testConfig["server"], testConfig["database"], testConfig["useBundledApp"]) +
                              installTestrunner(ctx, DEFAULT_PHP_VERSION, testConfig["useBundledApp"]) +
-                             (installFederated(testConfig["server"], phpVersionForDocker, testConfig["logLevel"], testConfig["database"], federationDbSuffix) + owncloudLog("federated") if testConfig["federatedServerNeeded"] else []) +
+                             (installFederated(testConfig["federatedServerVersion"], phpVersionForDocker, testConfig["logLevel"], testConfig["database"], federationDbSuffix) + owncloudLog("federated") if testConfig["federatedServerNeeded"] else []) +
                              installAppPhp(ctx, phpVersionForDocker) +
                              installAppJavaScript(ctx) +
                              installExtraApps(phpVersionForDocker, testConfig["extraApps"]) +
@@ -1143,6 +1150,7 @@ def acceptance(ctx):
                              testConfig["extraSetup"] +
                              waitForServer(testConfig["federatedServerNeeded"]) +
                              waitForEmailService(testConfig["emailNeeded"]) +
+                             waitForSamba(testConfig["extraServices"]) +
                              fixPermissions(phpVersionForDocker, testConfig["federatedServerNeeded"], params["selUserNeeded"]) +
                              waitForBrowserService(testConfig["browser"]) +
                              [
@@ -1171,7 +1179,7 @@ def acceptance(ctx):
                                 testConfig["extraServices"] +
                                 owncloudService(testConfig["server"], phpVersionForDocker, "server", dir["server"], testConfig["ssl"], testConfig["xForwardedFor"]) +
                                 ((
-                                    owncloudService(testConfig["server"], phpVersionForDocker, "federated", dir["federated"], testConfig["ssl"], testConfig["xForwardedFor"]) +
+                                    owncloudService(testConfig["federatedServerVersion"], phpVersionForDocker, "federated", dir["federated"], testConfig["ssl"], testConfig["xForwardedFor"]) +
                                     databaseServiceForFederation(testConfig["database"], federationDbSuffix)
                                 ) if testConfig["federatedServerNeeded"] else []),
                     "depends_on": [],
@@ -1443,6 +1451,26 @@ def waitForEmailService(emailNeeded):
 
     return []
 
+def waitForSamba(extraServices):
+    foundSamba = False
+
+    for extraService in extraServices:
+        # each service entry should be a key-value dictionary that has at least a "name" key
+        # if there is a "samba" service specified, then we need to wait for it to start.
+        if (extraService["name"] == "samba"):
+            foundSamba = True
+
+    if (foundSamba):
+        return [{
+            "name": "wait-for-samba",
+            "image": OC_CI_WAIT_FOR,
+            "commands": [
+                "wait-for -it samba:139,samba:445 -t 300",
+            ],
+        }]
+
+    return []
+
 def ldapService(ldapNeeded):
     if ldapNeeded:
         return [{
@@ -1669,7 +1697,7 @@ def installTestrunner(ctx, phpVersion, useBundledApp):
         ] if not useBundledApp else []),
     }]
 
-def installExtraApps(phpVersion, extraApps):
+def installExtraApps(phpVersion, extraApps, enableExtraApps = True):
     commandArray = []
     for app, command in extraApps.items():
         commandArray.append("ls %s/apps/%s || git clone https://github.com/owncloud/%s.git %s/apps/%s" % (dir["testrunner"], app, app, dir["testrunner"], app))
@@ -1678,9 +1706,10 @@ def installExtraApps(phpVersion, extraApps):
             commandArray.append("cd %s/apps/%s" % (dir["server"], app))
             commandArray.append(command)
         commandArray.append("cd %s" % dir["server"])
-        commandArray.append("php occ a:l")
-        commandArray.append("php occ a:e %s" % app)
-        commandArray.append("php occ a:l")
+        if (enableExtraApps):
+            commandArray.append("php occ a:l")
+            commandArray.append("php occ a:e %s" % app)
+            commandArray.append("php occ a:l")
 
     if (commandArray == []):
         return []
@@ -1839,7 +1868,7 @@ def setupElasticSearch(esVersion):
             "image": OC_CI_PHP % DEFAULT_PHP_VERSION,
             "commands": [
                 "cd %s" % dir["server"],
-                "php occ config:app:set search_elastic servers --value elasticsearch",
+                "php occ config:app:set search_elastic servers --value http://elasticsearch:9200",
                 "php occ search:index:reset --force",
             ],
         },
@@ -2220,3 +2249,33 @@ def skipIfUnchanged(ctx, type):
         return [skip_step]
 
     return []
+
+def validateDailyTarballBuild():
+    if "validateDailyTarball" not in config:
+        return []
+
+    if not config["validateDailyTarball"]:
+        return []
+
+    pipeline = {
+        "kind": "pipeline",
+        "type": "docker",
+        "name": "check-tarball-build-date",
+        "steps": [{
+            "name": "check-build-date",
+            "image": OC_CI_ALPINE,
+            "commands": [
+                "chmod +x ./tests/drone/check-daily-update.sh",
+                "./tests/drone/check-daily-update.sh %s %s" % ("daily-master", "daily-master-qa"),
+            ],
+        }],
+        "depends_on": [],
+        "trigger": {
+            "ref": [],
+        },
+    }
+
+    for branch in config["branches"]:
+        pipeline["trigger"]["ref"].append("refs/heads/%s" % branch)
+
+    return [pipeline]
