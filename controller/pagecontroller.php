@@ -15,7 +15,6 @@ use OCP\AppFramework\Http\TemplateResponse;
 use OCP\AppFramework\Controller;
 
 class PageController extends Controller {
-
 	/**
 	 * @NoAdminRequired
 	 * @NoCSRFRequired

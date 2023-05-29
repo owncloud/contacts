@@ -16,7 +16,6 @@ use PHPUnit\Framework\TestCase;
 use OCP\AppFramework\Http\TemplateResponse;
 
 class PageControllerTest extends TestCase {
-
 	/** @var PageController */
 	private $controller;
 
