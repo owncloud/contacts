@@ -52,7 +52,7 @@ OC.L10N.register(
     "Detailed name" : "Emri i hollësishëm",
     "Notes" : "Shënime",
     "Website" : "Sajt",
-    "Federated Cloud ID" : "ID Federated Cloud",
+    "Federated Cloud ID" : "ID Reje të Federuar",
     "Home" : "Kreu",
     "Work" : "Pune",
     "Other" : "Tjetër",
