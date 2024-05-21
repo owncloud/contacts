@@ -44,6 +44,14 @@
 		</li>
 
 		<li>
+      <button	ng-click="ctrl.triggerImport()">
+				<span class="icon-upload svg"></span>
+				<span>{{ctrl.t.import}}</span>
+			</button>
+      <input type="file" id="contact-import-{{index}}" class="hidden-visually" multiple/>
+		</li>
+
+		<li>
 			<button	ng-click="ctrl.deleteAddressBook()">
 				<span class="icon-delete svg"></span>
 				<span>{{ctrl.t.deleteAddressbook}}</span>
