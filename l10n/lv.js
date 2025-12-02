@@ -38,6 +38,7 @@ OC.L10N.register(
     "Not grouped" : "Negrupēts",
     "New contact" : "Jauns kontakts",
     "Sort by" : "Kārtot pēc",
+    "{addressbook} shared by {owner}" : "{addressbook} koplietoja {owner}",
     "Contact could not be created." : "Neizdevās izveidot kontaktu",
     "Display name" : "Redzamais vārds",
     "Nickname" : "Iesauka",
