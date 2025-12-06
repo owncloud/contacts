@@ -9,6 +9,7 @@ OC.L10N.register(
     "Download" : "下载",
     "Link" : "連結",
     "Share" : "分享",
+    "Delete" : "刪除",
     "Share with users or groups" : "共享给其他组或者用户",
     "More" : "更多",
     "can edit" : "可编辑",
@@ -46,6 +47,7 @@ OC.L10N.register(
     "Contact could not be created." : "無法創建聯繫人。",
     "No contacts in file. Only vCard files are allowed." : "沒有聯絡人 檔案。僅允許使用vCard文件。",
     "Only vCard version 4.0 (RFC6350) or version 3.0 (RFC2426) are supported." : "僅支持vCard版本4.0（RF​​C6350）或版本3.0（RF​​C2426）。",
+    "Display name" : "顯示名稱",
     "Nickname" : "昵称",
     "Detailed name" : "詳細名稱",
     "Notes" : "说明",
@@ -67,6 +69,7 @@ OC.L10N.register(
     "Fax work" : "工作传真",
     "Pager" : "传呼机",
     "Voice" : "语音",
-    "Social network" : "社交網絡"
+    "Social network" : "社交網絡",
+    "Settings" : "設定"
 },
 "nplurals=1; plural=0;");
