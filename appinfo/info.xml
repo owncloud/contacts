@@ -13,7 +13,7 @@ Furthermore users can share address books with other users or groups (read-only/
 In addition to managing synchronized contacts the application also offers a feature to import contacts from vCards (.vcf).</description>
     <licence>AGPL</licence>
     <author>Hendrik Leppelsack, Thomas Müller, Alexander Weidinger, Jan-Christoph Borchardt, Tom Needham</author>
-    <version>1.5.5</version>
+    <version>1.6.0</version>
     <documentation>
     	<user>https://doc.owncloud.com/webui/next/classic_ui/pim/</user>
     	<admin>https://doc.owncloud.com/server/next/admin_manual/configuration/server/occ_command.html#dav-commands</admin>
@@ -25,6 +25,7 @@ In addition to managing synchronized contacts the application also offers a feat
     <repository type="git">https://github.com/owncloud/contacts.git</repository>
     <screenshot>https://raw.githubusercontent.com/owncloud/screenshots/760f2783b03fd26cbc920188b672f5f5efe548c0/contacts/contacts.png</screenshot>
     <dependencies>
-        <owncloud min-version="10.2" max-version="10" />
+        <owncloud min-version="11" max-version="11" />
+	<php min-version="8.3" />
     </dependencies>
 </info>
