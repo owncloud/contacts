@@ -14,5 +14,6 @@ jobs:
     uses: owncloud/reusable-workflows/.github/workflows/translation-sync.yml@add-translation-sync
     with:
       mode: old
+      sub_path: l10n
     secrets:
       TX_TOKEN: ${{ secrets.TX_TOKEN }}
