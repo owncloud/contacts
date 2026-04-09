@@ -10,7 +10,7 @@ jobs:
     permissions:
       contents: write
       pull-requests: write
-    uses: owncloud/reusable-workflows/.github/workflows/translation-sync.yml@main
+    uses: owncloud/reusable-workflows/.github/workflows/translation-sync.yml@add-translation-sync
     with:
       mode: old
     secrets:
