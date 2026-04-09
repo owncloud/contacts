@@ -17,5 +17,5 @@ jobs:
       sub_path: l10n
     secrets:
       TX_TOKEN: ${{ secrets.TX_TOKEN }}
-      APP_ID: ${{ secrets.APP_ID }}
-      APP_PRIVATE_KEY: ${{ secrets.APP_PRIVATE_KEY }}
+      TRANSLATION_APP_ID: ${{ secrets.TRANSLATION_APP_ID }}
+      TRANSLATION_APP_PRIVATE_KEY: ${{ secrets.TRANSLATION_APP_PRIVATE_KEY }}
