@@ -4,14 +4,13 @@ on:
   schedule:
     - cron: '0 2 * * 1'
   workflow_dispatch:
-  pull_request:
 
 jobs:
   sync:
     permissions:
       contents: write
       pull-requests: write
-    uses: owncloud/reusable-workflows/.github/workflows/translation-sync.yml@add-translation-sync
+    uses: owncloud/reusable-workflows/.github/workflows/translation-sync.yml@main
     with:
       mode: old
       sub_path: l10n
