@@ -68,11 +68,7 @@ config = {
         ],
     },
     "phpunit": False,
-    "phpintegration": {
-        "allDatabases": {
-            "coverage": False,
-        },
-    },
+    "phpintegration": False,
 }
 
 def main(ctx):
