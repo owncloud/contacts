@@ -24,6 +24,7 @@ OC.L10N.register(
     "Save changes" : "ບັນທຶກການປ່ຽນແປງ",
     "Address book" : "ປຶ້ມທີ່ຢູ່",
     "No search result for {query}" : "ບໍ່ພົບຜົນການຄົ້ນຫາສຳລັບ {query}",
+    "_%n contact_::_%n contacts_" : ["%n ລາຍຊື່ຜູ້ຕິດຕໍ່"],
     "Post office box" : "ຕູ້ ປ.ນ.",
     "Postal code" : "ລະຫັດໄປສະນີ",
     "City" : "ເມືອງ",
