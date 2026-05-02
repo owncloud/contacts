@@ -55,3 +55,13 @@ jobs:
       app-name: ${{ needs.get-vars.outputs.app-name }}
       php-versions: ${{ needs.get-vars.outputs.php-versions }}
       do-integration-tests: true
+
+  js-unit:
+    name: JS Unit
+    needs:
+      - get-vars
+    uses: owncloud/reusable-workflows/.github/workflows/js-unit.yml@main
+    with:
+      app-name: ${{ needs.get-vars.outputs.app-name }}
+      php-version: '8.3'
+      enable-xvfb-display-server: true

@@ -195,7 +195,7 @@ endif
 # and root directory. If phpunit is not installed systemwide, a copy is fetched
 # from the internet
 .PHONY: test-js
-test-js:
+test-js: npm
 	./js/tests/run-js-test.sh
 
 # watch out for changes and rebuild
