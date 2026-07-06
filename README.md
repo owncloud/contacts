@@ -1,63 +1,115 @@
 # ownCloud Contacts
 
-[![irc](https://img.shields.io/badge/irc%20channel-%23owncloud--contacts%20on%20freenode-blue.svg)](https://webchat.freenode.net/?channels=owncloud-contacts)
-[![Build Status](https://scrutinizer-ci.com/g/owncloud/contacts/badges/build.png?b=master)](https://scrutinizer-ci.com/g/owncloud/contacts/build-status/master)
-[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=owncloud_contacts&metric=alert_status)](https://sonarcloud.io/dashboard?id=owncloud_contacts)
-[![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=owncloud_contacts&metric=security_rating)](https://sonarcloud.io/dashboard?id=owncloud_contacts)
-[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=owncloud_contacts&metric=coverage)](https://sonarcloud.io/dashboard?id=owncloud_contacts)
+<!-- OSPO-managed README | Generated: 2026-04-16 | v2 -->
 
-**A contacts app for [ownCloud](https://owncloud.org)**
+[![License](https://img.shields.io/badge/License-See%20Repository-blue.svg)](LICENSE) [![ownCloud OSPO](https://img.shields.io/badge/OSPO-ownCloud-blue)](https://kiteworks.com/opensource) [![Docker Hub](https://img.shields.io/docker/pulls/owncloud)](https://hub.docker.com/r/owncloud/server)
 
-This is the new contacts app that has replaced the [old contacts app](https://github.com/owncloudarchive/contacts), and is only the frontend for the new server-integrated CardDAV-Backend.
+The ownCloud Contacts app provides a feature-rich web interface for managing CardDAV contacts in ownCloud Server. It is the frontend for the server-integrated CardDAV backend, replacing the original contacts app. Users can create, edit, and organize contacts, manage address books, and share contacts with other users.
 
-![](https://raw.githubusercontent.com/owncloud/screenshots/master/contacts/contacts.png)
+## Part of Classic (OC10)
 
-## Maintainers:
+Contacts is an app for [ownCloud Server (Classic)](https://github.com/owncloud/core). It uses the CardDAV backend built into ownCloud Server core. The app is available on [Docker Hub as part of the ownCloud Server image](https://hub.docker.com/r/owncloud/server).
 
-- [Thomas Müller](https://github.com/DeepDiver1975)
-- [Hendrik Leppelsack](https://github.com/Henni)
-- [Jan-Christoph Borchardt](https://github.com/jancborchardt)
-- [Tom Needham](https://github.com/tomneedham)
+## Getting Started
 
+Follow the steps below to build and install the Contacts app.
 
-If you’d like to join, just go through the [issue list](https://github.com/owncloud/contacts/issues) and fix some. :)
+### Building
 
+The app can be built using the provided Makefile:
 
-## Building the app
+```bash
+make
+```
 
-The app can be built by using the provided Makefile by running:
+This requires: make, which, tar, curl, npm.
 
-    make
+### Installation
 
-This requires the following things to be present:
-* make
-* which
-* tar: for building the archive
-* curl: used if phpunit and composer are not installed to fetch them from the web
-* npm: for building and testing everything JS
+Extract the build artifact in the `apps/` folder of your ownCloud Server installation, then enable the app.
 
+### Running Tests
 
-## Publish to App Store
+```bash
+make test
+```
 
-First get an account for the [App Store](http://apps.owncloud.com/) then run:
+This runs both PHP unit tests and JavaScript tests.
 
-    make && make appstore
+## Documentation
 
-The archive is located in build/artifacts/appstore and can then be uploaded to the App Store.
+- [ownCloud Server documentation](https://doc.owncloud.com)
+- For CardDAV backend issues, see [ownCloud Core](https://github.com/owncloud/core)
 
-## Running tests
-You can use the provided Makefile to run all tests by using:
+## Community & Support
 
-    make test
+**[Star](https://github.com/owncloud/contacts)** this repo and **Watch** for release notifications!
 
-This will run the PHP unit and integration tests and if a package.json is present in the **js/** folder will execute **npm run test**
+- [ownCloud Website](https://owncloud.com)
+- [Community Discussions](https://github.com/orgs/owncloud/discussions)
+- [Matrix Chat](https://app.element.io/#/room/#owncloud:matrix.org)
+- [Documentation](https://doc.owncloud.com)
+- [Enterprise Support](https://owncloud.com/contact-us/)
+- [OSPO Home](https://kiteworks.com/opensource)
 
-Of course you can also install [PHPUnit](http://phpunit.de/getting-started.html) and use the configurations directly:
+## Contributing
 
-    phpunit -c phpunit.xml
+We welcome contributions! Please read the [Contributing Guidelines](CONTRIBUTING.md)
+and our [Code of Conduct](CODE_OF_CONDUCT.md) before getting started.
 
-or:
+### Workflow
 
-    phpunit -c phpunit.integration.xml
+- **Rebase Early, Rebase Often!** We use a rebase workflow. Always rebase on the target branch before submitting a PR.
+- **Dependabot**: Automated dependency updates are managed via Dependabot. Review and merge dependency PRs promptly.
+- **Signed Commits**: All commits **must** be PGP/GPG signed. See [GitHub's signing guide](https://docs.github.com/en/authentication/managing-commit-signature-verification).
+- **DCO Sign-off**: Every commit must carry a `Signed-off-by` line:
+  ```
+  git commit -s -S -m "your commit message"
+  ```
+- **GitHub Actions Policy**: Workflows may only use actions that are (a) owned by `owncloud`, (b) created by GitHub (`actions/*`), or (c) verified in the GitHub Marketplace.
 
-for integration tests
+## Translations
+
+Help translate this project on Transifex:
+**<https://explore.transifex.com/owncloud-org/owncloud/>**
+
+Please submit translations via Transifex -- do not open pull requests for translation changes.
+
+## Security
+
+**Do not open a public GitHub issue for security vulnerabilities.**
+
+Report vulnerabilities at **<https://security.owncloud.com>** -- see [SECURITY.md](SECURITY.md).
+
+Bug bounty: [YesWeHack ownCloud Program](https://yeswehack.com/programs/owncloud-bug-bounty-program)
+
+## License
+
+See [LICENSE](LICENSE) for license details.
+
+## About the ownCloud OSPO
+
+The [Kiteworks Open Source Program Office](https://kiteworks.com/opensource), operating under
+the [ownCloud](https://owncloud.com) brand, launched on May 5, 2026, to steward the open source
+ecosystem around ownCloud's products. The OSPO ensures transparent governance, license compliance,
+community health, and sustainable collaboration between the open source community and
+[Kiteworks](https://www.kiteworks.com), which acquired ownCloud in 2023.
+
+- **OSPO Home**: <https://kiteworks.com/opensource>
+- **GitHub**: <https://github.com/owncloud>
+- **ownCloud**: <https://owncloud.com>
+
+For questions about the OSPO or licensing, contact ospo@kiteworks.com.
+
+### License Migration to Apache 2.0
+
+The OSPO is driving a strategic relicensing of ownCloud repositories toward the
+[Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0), following
+the [Apache Software Foundation's third-party license policy](https://www.apache.org/legal/resolved.html).
+
+Individual repositories will migrate as their audit is completed. The LICENSE file
+in each repo reflects its **current** license status (not the target).
+
+**Current license: Not detected.** The OSPO will determine the current license status of this
+repository before planning any migration steps. If you know the intended license, please open an
+issue or contact ospo@kiteworks.com.
