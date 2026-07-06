@@ -2,7 +2,7 @@ import camelize from './camelize';
 
 let debug = require('./debug')('dav:parser');
 
-let DOMParser = require('xmldom').DOMParser;
+let DOMParser = require('@xmldom/xmldom').DOMParser;
 
 export function multistatus(string) {
   let parser = new DOMParser();
