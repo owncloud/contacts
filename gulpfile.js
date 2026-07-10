@@ -2,15 +2,25 @@ var gulp = require('gulp'),
 	concat = require('gulp-concat'),
 	eslint = require('gulp-eslint'),
 	ngAnnotate = require('gulp-ng-annotate'),
-	KarmaServer = require('karma').Server,
+	karma = require('karma'),
 	sourcemaps = require('gulp-sourcemaps');
 
 gulp.task('karma', function(done){
-	KarmaServer.start({
-		configFile: __dirname + '/karma.conf.js',
-		singleRun: true
-	}, function() {
-		done();
+	karma.config.parseConfig(
+		__dirname + '/karma.conf.js',
+		{ singleRun: true },
+		{ promiseConfig: true, throwErrors: true }
+	).then(function(karmaConfig) {
+		var server = new karma.Server(karmaConfig, function(exitCode) {
+			if (exitCode !== 0) {
+				done(new Error('Karma exited with code ' + exitCode));
+			} else {
+				done();
+			}
+		});
+		server.start();
+	}).catch(function(err) {
+		done(err);
 	});
 });
 
