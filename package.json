@@ -27,7 +27,7 @@
     "chai": "^6.2.2",
     "codecov": "^3.6.5",
     "gulp": "^4.0.0",
-    "gulp-cli": "^1.4.0",
+    "gulp-cli": "^3.1.0",
     "gulp-concat": "^2.6.0",
     "gulp-eslint": "^3.0.1",
     "gulp-ng-annotate": "^2.0.0",
