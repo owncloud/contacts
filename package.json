@@ -41,6 +41,6 @@
     "karma-sinon": "^1.0.5",
     "karma-webdriver-launcher": "^1.0.7",
     "mocha": "^5.2",
-    "sinon": "^1.17.5"
+    "sinon": "^22.0.0"
   }
 }
