@@ -29,7 +29,7 @@
     "gulp": "^4.0.0",
     "gulp-cli": "^1.4.0",
     "gulp-concat": "^2.6.0",
-    "gulp-eslint": "^3.0.1",
+    "gulp-eslint": "^6.0.0",
     "gulp-ng-annotate": "^2.0.0",
     "gulp-sourcemaps": "^1.6.0",
     "karma": "^6.4",
