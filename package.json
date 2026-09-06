@@ -40,7 +40,7 @@
     "karma-mocha-reporter": "^2.2.5",
     "karma-sinon": "^1.0.5",
     "karma-webdriver-launcher": "^1.0.7",
-    "mocha": "^11.7",
+    "mocha": "^12.0",
     "sinon": "^22.1.0"
   }
 }
