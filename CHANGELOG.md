@@ -5,6 +5,18 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 ## [Unreleased]
 
+### Fixed
+
+- Restore the contact and address book list, which never loaded because every request
+  template in the vendored dav library resolved to a module namespace instead of a
+  function.
+
+### Changed
+
+- The vendored dav bundle (`js/dav/dav.js`) is reproducible from the repository again:
+  its dependency tree is locked and the build is recorded in `js/dav/Makefile`.
+  Rebuilding it takes the bundled `@xmldom/xmldom` from 0.8.13 to 0.8.15.
+
 ## [1.5.5] - 2018-12-11
 
 ### Added

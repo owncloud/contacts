@@ -4,6 +4,9 @@ js/vendor
 coverage
 npm-debug.log
 package-lock.json
+# js/dav/dav.js is a committed build artifact, so its dependency tree has to be
+# locked or a rebuild silently produces a different bundle. See js/dav/Makefile.
+!js/dav/package-lock.json
 
 .php_cs.cache
 .php-cs-fixer.cache
