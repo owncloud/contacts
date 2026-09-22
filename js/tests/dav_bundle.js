@@ -39,6 +39,34 @@ describe('dav bundle', function() {
 		}).to.not.throw();
 	});
 
+	// mkcol and proppatch back createAddressBook and renameAddressBook; calendarQuery is
+	// the one remaining template in the barrel. These builders only assemble a request,
+	// so nothing leaves the browser.
+	it('should build an mkcol request', function() {
+		expect(function() {
+			dav.request.mkcol({
+				props: [{ name: 'displayname', value: 'Test', namespace: dav.ns.DAV }]
+			});
+		}).to.not.throw();
+	});
+
+	it('should build a proppatch request', function() {
+		expect(function() {
+			dav.request.proppatch({
+				props: [{ name: 'displayname', value: 'Renamed', namespace: dav.ns.DAV }]
+			});
+		}).to.not.throw();
+	});
+
+	it('should build a calendarQuery request', function() {
+		expect(function() {
+			dav.request.calendarQuery({
+				props: [{ name: 'getetag', namespace: dav.ns.DAV }],
+				filters: []
+			});
+		}).to.not.throw();
+	});
+
 	it('should render a propfind body containing the requested prop', function() {
 		var request = dav.request.propfind({
 			props: [{ name: 'displayname', namespace: dav.ns.DAV }]

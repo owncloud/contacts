@@ -65,3 +65,48 @@ jobs:
       app-name: ${{ needs.get-vars.outputs.app-name }}
       php-version: '8.3'
       enable-xvfb-display-server: true
+
+  # js/dav/dav.js is a committed build artifact. It silently drifted from its sources
+  # once already - the bundle was rebuilt with a different bundler than the Makefile
+  # described, which broke every CardDAV request while CI stayed green - so rebuild it
+  # here and fail if the result differs from what is committed.
+  dav-bundle:
+    name: dav bundle
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Setup Node
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: '22'
+
+      # Delete the bundle first so the rebuild is unconditional. Otherwise the job only
+      # proves anything as long as node_modules happens to be newer than dav.js, and
+      # caching node_modules here - the obvious optimisation for a job that installs
+      # ~375 packages - would make `make` report "up to date", compile nothing, and pass.
+      - name: Rebuild the bundle from source
+        working-directory: js/dav
+        run: |
+          rm -f dav.js
+          make dav.js
+          test -s dav.js
+
+      # `git status --porcelain` rather than `git diff`: diff reports neither untracked
+      # nor deleted paths, so a PR that dropped dav.js from the index would have it
+      # rebuilt as an untracked file and still pass.
+      - name: Assert the committed bundle matches its sources
+        run: |
+          changed=$(git status --porcelain -- js/dav/dav.js js/dav/package-lock.json)
+          if [ -n "$changed" ]; then
+            echo "$changed"
+            git diff -- js/dav/dav.js js/dav/package-lock.json | head -50
+            echo "::error::js/dav/dav.js is out of date or untracked. Run 'make -C js/dav dav.js' and commit the result."
+            exit 1
+          fi
+          echo "js/dav/dav.js is in sync with js/dav/lib"

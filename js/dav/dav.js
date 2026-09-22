@@ -5522,9 +5522,9 @@ ${JSON.stringify(result)}
     }
   });
 
-  // node_modules/url/node_modules/punycode/punycode.js
+  // node_modules/punycode/punycode.js
   var require_punycode = __commonJS({
-    "node_modules/url/node_modules/punycode/punycode.js"(exports, module) {
+    "node_modules/punycode/punycode.js"(exports, module) {
       (function(root) {
         var freeExports = typeof exports == "object" && exports && !exports.nodeType && exports;
         var freeModule = typeof module == "object" && module && !module.nodeType && module;
