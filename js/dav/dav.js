@@ -209,11 +209,17 @@ var dav = (() => {
          */
         XMLNS: "http://www.w3.org/2000/xmlns/"
       });
+      var nameStartChar = /[A-Z_a-z\xC0-\xD6\xD8-\xF6\u00F8-\u02FF\u0370-\u037D\u037F-\u1FFF\u200C-\u200D\u2070-\u218F\u2C00-\u2FEF\u3001-\uD7FF\uF900-\uFDCF\uFDF0-\uFFFD]/;
+      var nameChar = new RegExp("[\\-\\.0-9" + nameStartChar.source.slice(1, -1) + "\\u00B7\\u0300-\\u036F\\u203F-\\u2040]");
+      var tagNamePattern = new RegExp("^" + nameStartChar.source + nameChar.source + "*(?::" + nameStartChar.source + nameChar.source + "*)?$");
       exports.assign = assign;
       exports.find = find;
       exports.freeze = freeze;
       exports.MIME_TYPE = MIME_TYPE;
       exports.NAMESPACE = NAMESPACE;
+      exports.nameStartChar = nameStartChar;
+      exports.nameChar = nameChar;
+      exports.tagNamePattern = tagNamePattern;
     }
   });
 
@@ -223,6 +229,7 @@ var dav = (() => {
       var conventions = require_conventions();
       var find = conventions.find;
       var NAMESPACE = conventions.NAMESPACE;
+      var tagNamePattern = conventions.tagNamePattern;
       function notEmptyString(input) {
         return input !== "";
       }
@@ -386,6 +393,7 @@ var dav = (() => {
       };
       _extends(LiveNodeList, NodeList);
       function NamedNodeMap() {
+        this._nameIndex = /* @__PURE__ */ Object.create(null);
       }
       function _findNodeIndex(list, node) {
         var i = list.length;
@@ -395,12 +403,22 @@ var dav = (() => {
           }
         }
       }
+      function _nnmIndexAdd(list, attr) {
+        list._nameIndex[attr.nodeName] = attr;
+      }
+      function _nnmIndexRemove(list, attr) {
+        if (list._nameIndex[attr.nodeName] === attr) {
+          delete list._nameIndex[attr.nodeName];
+        }
+      }
       function _addNamedNode(el, list, newAttr, oldAttr) {
         if (oldAttr) {
           list[_findNodeIndex(list, oldAttr)] = newAttr;
+          _nnmIndexRemove(list, oldAttr);
         } else {
           list[list.length++] = newAttr;
         }
+        _nnmIndexAdd(list, newAttr);
         if (el) {
           newAttr.ownerElement = el;
           var doc = el.ownerDocument;
@@ -418,6 +436,7 @@ var dav = (() => {
             list[i] = list[++i];
           }
           list.length = lastIndex;
+          _nnmIndexRemove(list, attr);
           if (el) {
             var doc = el.ownerDocument;
             if (doc) {
@@ -446,7 +465,7 @@ var dav = (() => {
           if (el && el != this._ownerElement) {
             throw new DOMException(INUSE_ATTRIBUTE_ERR);
           }
-          var oldAttr = this.getNamedItem(attr.nodeName);
+          var oldAttr = this._nameIndex[attr.nodeName];
           _addNamedNode(this._ownerElement, this, attr, oldAttr);
           return oldAttr;
         },
@@ -649,8 +668,29 @@ var dav = (() => {
               while (child2) {
                 var next = child2.nextSibling;
                 if (next !== null && next.nodeType === TEXT_NODE && child2.nodeType === TEXT_NODE) {
-                  node.removeChild(next);
-                  child2.appendData(next.data);
+                  var tail = [];
+                  var sibling = next;
+                  while (sibling !== null && sibling.nodeType === TEXT_NODE) {
+                    tail.push(sibling.data);
+                    sibling = sibling.nextSibling;
+                  }
+                  var removed = child2.nextSibling;
+                  while (removed !== sibling) {
+                    var following = removed.nextSibling;
+                    removed.parentNode = null;
+                    removed.previousSibling = null;
+                    removed.nextSibling = null;
+                    removed = following;
+                  }
+                  child2.nextSibling = sibling;
+                  if (sibling !== null) {
+                    sibling.previousSibling = child2;
+                  } else {
+                    node.lastChild = child2;
+                  }
+                  child2.appendData(tail.join(""));
+                  _onUpdateChild(node.ownerDocument, node);
+                  child2 = sibling;
                 } else {
                   child2 = next;
                 }
@@ -1165,8 +1205,10 @@ var dav = (() => {
          * - it does not do any input validation on the arguments and doesn't throw "InvalidCharacterError".
          *
          * Note: When the resulting document is serialized with `requireWellFormed: true`, the
-         * serializer throws with code `INVALID_STATE_ERR` if `.data` contains `?>` (W3C DOM Parsing
-         * §3.2.1.7). Without that option the data is emitted verbatim.
+         * serializer throws with code `INVALID_STATE_ERR` if `.target` is not a valid XML `NCName`
+         * (a `Name` with no colon) or is an ASCII case-insensitive match for `"xml"`, or if `.data`
+         * contains `?>` (W3C DOM Parsing §3.2.1.7). Without that option the target and data are
+         * emitted verbatim.
          *
          * @param {string} target
          * @param {string} data
@@ -1191,7 +1233,27 @@ var dav = (() => {
           node.specified = true;
           return node;
         },
+        /**
+         * Creates an EntityReference object, serialized as `&name;`.
+         *
+         * The `name` is validated against the XML `Name` production at creation time; an invalid name
+         * throws a `DOMException` with code `INVALID_CHARACTER_ERR`. When the resulting node is
+         * serialized with `requireWellFormed: true`, the serializer re-validates `nodeName` and throws
+         * a `DOMException` with code `INVALID_STATE_ERR` if a later `nodeName` mutation made it invalid;
+         * without that option the name is emitted verbatim.
+         *
+         * Note: xmldom does not expand entities — the parser resolves entity references inline and never
+         * constructs `EntityReference` nodes, so this method is the only producer.
+         *
+         * @param {string} name The name of the entity to reference.
+         * @returns {EntityReference}
+         * @throws {DOMException} With code `INVALID_CHARACTER_ERR` when `name` is not a valid XML `Name`.
+         * @see https://www.w3.org/TR/DOM-Level-3-Core/core.html#ID-392B75AE
+         */
         createEntityReference: function(name) {
+          if (!tagNamePattern.test(name)) {
+            throw new DOMException(INVALID_CHARACTER_ERR, 'not a valid xml name "' + name + '"');
+          }
           var node = new EntityReference();
           node.ownerDocument = this;
           node.nodeName = name;
@@ -1456,7 +1518,10 @@ var dav = (() => {
         }
         return true;
       }
-      function addSerializedAttribute(buf, qualifiedName, value) {
+      function addSerializedAttribute(buf, qualifiedName, value, requireWellFormed) {
+        if (requireWellFormed && !tagNamePattern.test(qualifiedName)) {
+          throw new DOMException(INVALID_STATE_ERR, 'The attribute name "' + qualifiedName + '" is not a valid XML QName');
+        }
         buf.push(" ", qualifiedName, '="', value.replace(/[<>&"\t\n\r]/g, _xmlEncoder), '"');
       }
       function serializeToString(node, buf, isHTML, nodeFilter, visibleNamespaces, requireWellFormed) {
@@ -1514,6 +1579,9 @@ var dav = (() => {
                     }
                   }
                 }
+                if (requireWellFormed && !tagNamePattern.test(prefixedNodeName)) {
+                  throw new DOMException(INVALID_STATE_ERR, 'The element name "' + prefixedNodeName + '" is not a valid XML QName');
+                }
                 buf.push("<", prefixedNodeName);
                 var childNs = ns.slice();
                 for (var i = 0; i < len; i++) {
@@ -1529,7 +1597,7 @@ var dav = (() => {
                   if (needNamespaceDefine(attr, html, childNs)) {
                     var attrPrefix = attr.prefix || "";
                     var uri = attr.namespaceURI;
-                    addSerializedAttribute(buf, attrPrefix ? "xmlns:" + attrPrefix : "xmlns", uri);
+                    addSerializedAttribute(buf, attrPrefix ? "xmlns:" + attrPrefix : "xmlns", uri, requireWellFormed);
                     childNs.push({ prefix: attrPrefix, namespace: uri });
                   }
                   var filteredAttr = nodeFilter ? nodeFilter(attr) : attr;
@@ -1537,14 +1605,14 @@ var dav = (() => {
                     if (typeof filteredAttr === "string") {
                       buf.push(filteredAttr);
                     } else {
-                      addSerializedAttribute(buf, filteredAttr.name, filteredAttr.value);
+                      addSerializedAttribute(buf, filteredAttr.name, filteredAttr.value, requireWellFormed);
                     }
                   }
                 }
                 if (nodeName === prefixedNodeName && needNamespaceDefine(n, html, childNs)) {
                   var nodePrefix = n.prefix || "";
                   var uri = n.namespaceURI;
-                  addSerializedAttribute(buf, nodePrefix ? "xmlns:" + nodePrefix : "xmlns", uri);
+                  addSerializedAttribute(buf, nodePrefix ? "xmlns:" + nodePrefix : "xmlns", uri, requireWellFormed);
                   childNs.push({ prefix: nodePrefix, namespace: uri });
                 }
                 var child2 = n.firstChild;
@@ -1571,7 +1639,7 @@ var dav = (() => {
               case DOCUMENT_FRAGMENT_NODE:
                 return { ns: ns.slice(), isHTML: html, tag: null };
               case ATTRIBUTE_NODE:
-                addSerializedAttribute(buf, n.name, n.value);
+                addSerializedAttribute(buf, n.name, n.value, requireWellFormed);
                 return null;
               case TEXT_NODE:
                 buf.push(n.data.replace(/[<&>]/g, _xmlEncoder));
@@ -1590,6 +1658,9 @@ var dav = (() => {
                 return null;
               case DOCUMENT_TYPE_NODE:
                 if (requireWellFormed) {
+                  if (!tagNamePattern.test(n.name)) {
+                    throw new DOMException(INVALID_STATE_ERR, 'The doctype name "' + n.name + '" is not a valid XML Name');
+                  }
                   if (n.publicId && !/^("[\x20\r\na-zA-Z0-9\-()+,.\/:=?;!*#@$_%']*"|'[\x20\r\na-zA-Z0-9\-()+,.\/:=?;!*#@$_%'"]*')$/.test(n.publicId)) {
                     throw new DOMException(INVALID_STATE_ERR, "DocumentType publicId is not a valid PubidLiteral");
                   }
@@ -1620,12 +1691,26 @@ var dav = (() => {
                 }
                 return null;
               case PROCESSING_INSTRUCTION_NODE:
-                if (requireWellFormed && n.data.indexOf("?>") !== -1) {
-                  throw new DOMException(INVALID_STATE_ERR, 'The ProcessingInstruction data contains "?>"');
+                if (requireWellFormed) {
+                  if (!tagNamePattern.test(n.target) || n.target.indexOf(":") !== -1 || n.target.toLowerCase() === "xml") {
+                    throw new DOMException(
+                      INVALID_STATE_ERR,
+                      'The processing instruction target "' + n.target + '" is not a valid XML NCName or is reserved'
+                    );
+                  }
+                  if (n.data.indexOf("?>") !== -1) {
+                    throw new DOMException(INVALID_STATE_ERR, 'The ProcessingInstruction data contains "?>"');
+                  }
                 }
                 buf.push("<?", n.target, " ", n.data, "?>");
                 return null;
               case ENTITY_REFERENCE_NODE:
+                if (requireWellFormed && !tagNamePattern.test(n.nodeName)) {
+                  throw new DOMException(
+                    INVALID_STATE_ERR,
+                    'The entity reference name "' + n.nodeName + '" is not a valid XML Name'
+                  );
+                }
                 buf.push("&", n.nodeName, ";");
                 return null;
               //case ENTITY_NODE:
@@ -3915,9 +4000,7 @@ var dav = (() => {
   var require_sax = __commonJS({
     "node_modules/@xmldom/xmldom/lib/sax.js"(exports) {
       var NAMESPACE = require_conventions().NAMESPACE;
-      var nameStartChar = /[A-Z_a-z\xC0-\xD6\xD8-\xF6\u00F8-\u02FF\u0370-\u037D\u037F-\u1FFF\u200C-\u200D\u2070-\u218F\u2C00-\u2FEF\u3001-\uD7FF\uF900-\uFDCF\uFDF0-\uFFFD]/;
-      var nameChar = new RegExp("[\\-\\.0-9" + nameStartChar.source.slice(1, -1) + "\\u00B7\\u0300-\\u036F\\u203F-\\u2040]");
-      var tagNamePattern = new RegExp("^" + nameStartChar.source + nameChar.source + "*(?::" + nameStartChar.source + nameChar.source + "*)?$");
+      var tagNamePattern = require_conventions().tagNamePattern;
       var S_TAG = 0;
       var S_ATTR = 1;
       var S_ATTR_SPACE = 2;
@@ -4012,7 +4095,7 @@ var dav = (() => {
             switch (source.charAt(tagStart + 1)) {
               case "/":
                 var end = source.indexOf(">", tagStart + 3);
-                var tagName = source.substring(tagStart + 2, end).replace(/[ \t\n\r]+$/g, "");
+                var tagName = source.substring(tagStart + 2, end).replace(/^([\s\S]*?[^ \t\n\r])?[ \t\n\r]*$/, "$1");
                 var config = parseStack.pop();
                 if (end < 0) {
                   tagName = source.substring(tagStart + 2).replace(/[\s<].*/, "");
@@ -4022,6 +4105,8 @@ var dav = (() => {
                   tagName = tagName.replace(/[\s<].*/, "");
                   errorHandler.error("end tag name: " + tagName + " maybe not complete");
                   end = tagStart + 1 + tagName.length;
+                } else if (/[ \t\n\r]/.test(tagName) && tagNamePattern.test(tagName.split(/[ \t\n\r]/)[0])) {
+                  errorHandler.error('end tag name is followed by whitespace and trailing content: "' + tagName + '"');
                 }
                 var localNSMap = config.localNSMap;
                 var endMatch = config.tagName == tagName;
@@ -4127,6 +4212,9 @@ var dav = (() => {
         var s = S_TAG;
         while (true) {
           var c = source.charAt(p);
+          if (s === S_TAG && c === "<") {
+            throw new Error("unexpected < in tag name: " + source.slice(start, p));
+          }
           switch (c) {
             case "=":
               if (s === S_ATTR) {
@@ -4301,7 +4389,7 @@ var dav = (() => {
           if (nsPrefix !== false) {
             if (localNSMap == null) {
               localNSMap = {};
-              _copy(currentNSMap, currentNSMap = {});
+              currentNSMap = Object.create(currentNSMap);
             }
             currentNSMap[nsPrefix] = localNSMap[nsPrefix] = value;
             a.uri = NAMESPACE.XMLNS;
@@ -4896,10 +4984,6 @@ ${JSON.stringify(result)}
   });
 
   // lib/template/address_book_query.js
-  var address_book_query_exports = {};
-  __export(address_book_query_exports, {
-    default: () => addressBookQuery
-  });
   function addressBookQuery(object) {
     return `<card:addressbook-query xmlns:card="urn:ietf:params:xml:ns:carddav"
                           xmlns:d="DAV:">
@@ -4938,10 +5022,6 @@ ${JSON.stringify(result)}
   });
 
   // lib/template/calendar_query.js
-  var calendar_query_exports = {};
-  __export(calendar_query_exports, {
-    default: () => calendarQuery
-  });
   function calendarQuery(object) {
     return `<c:calendar-query xmlns:c="urn:ietf:params:xml:ns:caldav"
                     xmlns:cs="http://calendarserver.org/ns/"
@@ -4963,10 +5043,6 @@ ${JSON.stringify(result)}
   });
 
   // lib/template/propfind.js
-  var propfind_exports = {};
-  __export(propfind_exports, {
-    default: () => propfind
-  });
   function propfind(object) {
     return `<d:propfind xmlns:c="urn:ietf:params:xml:ns:caldav"
               xmlns:card="urn:ietf:params:xml:ns:carddav"
@@ -4985,10 +5061,6 @@ ${JSON.stringify(result)}
   });
 
   // lib/template/sync_collection.js
-  var sync_collection_exports = {};
-  __export(sync_collection_exports, {
-    default: () => syncCollection
-  });
   function syncCollection(object) {
     return `<d:sync-collection xmlns:c="urn:ietf:params:xml:ns:caldav"
                      xmlns:card="urn:ietf:params:xml:ns:carddav"
@@ -5007,10 +5079,6 @@ ${JSON.stringify(result)}
   });
 
   // lib/template/mkcol.js
-  var mkcol_exports = {};
-  __export(mkcol_exports, {
-    default: () => mkcol
-  });
   function mkcol(object) {
     return `<d:mkcol xmlns:c="urn:ietf:params:xml:ns:caldav"
               xmlns:card="urn:ietf:params:xml:ns:carddav"
@@ -5030,10 +5098,6 @@ ${JSON.stringify(result)}
   });
 
   // lib/template/proppatch.js
-  var proppatch_exports = {};
-  __export(proppatch_exports, {
-    default: () => proppatch
-  });
   function proppatch(object) {
     return `<d:propertyupdate xmlns:c="urn:ietf:params:xml:ns:caldav"
               xmlns:card="urn:ietf:params:xml:ns:carddav"
@@ -5053,14 +5117,14 @@ ${JSON.stringify(result)}
   });
 
   // lib/template/index.js
-  var require_template = __commonJS({
-    "lib/template/index.js"(exports) {
-      exports.addressBookQuery = (init_address_book_query(), __toCommonJS(address_book_query_exports));
-      exports.calendarQuery = (init_calendar_query(), __toCommonJS(calendar_query_exports));
-      exports.propfind = (init_propfind(), __toCommonJS(propfind_exports));
-      exports.syncCollection = (init_sync_collection(), __toCommonJS(sync_collection_exports));
-      exports.mkcol = (init_mkcol(), __toCommonJS(mkcol_exports));
-      exports.proppatch = (init_proppatch(), __toCommonJS(proppatch_exports));
+  var init_template = __esm({
+    "lib/template/index.js"() {
+      init_address_book_query();
+      init_calendar_query();
+      init_propfind();
+      init_sync_collection();
+      init_mkcol();
+      init_proppatch();
     }
   });
 
@@ -5068,21 +5132,21 @@ ${JSON.stringify(result)}
   var request_exports = {};
   __export(request_exports, {
     Request: () => Request,
-    addressBookQuery: () => addressBookQuery3,
+    addressBookQuery: () => addressBookQuery2,
     basic: () => basic,
-    calendarQuery: () => calendarQuery3,
+    calendarQuery: () => calendarQuery2,
     collectionQuery: () => collectionQuery,
     getProps: () => getProps,
     mergeProps: () => mergeProps,
-    mkcol: () => mkcol3,
-    propfind: () => propfind3,
-    proppatch: () => proppatch3,
+    mkcol: () => mkcol2,
+    propfind: () => propfind2,
+    proppatch: () => proppatch2,
     setRequestHeaders: () => setRequestHeaders,
-    syncCollection: () => syncCollection3
+    syncCollection: () => syncCollection2
   });
-  function addressBookQuery3(options) {
+  function addressBookQuery2(options) {
     return collectionQuery(
-      template.addressBookQuery({ props: options.props || [] }),
+      addressBookQuery({ props: options.props || [] }),
       { depth: options.depth }
     );
   }
@@ -5096,9 +5160,9 @@ ${JSON.stringify(result)}
       transformRequest
     });
   }
-  function calendarQuery3(options) {
+  function calendarQuery2(options) {
     return collectionQuery(
-      template.calendarQuery({
+      calendarQuery({
         props: options.props || [],
         filters: options.filters || [],
         timezone: options.timezone
@@ -5124,8 +5188,8 @@ ${JSON.stringify(result)}
       transformResponse
     });
   }
-  function mkcol3(options) {
-    let requestData = template.mkcol({ props: options.props });
+  function mkcol2(options) {
+    let requestData = mkcol({ props: options.props });
     function transformRequest(xhr) {
       setRequestHeaders(xhr, options);
     }
@@ -5135,8 +5199,8 @@ ${JSON.stringify(result)}
       transformRequest
     });
   }
-  function proppatch3(options) {
-    let requestData = template.proppatch({ props: options.props });
+  function proppatch2(options) {
+    let requestData = proppatch({ props: options.props });
     function transformRequest(xhr) {
       setRequestHeaders(xhr, options);
     }
@@ -5146,8 +5210,8 @@ ${JSON.stringify(result)}
       transformRequest
     });
   }
-  function propfind3(options) {
-    let requestData = template.propfind({ props: options.props });
+  function propfind2(options) {
+    let requestData = propfind({ props: options.props });
     function transformRequest(xhr) {
       setRequestHeaders(xhr, options);
     }
@@ -5169,8 +5233,8 @@ ${JSON.stringify(result)}
       transformResponse
     });
   }
-  function syncCollection3(options) {
-    let requestData = template.syncCollection({
+  function syncCollection2(options) {
+    let requestData = syncCollection({
       props: options.props,
       syncLevel: options.syncLevel,
       syncToken: options.syncToken
@@ -5228,11 +5292,11 @@ ${JSON.stringify(result)}
       request.setRequestHeader("Overwrite", options.overwrite);
     }
   }
-  var template, Request;
+  var Request;
   var init_request = __esm({
     "lib/request.js"() {
       init_parser();
-      template = __toESM(require_template());
+      init_template();
       Request = class {
         constructor(options = {}) {
           Object.assign(this, {
@@ -5449,10 +5513,12 @@ ${JSON.stringify(result)}
     }
   });
 
-  // ../../../shims/xmlhttprequest.js
+  // shims/xmlhttprequest.js
   var require_xmlhttprequest = __commonJS({
-    "../../../shims/xmlhttprequest.js"(exports, module) {
-      module.exports = { XMLHttpRequest: typeof self !== "undefined" && self.XMLHttpRequest };
+    "shims/xmlhttprequest.js"(exports, module) {
+      module.exports = {
+        XMLHttpRequest: typeof self !== "undefined" ? self.XMLHttpRequest : void 0
+      };
     }
   });
 
@@ -5702,10 +5768,33 @@ ${JSON.stringify(result)}
     }
   });
 
+  // node_modules/url/util.js
+  var require_util = __commonJS({
+    "node_modules/url/util.js"(exports, module) {
+      "use strict";
+      module.exports = {
+        isString: function(arg) {
+          return typeof arg === "string";
+        },
+        isObject: function(arg) {
+          return typeof arg === "object" && arg !== null;
+        },
+        isNull: function(arg) {
+          return arg === null;
+        },
+        isNullOrUndefined: function(arg) {
+          return arg == null;
+        }
+      };
+    }
+  });
+
   // node_modules/url/url.js
   var require_url = __commonJS({
     "node_modules/url/url.js"(exports) {
+      "use strict";
       var punycode = require_punycode();
+      var util = require_util();
       exports.parse = urlParse;
       exports.resolve = urlResolve;
       exports.resolveObject = urlResolveObject;
@@ -5727,14 +5816,15 @@ ${JSON.stringify(result)}
       }
       var protocolPattern = /^([a-z0-9.+-]+:)/i;
       var portPattern = /:[0-9]*$/;
+      var simplePathPattern = /^(\/\/?(?!\/)[^\?\s]*)(\?[^\s]*)?$/;
       var delims = ["<", ">", '"', "`", " ", "\r", "\n", "	"];
       var unwise = ["{", "}", "|", "\\", "^", "`"].concat(delims);
       var autoEscape = ["'"].concat(unwise);
       var nonHostChars = ["%", "/", "?", ";", "#"].concat(autoEscape);
       var hostEndingChars = ["/", "?", "#"];
       var hostnameMaxLen = 255;
-      var hostnamePartPattern = /^[a-z0-9A-Z_-]{0,63}$/;
-      var hostnamePartStart = /^([a-z0-9A-Z_-]{0,63})(.*)$/;
+      var hostnamePartPattern = /^[+a-z0-9A-Z_-]{0,63}$/;
+      var hostnamePartStart = /^([+a-z0-9A-Z_-]{0,63})(.*)$/;
       var unsafeProtocol = {
         "javascript": true,
         "javascript:": true
@@ -5757,17 +5847,40 @@ ${JSON.stringify(result)}
       };
       var querystring2 = require_querystring();
       function urlParse(url4, parseQueryString, slashesDenoteHost) {
-        if (url4 && isObject(url4) && url4 instanceof Url) return url4;
+        if (url4 && util.isObject(url4) && url4 instanceof Url) return url4;
         var u = new Url();
         u.parse(url4, parseQueryString, slashesDenoteHost);
         return u;
       }
       Url.prototype.parse = function(url4, parseQueryString, slashesDenoteHost) {
-        if (!isString(url4)) {
+        if (!util.isString(url4)) {
           throw new TypeError("Parameter 'url' must be a string, not " + typeof url4);
         }
+        var queryIndex = url4.indexOf("?"), splitter = queryIndex !== -1 && queryIndex < url4.indexOf("#") ? "?" : "#", uSplit = url4.split(splitter), slashRegex = /\\/g;
+        uSplit[0] = uSplit[0].replace(slashRegex, "/");
+        url4 = uSplit.join(splitter);
         var rest = url4;
         rest = rest.trim();
+        if (!slashesDenoteHost && url4.split("#").length === 1) {
+          var simplePath = simplePathPattern.exec(rest);
+          if (simplePath) {
+            this.path = rest;
+            this.href = rest;
+            this.pathname = simplePath[1];
+            if (simplePath[2]) {
+              this.search = simplePath[2];
+              if (parseQueryString) {
+                this.query = querystring2.parse(this.search.substr(1));
+              } else {
+                this.query = this.search.substr(1);
+              }
+            } else if (parseQueryString) {
+              this.search = "";
+              this.query = {};
+            }
+            return this;
+          }
+        }
         var proto = protocolPattern.exec(rest);
         if (proto) {
           proto = proto[0];
@@ -5850,13 +5963,7 @@ ${JSON.stringify(result)}
             this.hostname = this.hostname.toLowerCase();
           }
           if (!ipv6Hostname) {
-            var domainArray = this.hostname.split(".");
-            var newOut = [];
-            for (var i = 0; i < domainArray.length; ++i) {
-              var s = domainArray[i];
-              newOut.push(s.match(/[^A-Za-z0-9_-]/) ? "xn--" + punycode.encode(s) : s);
-            }
-            this.hostname = newOut.join(".");
+            this.hostname = punycode.toASCII(this.hostname);
           }
           var p = this.port ? ":" + this.port : "";
           var h = this.hostname || "";
@@ -5872,6 +5979,8 @@ ${JSON.stringify(result)}
         if (!unsafeProtocol[lowerProto]) {
           for (var i = 0, l = autoEscape.length; i < l; i++) {
             var ae = autoEscape[i];
+            if (rest.indexOf(ae) === -1)
+              continue;
             var esc = encodeURIComponent(ae);
             if (esc === ae) {
               esc = escape(ae);
@@ -5909,7 +6018,7 @@ ${JSON.stringify(result)}
         return this;
       };
       function urlFormat(obj) {
-        if (isString(obj)) obj = urlParse(obj);
+        if (util.isString(obj)) obj = urlParse(obj);
         if (!(obj instanceof Url)) return Url.prototype.format.call(obj);
         return obj.format();
       }
@@ -5929,7 +6038,7 @@ ${JSON.stringify(result)}
             host += ":" + this.port;
           }
         }
-        if (this.query && isObject(this.query) && Object.keys(this.query).length) {
+        if (this.query && util.isObject(this.query) && Object.keys(this.query).length) {
           query = querystring2.stringify(this.query);
         }
         var search = this.search || query && "?" + query || "";
@@ -5959,25 +6068,29 @@ ${JSON.stringify(result)}
         return urlParse(source, false, true).resolveObject(relative);
       }
       Url.prototype.resolveObject = function(relative) {
-        if (isString(relative)) {
+        if (util.isString(relative)) {
           var rel = new Url();
           rel.parse(relative, false, true);
           relative = rel;
         }
         var result = new Url();
-        Object.keys(this).forEach(function(k) {
-          result[k] = this[k];
-        }, this);
+        var tkeys = Object.keys(this);
+        for (var tk = 0; tk < tkeys.length; tk++) {
+          var tkey = tkeys[tk];
+          result[tkey] = this[tkey];
+        }
         result.hash = relative.hash;
         if (relative.href === "") {
           result.href = result.format();
           return result;
         }
         if (relative.slashes && !relative.protocol) {
-          Object.keys(relative).forEach(function(k) {
-            if (k !== "protocol")
-              result[k] = relative[k];
-          });
+          var rkeys = Object.keys(relative);
+          for (var rk = 0; rk < rkeys.length; rk++) {
+            var rkey = rkeys[rk];
+            if (rkey !== "protocol")
+              result[rkey] = relative[rkey];
+          }
           if (slashedProtocol[result.protocol] && result.hostname && !result.pathname) {
             result.path = result.pathname = "/";
           }
@@ -5986,9 +6099,11 @@ ${JSON.stringify(result)}
         }
         if (relative.protocol && relative.protocol !== result.protocol) {
           if (!slashedProtocol[relative.protocol]) {
-            Object.keys(relative).forEach(function(k) {
+            var keys = Object.keys(relative);
+            for (var v = 0; v < keys.length; v++) {
+              var k = keys[v];
               result[k] = relative[k];
-            });
+            }
             result.href = result.format();
             return result;
           }
@@ -6051,7 +6166,7 @@ ${JSON.stringify(result)}
           srcPath = srcPath.concat(relPath);
           result.search = relative.search;
           result.query = relative.query;
-        } else if (!isNullOrUndefined(relative.search)) {
+        } else if (!util.isNullOrUndefined(relative.search)) {
           if (psychotic) {
             result.hostname = result.host = srcPath.shift();
             var authInHost = result.host && result.host.indexOf("@") > 0 ? result.host.split("@") : false;
@@ -6062,7 +6177,7 @@ ${JSON.stringify(result)}
           }
           result.search = relative.search;
           result.query = relative.query;
-          if (!isNull(result.pathname) || !isNull(result.search)) {
+          if (!util.isNull(result.pathname) || !util.isNull(result.search)) {
             result.path = (result.pathname ? result.pathname : "") + (result.search ? result.search : "");
           }
           result.href = result.format();
@@ -6079,11 +6194,11 @@ ${JSON.stringify(result)}
           return result;
         }
         var last = srcPath.slice(-1)[0];
-        var hasTrailingSlash = (result.host || relative.host) && (last === "." || last === "..") || last === "";
+        var hasTrailingSlash = (result.host || relative.host || srcPath.length > 1) && (last === "." || last === "..") || last === "";
         var up = 0;
         for (var i = srcPath.length; i >= 0; i--) {
           last = srcPath[i];
-          if (last == ".") {
+          if (last === ".") {
             srcPath.splice(i, 1);
           } else if (last === "..") {
             srcPath.splice(i, 1);
@@ -6123,7 +6238,7 @@ ${JSON.stringify(result)}
         } else {
           result.pathname = srcPath.join("/");
         }
-        if (!isNull(result.pathname) || !isNull(result.search)) {
+        if (!util.isNull(result.pathname) || !util.isNull(result.search)) {
           result.path = (result.pathname ? result.pathname : "") + (result.search ? result.search : "");
         }
         result.auth = relative.auth || result.auth;
@@ -6143,18 +6258,6 @@ ${JSON.stringify(result)}
         }
         if (host) this.hostname = host;
       };
-      function isString(arg) {
-        return typeof arg === "string";
-      }
-      function isObject(arg) {
-        return typeof arg === "object" && arg !== null;
-      }
-      function isNull(arg) {
-        return arg === null;
-      }
-      function isNullOrUndefined(arg) {
-        return arg == null;
-      }
     }
   });
 
@@ -6278,7 +6381,7 @@ ${JSON.stringify(result)}
     var req = basic({ method: "DELETE", etag });
     return options.xhr.send(req, objectUrl, { sandbox: options.sandbox });
   }
-  function syncCollection4(collection, options) {
+  function syncCollection3(collection, options) {
     let syncMethod;
     if ("syncMethod" in options) {
       syncMethod = options.syncMethod;
@@ -6296,13 +6399,13 @@ ${JSON.stringify(result)}
     }
   }
   function updateProperties(objectUrl, options) {
-    var req = proppatch3({
+    var req = proppatch2({
       props: options.props
     });
     return options.xhr.send(req, objectUrl, { sandbox: options.sandbox });
   }
   function createCollection(collectionUrl, options) {
-    var req = mkcol3({
+    var req = mkcol2({
       props: options.props
     });
     return options.xhr.send(req, collectionUrl, { sandbox: options.sandbox });
@@ -6321,7 +6424,7 @@ ${JSON.stringify(result)}
       debug3 = require_debug()("dav:webdav");
       supportedReportSet = import_co2.default.wrap(function* (collection, options) {
         debug3("Checking supported report set for collection at " + collection.url);
-        var req = propfind3({
+        var req = propfind2({
           props: [{ name: "supported-report-set", namespace: DAV }],
           depth: 1,
           mergeResponses: true
@@ -6337,7 +6440,7 @@ ${JSON.stringify(result)}
           return false;
         }
         debug3("Fetch remote getctag prop.");
-        var req = propfind3({
+        var req = propfind2({
           props: [{ name: "getctag", namespace: CALENDAR_SERVER }],
           depth: 0
         });
@@ -6389,7 +6492,7 @@ ${JSON.stringify(result)}
   function syncCalendar(calendar, options) {
     options.basicSync = basicSync;
     options.webdavSync = webdavSync;
-    return syncCollection4(calendar, options);
+    return syncCollection3(calendar, options);
   }
   var import_co3, import_url, debug4, ICAL_OBJS, listCalendars, listCalendarObjects, syncCaldavAccount, basicSync, webdavSync;
   var init_calendars = __esm({
@@ -6412,7 +6515,7 @@ ${JSON.stringify(result)}
       ]);
       listCalendars = import_co3.default.wrap(function* (account, options) {
         debug4(`Fetch calendars from home url ${account.homeUrl}`);
-        var req = propfind3({
+        var req = propfind2({
           props: [
             { name: "calendar-description", namespace: CALDAV },
             { name: "calendar-timezone", namespace: CALDAV },
@@ -6465,7 +6568,7 @@ ${JSON.stringify(result)}
             attrs: { name: "VEVENT" }
           }]
         }];
-        let req = calendarQuery3({
+        let req = calendarQuery2({
           depth: 1,
           props: [
             { name: "getetag", namespace: DAV },
@@ -6518,7 +6621,7 @@ ${JSON.stringify(result)}
         return calendar;
       });
       webdavSync = import_co3.default.wrap(function* (calendar, options) {
-        var req = syncCollection3({
+        var req = syncCollection2({
           props: [
             { name: "getetag", namespace: DAV },
             { name: "calendar-data", namespace: CALDAV }
@@ -6562,7 +6665,7 @@ ${JSON.stringify(result)}
   });
   function getAddressBook(options) {
     let addressBookUrl = import_url2.default.resolve(options.url, options.displayName);
-    var req = propfind3({
+    var req = propfind2({
       props: [
         { name: "displayname", namespace: DAV },
         { name: "owner", namespace: DAV },
@@ -6622,7 +6725,7 @@ ${JSON.stringify(result)}
   function syncAddressBook(addressBook, options) {
     options.basicSync = basicSync2;
     options.webdavSync = webdavSync2;
-    return syncCollection4(addressBook, options);
+    return syncCollection3(addressBook, options);
   }
   var import_co4, import_url2, debug5, listAddressBooks, listVCards, syncCarddavAccount, basicSync2, webdavSync2;
   var init_contacts = __esm({
@@ -6637,7 +6740,7 @@ ${JSON.stringify(result)}
       debug5 = require_debug()("dav:contacts");
       listAddressBooks = import_co4.default.wrap(function* (account, options) {
         debug5(`Fetch address books from home url ${account.homeUrl}`);
-        var req = propfind3({
+        var req = propfind2({
           props: [
             { name: "displayname", namespace: DAV },
             { name: "owner", namespace: DAV },
@@ -6675,7 +6778,7 @@ ${JSON.stringify(result)}
       listVCards = import_co4.default.wrap(function* (addressBook, options) {
         debug5(`Doing REPORT on address book ${addressBook.url} which belongs to
         ${addressBook.account.credentials.username}`);
-        var req = addressBookQuery3({
+        var req = addressBookQuery2({
           depth: 1,
           props: [
             { name: "getetag", namespace: DAV },
@@ -6729,7 +6832,7 @@ ${JSON.stringify(result)}
         return addressBook;
       });
       webdavSync2 = import_co4.default.wrap(function* (addressBook, options) {
-        var req = syncCollection3({
+        var req = syncCollection2({
           props: [
             { name: "getetag", namespace: DAV },
             { name: "address-data", namespace: CARDDAV }
@@ -6801,7 +6904,7 @@ ${JSON.stringify(result)}
       });
       var principalUrl = import_co5.default.wrap(function* (account, options) {
         debug8(`Fetch principal url from context path ${account.rootUrl}.`);
-        let req = propfind3({
+        let req = propfind2({
           props: [{ name: "current-user-principal", namespace: DAV }],
           depth: 0,
           mergeResponses: true
@@ -6821,7 +6924,7 @@ ${JSON.stringify(result)}
         } else if (options.accountType === "carddav") {
           prop2 = { name: "addressbook-home-set", namespace: CARDDAV };
         }
-        var req = propfind3({ props: [prop2] });
+        var req = propfind2({ props: [prop2] });
         let responses = yield options.xhr.send(req, account.principalUrl, {
           sandbox: options.sandbox
         });
