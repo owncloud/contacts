@@ -183,6 +183,11 @@ appstore: build
 	js/vendor/ngclipboard/dist/ngclipboard.min.js \
 	js/vendor/ui-select/dist/select.js \
 	$(appstore_package_name)
+	# l10n is copied wholesale, which drags the Transifex client config into the
+	# release. It is covered by appinfo/signature.json, so an administrator could
+	# not delete it without breaking `occ integrity:check-app` - the failure mode
+	# owncloud/core#41824 was about. firewall's appstore target prunes it the same way.
+	rm -Rf $(appstore_package_name)/l10n/.tx
 
 ifdef CAN_SIGN
 	$(sign) --path="$(appstore_package_name)"

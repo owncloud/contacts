@@ -1,0 +1,26 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: read
+
+jobs:
+  release:
+    permissions:
+      contents: write
+    uses: owncloud/reusable-workflows/.github/workflows/release.yml@main
+    with:
+      app-name: contacts
+      # `make dist` emits two tarballs both named contacts.tar.gz (source and
+      # appstore); publish only the appstore one. The source tarball is the whole
+      # working tree, so it would both collide on the release asset name and trip
+      # the workflow's development-files check.
+      artifact-glob: build/artifacts/appstore/*.tar.gz
+    secrets:
+      SIGNING_KEY: ${{ secrets.SIGNING_KEY }}
+      SIGNING_CERT: ${{ secrets.SIGNING_CERT }}
+      SIGNING_CHAIN: ${{ secrets.SIGNING_CHAIN }}
