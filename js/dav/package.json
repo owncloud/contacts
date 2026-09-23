@@ -30,11 +30,11 @@
   },
   "devDependencies": {
     "esbuild": "0.25.12",
-    "babel": "^5.8.23",
+    "babel": "^6.23.0",
     "chai": "^3.2.0",
     "doctoc": "^2.5.0",
     "mocha": "^12.0.2",
-    "nock": "^2.10.0",
+    "nock": "^14.0.17",
     "sinon": "^1.16.1",
     "tcp-port-used": "^0.1.2"
   },
