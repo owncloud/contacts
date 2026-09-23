@@ -24,7 +24,7 @@
   },
   "devDependencies": {
     "bower": "^1.7.9",
-    "chai": "^3.5.0",
+    "chai": "^6.2.2",
     "codecov": "^3.6.5",
     "gulp": "^5.0.1",
     "gulp-cli": "^3.1.0",
