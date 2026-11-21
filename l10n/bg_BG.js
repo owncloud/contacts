@@ -28,7 +28,7 @@ OC.L10N.register(
     "Post office box" : "Служебна пощенска кутия",
     "Postal code" : "Пощенски код",
     "City" : "Град",
-    "State or province" : "Страна или област",
+    "State or province" : "Област/щат/провинция",
     "Country" : "Държава",
     "Address" : "Адрес",
     "(new group)" : "(нова група)",
